@@ -1,0 +1,33 @@
+server:
+  servlet:
+    session:
+      tracking-modes: cookie
+      timeout: 1800
+
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/sgdev_manager
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+#    hibernate:
+#      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+#    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath*:data/schema.sql
+#      data-locations: classpath*:data/publisher-data.sql
+
+logging.level:
+  org.hibernate.SQL: debug
+
