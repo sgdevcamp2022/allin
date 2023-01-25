@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 8090
+  main:
+    allow-bean-definition-overriding: true
