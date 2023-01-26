@@ -1,5 +1,7 @@
 package com.example.chat.service;
 
+import static com.example.chat.exception.ErrorMessage.NONEXISTENT_TOPIC;
+
 import com.example.chat.repository.TopicRepository;
 import com.example.entity.Topic;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +24,11 @@ public class TopicServiceImpl implements TopicService {
     redisMessageListenerContainer.addMessageListener(redisSubscriber,
       new org.springframework.data.redis.listener.ChannelTopic(id));
     topicRepository.save(Topic.from(id));
+  }
+
+  @Override
+  public Topic findById(String id) {
+    return topicRepository.findById(id).orElseThrow(
+      () -> new IllegalArgumentException(NONEXISTENT_TOPIC.getMessage()));
   }
 }
