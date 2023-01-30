@@ -1,4 +1,4 @@
-package com.example.chat.domain;
+package com.example.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;

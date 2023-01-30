@@ -1,4 +1,4 @@
-package com.example.chat.exception;
+package com.example.exception;
 
 import lombok.AccessLevel;
 import lombok.Getter;

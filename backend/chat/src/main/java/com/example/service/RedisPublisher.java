@@ -1,6 +1,6 @@
-package com.example.chat.service;
+package com.example.service;
 
-import com.example.chat.dto.ChatMessage;
+import com.example.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.example.chat.dto;
+package com.example.dto;
 
 import static lombok.AccessLevel.PRIVATE;
 

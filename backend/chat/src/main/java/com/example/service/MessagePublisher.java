@@ -1,6 +1,7 @@
-package com.example.chat.service;
+package com.example.service;
 
-import com.example.chat.dto.ChatMessage;
+
+import com.example.dto.ChatMessage;
 
 public interface MessagePublisher {
 
