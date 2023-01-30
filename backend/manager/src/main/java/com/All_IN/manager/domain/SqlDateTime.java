@@ -151,7 +151,7 @@ public class SqlDateTime {
 
 
         public modifiedAndDeleteAt() {
-            this.modifiedAt = null;
+            this.modifiedAt = LocalDateTime.now();
             this.deleteAt = null;
         }
 
