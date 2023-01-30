@@ -1,6 +1,6 @@
-package com.example.chat.service;
+package com.example.service;
 
-import com.example.chat.dto.ChatMessage;
+import com.example.dto.ChatMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;

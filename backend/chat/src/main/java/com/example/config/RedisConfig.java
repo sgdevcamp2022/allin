@@ -1,4 +1,4 @@
-package com.example.chat.config;
+package com.example.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;

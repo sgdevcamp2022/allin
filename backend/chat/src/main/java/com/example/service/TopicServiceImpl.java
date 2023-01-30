@@ -1,9 +1,9 @@
-package com.example.chat.service;
+package com.example.service;
 
-import static com.example.chat.exception.ErrorMessage.NONEXISTENT_TOPIC;
+import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
 
-import com.example.chat.domain.Topic;
-import com.example.chat.repository.TopicRepository;
+import com.example.domain.Topic;
+import com.example.repository.TopicRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
