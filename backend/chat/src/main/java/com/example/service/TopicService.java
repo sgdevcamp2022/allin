@@ -1,6 +1,6 @@
 package com.example.chat.service;
 
-import com.example.entity.Topic;
+import com.example.chat.domain.Topic;
 
 public interface TopicService {
 
