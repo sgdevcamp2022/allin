@@ -46,13 +46,13 @@ create table room_table
 
 create table room_info_table
 (
-    id          bigint NOT NULL AUTO_INCREMENT,
-    description varchar(255),
-    end_time    time,
-    start_time  time,
+    room_info_id          bigint NOT NULL AUTO_INCREMENT,
+    room_info_description varchar(255),
+    room_info_end_time    time,
+    room_info_start_time  time,
     delete_at   timestamp,
     modified_at timestamp,
-    title       varchar(255),
+    room_info_title       varchar(255),
     room_id     bigint,
-    primary key (id)
+    primary key (room_info_id)
 );
