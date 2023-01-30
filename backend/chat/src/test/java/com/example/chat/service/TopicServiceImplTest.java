@@ -9,7 +9,6 @@ import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
 
 import com.example.chat.repository.TopicRepository;
-import com.example.entity.Topic;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -32,10 +31,10 @@ class TopicServiceImplTest {
   RedisMessageListenerContainer redisMessageListenerContainer;
 
   @Mock
-  RedisSubscriber redisSubscriber;
+  com.example.chat.service.RedisSubscriber redisSubscriber;
 
   @InjectMocks
-  TopicServiceImpl topicService;
+  com.example.chat.service.TopicServiceImpl topicService;
 
   @Nested
   @DisplayName("create 메서드는")
@@ -53,8 +52,8 @@ class TopicServiceImplTest {
         willDoNothing().given(redisMessageListenerContainer)
                        .addMessageListener(any(MessageListener.class), any(
                          ChannelTopic.class));
-        given(topicRepository.save(any(Topic.class)))
-          .willReturn(Topic.from(id));
+        given(topicRepository.save(any(com.example.chat.domain.Topic.class)))
+          .willReturn(com.example.chat.domain.Topic.from(id));
 
         // when
         topicService.create(id);
@@ -62,7 +61,7 @@ class TopicServiceImplTest {
         // then
         verify(redisMessageListenerContainer).addMessageListener(any(MessageListener.class), any(
           ChannelTopic.class));
-        verify(topicRepository).save(any(Topic.class));
+        verify(topicRepository).save(any(com.example.chat.domain.Topic.class));
       }
     }
   }
@@ -81,10 +80,10 @@ class TopicServiceImplTest {
         // given
         String id = "topic1";
         given(topicRepository.findById(anyString()))
-          .willReturn(Optional.of(Topic.from(id)));
+          .willReturn(Optional.of(com.example.chat.domain.Topic.from(id)));
 
         // when
-        Topic topic = topicService.findById(id);
+        com.example.chat.domain.Topic topic = topicService.findById(id);
 
         // then
         assertThat(topic.getId()).isEqualTo(id);
