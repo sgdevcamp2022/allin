@@ -25,7 +25,9 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Gradle 명령 실행을 위한 권한을 부여합니다
         run: chmod +x gradlew
 
