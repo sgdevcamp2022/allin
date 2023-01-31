@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.context.annotation.Profile;
@@ -11,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Embeddable
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ScheduleVO {
 
     @DateTimeFormat(pattern = "HH::mm")

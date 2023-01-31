@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "room_info_table")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "DELETE_AT IS NULL")
 @SQLDelete(sql = "UPDATE ROOM_INFO_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where ROOM_INFO_ID = ?")
 public class RoomInfo {
