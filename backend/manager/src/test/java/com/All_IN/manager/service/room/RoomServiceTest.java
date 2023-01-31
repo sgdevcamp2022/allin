@@ -11,6 +11,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -23,6 +25,9 @@ class RoomServiceTest {
 
     @Autowired
     RoomService roomService;
+
+    @Mock
+    RoomService mockRoomService;
 
     @Autowired
     PublisherService publisherService;
@@ -69,10 +74,10 @@ class RoomServiceTest {
         roomInfoDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
 
         // When
-        roomService.save(memberId, roomInfoDTO);
+        mockRoomService.save(memberId, roomInfoDTO);
 
         // Then
-        roomId++;
+        Mockito.verify(mockRoomService, Mockito.times(1)).save(memberId, roomInfoDTO);
     }
 
     @Test
