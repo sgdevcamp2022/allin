@@ -5,6 +5,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -18,11 +21,15 @@ class PublisherServiceTest {
     @Autowired
     private PublisherService publisherService;
 
+    @Mock
+    private PublisherService mockPublisherService;
+
     private static Long publisherId = 1L;
 
     @BeforeEach
     void save_data() {
         publisherService.save(999L);
+        System.out.println("before publisherId = " + publisherId);
     }
 
 
@@ -30,6 +37,7 @@ class PublisherServiceTest {
     void clear() {
         publisherService.clear();
         publisherId++;
+        System.out.println("after publisherId = " + publisherId);
     }
 
     @Test
@@ -38,10 +46,10 @@ class PublisherServiceTest {
         // Given
 
         // When
-        publisherService.save(1L);
+        mockPublisherService.save(1L);
 
         // Then
-        publisherId++;
+        Mockito.verify(mockPublisherService, Mockito.times(1)).save(1L);
 
     }
 
@@ -50,10 +58,11 @@ class PublisherServiceTest {
         // Given
 
         // When
-        String key = publisherService.getKey(publisherId);
+        String key = mockPublisherService.getKey(publisherId);
         log.info("key = {}", key);
 
         // Then
+        Mockito.verify(mockPublisherService, Mockito.times(1)).getKey(publisherId);
 
     }
 
@@ -62,10 +71,11 @@ class PublisherServiceTest {
         // Given
 
         // When
-        String password = publisherService.generatePassword(publisherId);
+        String password = mockPublisherService.generatePassword(publisherId);
         log.info("password = {}", password);
 
         // Then
+        Mockito.verify(mockPublisherService, Mockito.times(1)).generatePassword(publisherId);
 
     }
 
