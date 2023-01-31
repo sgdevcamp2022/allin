@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "publisher_table")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Where(clause = "DELETE_AT IS NULL")
 @SQLDelete(sql = "UPDATE PUBLISHER_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where PUBLISHER_ID = ?")
