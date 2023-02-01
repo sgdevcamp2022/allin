@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
+import './index.css'
 
 import App from './App'
 import SignInPage from './Pages/Account/SignIn.page'

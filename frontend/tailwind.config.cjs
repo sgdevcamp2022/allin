@@ -13,10 +13,6 @@ module.exports = {
       pointText: '#5F5ACE',
       warningText: '#ED2E51',
     },
-    fontFamily: {
-      pretendard: ['Pretendard', 'sans-serif'],
-      helvetica: ['Helvetica', 'sans-serif'],
-    },
     extend: {
       borderRadius: {
         sm: '3px',

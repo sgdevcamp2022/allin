@@ -3,10 +3,12 @@ import { RecoilState, useRecoilState } from 'recoil'
 
 const InputTextElement = ({
   textState,
-  placeholder,
+  className = '',
+  placeholder = '',
 }: {
   textState: RecoilState<string>
-  placeholder: string | undefined
+  className?: string
+  placeholder?: string
 }) => {
   const [text, setText] = useRecoilState(textState)
 
@@ -15,15 +17,13 @@ const InputTextElement = ({
   }
 
   return (
-    <div>
-      <input
-        className="w-full"
-        type="text"
-        value={text}
-        onChange={onChange}
-        placeholder={placeholder ?? ''}
-      />
-    </div>
+    <input
+      className={className}
+      type="text"
+      value={text}
+      onChange={onChange}
+      placeholder={placeholder}
+    />
   )
 }
 
