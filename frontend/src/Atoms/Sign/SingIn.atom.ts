@@ -1,6 +1,11 @@
 import { atom } from 'recoil'
 
-export const signInTextState = atom({
-  key: 'signIdTextState',
+export const signInIdTextState = atom({
+  key: 'signInIdTextState',
+  default: '',
+})
+
+export const signInPwTextState = atom({
+  key: 'singOutTextState',
   default: '',
 })
