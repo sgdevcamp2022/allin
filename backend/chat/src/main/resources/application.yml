@@ -3,5 +3,9 @@ spring:
     redis:
       host: localhost
       port: 8090
+    mongodb:
+      host: localhost
+      port: 27017
+      database: chat
   main:
     allow-bean-definition-overriding: true

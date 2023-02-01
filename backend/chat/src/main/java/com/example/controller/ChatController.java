@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.dto.ChatMessage;
+import com.example.dto.ChatMessageRequest;
 import com.example.service.ChatService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -20,7 +20,7 @@ public class ChatController {
 
 
   @MessageMapping("/{id}/send")
-  public void send(@DestinationVariable @NotEmpty String id, @Valid ChatMessage message) {
+  public void send(@DestinationVariable @NotEmpty String id, @Valid ChatMessageRequest message) {
     chatService.send(id, message);
   }
 

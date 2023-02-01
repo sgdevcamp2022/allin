@@ -4,16 +4,13 @@ import static lombok.AccessLevel.PRIVATE;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import java.io.Serializable;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = PRIVATE)
-public class ChatMessage implements Serializable {
-
-  private static final long serialVersionUID = 6494678977089006639L;
+public class ChatMessageRequest {
 
   @NotEmpty
   @Size(max = 255, message = "닉네임 길이는 최대 255자입니다.")
@@ -24,15 +21,15 @@ public class ChatMessage implements Serializable {
   private String content;
 
   @Builder(access = PRIVATE)
-  private ChatMessage(String sender, String content) {
+  private ChatMessageRequest(String sender, String content) {
     this.sender = sender;
     this.content = content;
   }
 
-  public static ChatMessage of(String sender, String content) {
-    return ChatMessage.builder()
-                      .sender(sender)
-                      .content(content)
-                      .build();
+  public static ChatMessageRequest of(String sender, String content) {
+    return ChatMessageRequest.builder()
+                             .sender(sender)
+                             .content(content)
+                             .build();
   }
 }

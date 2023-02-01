@@ -1,6 +1,7 @@
 package com.example.service;
 
-import com.example.dto.ChatMessage;
+import com.example.dto.ChatMessageRequest;
+import com.example.dto.ChatMessageResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +27,15 @@ public class RedisSubscriber implements MessageListener {
     String id = redisTemplate.getStringSerializer().deserialize(message.getChannel());
     String messageBody = redisTemplate.getStringSerializer()
                                       .deserialize(message.getBody());
-    ChatMessage chatMessage = null;
+    ChatMessageRequest chatMessage = null;
     try {
-      chatMessage = objectMapper.readValue(messageBody, ChatMessage.class);
+      chatMessage = objectMapper.readValue(messageBody, ChatMessageRequest.class);
     } catch (JsonProcessingException e) {
       log.info(e.getMessage());
       return;
     }
-    simpMessageSendingOperations.convertAndSend("/topic/" + id, chatMessage);
+    ChatMessageResponse sendChatMessage = ChatMessageResponse.of(chatMessage.getSender(),
+      chatMessage.getContent());
+    simpMessageSendingOperations.convertAndSend("/topic/" + id, sendChatMessage);
   }
 }

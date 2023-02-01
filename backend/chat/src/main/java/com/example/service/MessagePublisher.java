@@ -1,9 +1,9 @@
 package com.example.service;
 
 
-import com.example.dto.ChatMessage;
+import com.example.dto.ChatMessageRequest;
 
 public interface MessagePublisher {
 
-  void publish(String topic, ChatMessage message);
+  void publish(String topic, ChatMessageRequest message);
 }
