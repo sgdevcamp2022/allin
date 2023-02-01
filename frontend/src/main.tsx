@@ -5,7 +5,9 @@ import { RecoilRoot } from 'recoil'
 import './index.css'
 
 import App from './App'
-import SignInPage from './Pages/Account/SignIn.page'
+import SignInMobilePage from './Pages/Mobile/Account/SignIn.page'
+import { isMobile } from 'react-device-detect'
+import SignInDesktopPage from './Pages/Desktop/Account/SignIn.page'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +16,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/sign-in',
-    element: <SignInPage />,
+    element: isMobile ? <SignInMobilePage /> : <SignInDesktopPage />,
   },
 ])
 

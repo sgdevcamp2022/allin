@@ -14,7 +14,7 @@ const InputTextForm = ({
 }) => {
   return (
     <div className={'flex flex-col ' + className}>
-      {formTitle ? <div className="w-full pb-2 text-[18px]">{formTitle}</div> : ''}
+      {formTitle ? <div className="w-full pb-2">{formTitle}</div> : ''}
       <InputTextElement
         className={'border-border border-[1px] w-full ' + inputTextClassName}
         textState={textState}
@@ -36,7 +36,7 @@ const InputSecretTextForm = ({
 }) => {
   return (
     <div className={'flex flex-col ' + className}>
-      {formTitle ? <div className="w-full pb-2 text-[18px]">{formTitle}</div> : ''}
+      {formTitle ? <div className="w-full pb-2">{formTitle}</div> : ''}
       <InpuSecretTextElement
         className={'border-border border-[1px] w-full ' + inputTextClassName}
         textState={textState}
