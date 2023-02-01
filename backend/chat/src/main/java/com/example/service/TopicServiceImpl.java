@@ -4,6 +4,7 @@ import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
 
 import com.example.domain.Topic;
 import com.example.repository.TopicRepository;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ public class TopicServiceImpl implements TopicService {
   TODO: ttl 값 설정 필요
    */
   @Override
-  public void create(String id) {
+  public void create(String id, LocalDateTime expireAt) {
     redisMessageListenerContainer.addMessageListener(redisSubscriber,
       new org.springframework.data.redis.listener.ChannelTopic(id));
-    topicRepository.save(Topic.from(id));
+    topicRepository.save(Topic.from(id, expireAt));
   }
 
   @Override
