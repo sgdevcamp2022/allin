@@ -33,7 +33,6 @@ const SignUpDesktopPage = () => {
           formTitle="이메일 주소"
           className="flex my-10 justify-between text-xl items-center "
           inputTextClassName="w-[75%] text-base p-2 rounded-sm"
-          warningClassName=""
           placeholder="example@smilegate.com"
           isWarning={!isValidId}
           warningText="이메일 형식이 틀렸습니다."
