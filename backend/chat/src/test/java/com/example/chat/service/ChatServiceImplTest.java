@@ -6,8 +6,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
+import com.example.domain.Message;
 import com.example.domain.Topic;
-import com.example.dto.ChatMessage;
+import com.example.dto.ChatMessageRequest;
+import com.example.repository.ChatRepository;
 import com.example.service.ChatServiceImpl;
 import com.example.service.MessagePublisher;
 import com.example.service.TopicService;
@@ -29,6 +31,8 @@ class ChatServiceImplTest {
   @Mock
   MessagePublisher messagePublisher;
 
+  @Mock
+  ChatRepository chatRepository;
   @InjectMocks
   ChatServiceImpl chatService;
 
@@ -41,19 +45,22 @@ class ChatServiceImplTest {
     class ContextWithValidData {
 
       @Test
-      @DisplayName("publisher.publish()를 호출한다")
+      @DisplayName("publisher.publish()와 chatRepository.save()를 호출한다")
       void ItCallsPublish() {
         // given
         String id = "topic1";
-        ChatMessage message = ChatMessage.of("user1", "message1");
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
         given(topicService.findById(anyString()))
           .willReturn(Topic.from(id, LocalDateTime.now()));
+        given(chatRepository.save(any(Message.class)))
+          .willReturn(Message.of(id, message.getSender(), message.getContent(), LocalDateTime.now()));
 
         // when
         chatService.send(id, message);
 
         // then
-        verify(messagePublisher).publish(anyString(), any(ChatMessage.class));
+        verify(messagePublisher).publish(anyString(), any(ChatMessageRequest.class));
+        verify(chatRepository).save(any(Message.class));
       }
     }
 
@@ -66,7 +73,7 @@ class ChatServiceImplTest {
       void ItThrowsIllegalArgumentException() {
         // given
         String id = "topic1";
-        ChatMessage message = ChatMessage.of("user1", "message1");
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
         given(topicService.findById(anyString()))
           .willThrow(new IllegalArgumentException());
 

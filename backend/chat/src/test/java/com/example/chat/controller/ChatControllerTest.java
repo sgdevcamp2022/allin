@@ -5,8 +5,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
+import com.example.chat.MongoTestContainerConfig;
+import com.example.chat.RedisTestContainerConfig;
 import com.example.controller.ChatController;
-import com.example.dto.ChatMessage;
+import com.example.domain.Message;
+import com.example.dto.ChatMessageRequest;
+import com.example.dto.ChatMessageResponse;
+import com.example.repository.ChatRepository;
 import com.example.repository.TopicRepository;
 import com.example.service.TopicService;
 import java.lang.reflect.Type;
@@ -39,7 +44,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
-@ExtendWith(TestContainerConfig.class)
+@ExtendWith({RedisTestContainerConfig.class, MongoTestContainerConfig.class})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ChatControllerTest {
 
@@ -54,6 +59,9 @@ class ChatControllerTest {
 
   @Autowired
   TopicService topicService;
+
+  @Autowired
+  ChatRepository chatRepository;
   WebSocketStompClient webSocketStompClient;
   StompSession session;
 
@@ -80,24 +88,24 @@ class ChatControllerTest {
     class ContextWithValidData {
 
       @Test
-      @DisplayName("해당 토픽을 구독한 사용자들에게 메시지를 발행한다")
+      @DisplayName("해당 토픽을 구독한 사용자들에게 메시지를 발행하고 메시지를 저장한다.")
       void ItPublishesMessage() throws InterruptedException {
         // given
         String topicId = "topicId";
         String subUri = String.format("/topic/%s", topicId);
         topicService.create(topicId, LocalDateTime.now());
 
-        ChatMessage message = ChatMessage.of("user1", "hi~");
-        BlockingQueue<ChatMessage> queue = new ArrayBlockingQueue<>(1);
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "hi~");
+        BlockingQueue<ChatMessageResponse> queue = new ArrayBlockingQueue<>(1);
         session.subscribe(subUri, new StompFrameHandler() {
           @Override
           public Type getPayloadType(StompHeaders headers) {
-            return ChatMessage.class;
+            return ChatMessageResponse.class;
           }
 
           @Override
           public void handleFrame(StompHeaders headers, Object payload) {
-            queue.add((ChatMessage) payload);
+            queue.add((ChatMessageResponse) payload);
           }
         });
 
@@ -105,7 +113,11 @@ class ChatControllerTest {
         session.send(String.format("/chat/%s/send", topicId), message);
 
         // then
-        ChatMessage chatMessage = queue.poll(1, TimeUnit.SECONDS);
+        sleep(1000);
+        List<Message> result = (List<Message>) chatRepository.findAll();
+        assertThat(result.size()).isEqualTo(1);
+        ChatMessageResponse chatMessage = queue.poll(1, TimeUnit.SECONDS);
+        assertThat(chatMessage.getSender()).isEqualTo(message.getSender());
         assertThat(chatMessage.getContent()).isEqualTo(message.getContent());
       }
     }
@@ -119,7 +131,7 @@ class ChatControllerTest {
       void ItCallsHandleException() throws InterruptedException {
         // given
         String topicId = "topicId";
-        ChatMessage message = ChatMessage.of("user1", "s".repeat(101));
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "s".repeat(101));
 
         // when
         session.send(String.format("/chat/%s/send", topicId), message);
@@ -140,7 +152,7 @@ class ChatControllerTest {
       void ItCallsHandleException(String content) throws InterruptedException {
         // given
         String topicId = "topicId";
-        ChatMessage message = ChatMessage.of("user1", content);
+        ChatMessageRequest message = ChatMessageRequest.of("user1", content);
 
         // when
         session.send(String.format("/chat/%s/send", topicId), message);
@@ -160,7 +172,7 @@ class ChatControllerTest {
       void ItCallsHandleException() throws InterruptedException {
         // given
         String topicId = null;
-        ChatMessage message = ChatMessage.of("user1", "hello~~!!");
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "hello~~!!");
 
         // when, then
         session.send(String.format("/chat/%s/send", topicId), message);
@@ -180,7 +192,7 @@ class ChatControllerTest {
       void ItCallsHandleException() throws InterruptedException {
         // given
         String topicId = "topicId";
-        ChatMessage message = ChatMessage.of("u".repeat(256), "message");
+        ChatMessageRequest message = ChatMessageRequest.of("u".repeat(256), "message");
 
         // when
         session.send(String.format("/chat/%s/send", topicId), message);
@@ -201,7 +213,7 @@ class ChatControllerTest {
       void ItCallsHandleException(String sender) throws InterruptedException {
         // given
         String topicId = "topicId";
-        ChatMessage message = ChatMessage.of(sender, "message");
+        ChatMessageRequest message = ChatMessageRequest.of(sender, "message");
 
         // when
         session.send(String.format("/chat/%s/send", topicId), message);
