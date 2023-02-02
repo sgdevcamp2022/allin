@@ -34,11 +34,9 @@ public class RoomService {
             .orElseThrow(
                 () -> new PublisherServiceValidateException(PublisherServiceException.NO_SUCH_PUBLISHER));
 
-        Optional<Room> roomByPublisher = repository.findByPublisher(publisher);
-        if (roomByPublisher.isPresent()) {
+        if (repository.existsByPublisher(publisher)) {
             throw new RoomServiceValidateException(RoomServiceException.ALREADY_HAVE_ROOM);
         }
-
         Room room = Room.create(publisher);
         repository.save(room);
 
