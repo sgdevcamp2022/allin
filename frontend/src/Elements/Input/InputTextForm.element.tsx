@@ -13,8 +13,8 @@ const InputTextForm = ({
   textState: RecoilState<string>
 }) => {
   return (
-    <div className={'flex flex-col ' + className}>
-      {formTitle ? <div className="w-full pb-2">{formTitle}</div> : ''}
+    <div className={className}>
+      {formTitle ? <div className="pb-2 min-w-max">{formTitle}</div> : ''}
       <InputTextElement
         className={'border-border border-[1px] w-full ' + inputTextClassName}
         textState={textState}
@@ -35,8 +35,8 @@ const InputSecretTextForm = ({
   textState: RecoilState<string>
 }) => {
   return (
-    <div className={'flex flex-col ' + className}>
-      {formTitle ? <div className="w-full pb-2">{formTitle}</div> : ''}
+    <div className={className}>
+      {formTitle ? <div className="pb-2 min-w-max">{formTitle}</div> : ''}
       <InpuSecretTextElement
         className={'border-border border-[1px] w-full ' + inputTextClassName}
         textState={textState}
