@@ -7,5 +7,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiResponse<T> {
 
+  private final String result = "success";
   private final T data;
 }
