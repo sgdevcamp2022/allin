@@ -1,5 +1,8 @@
 package com.example.domain;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -17,15 +20,21 @@ public class Message {
   @Id
   private String id;
 
+  @NotBlank
   private String topicId;
 
+  @NotBlank
+  @Size(max = 255)
   private String sender;
 
+  @NotBlank
+  @Size(max = 100)
   private String content;
 
   @CreatedDate
   LocalDateTime createAt;
 
+  @NotNull
   @Indexed(expireAfterSeconds = 0)
   private LocalDateTime expireAt;
 
