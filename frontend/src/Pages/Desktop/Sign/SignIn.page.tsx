@@ -26,7 +26,9 @@ const SignInDesktopPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <img src="/src/assets/logo.svg" alt="" />
+      <button>
+        <img src="/src/assets/logo.svg" alt="" />
+      </button>
       <div className="min-w-[32rem] w-[40%] border-border px-12 py-10 border-[1px] rounded-xl mt-8">
         <InputForm
           textState={signInIdTextState}
