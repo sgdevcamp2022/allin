@@ -36,7 +36,7 @@ public class Room {
     @Embedded
     private SqlDateTime.createAndDeleteAt sqlDateTime;
 
-    protected Room(Publisher publisher) {
+    private Room(Publisher publisher) {
         this.publisher = publisher;
         this.sqlDateTime = new SqlDateTime.createAndDeleteAt();
     }
