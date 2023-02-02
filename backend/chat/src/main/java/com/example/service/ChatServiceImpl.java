@@ -37,9 +37,10 @@ public class ChatServiceImpl implements ChatService {
   }
 
   @Override
-  public List<ChatMessageResponse> findAll(ChatMessagePagingRequest request) {
+  public List<ChatMessageResponse> findAll(String topicId, ChatMessagePagingRequest request) {
+    Topic topic = topicService.findById(topicId);
     Pageable page = PageRequest.of(request.getPage(), PAGE_SIZE, Sort.by("createAt").descending());
-    return chatRepository.findAll(page)
+    return chatRepository.findAllByTopicId(topic.getId(), page)
                          .stream()
                          .map(
                            (message) -> ChatMessageResponse.of(message.getSender(),

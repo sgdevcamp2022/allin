@@ -37,7 +37,7 @@ class ChatRepositoryTest {
         createChatMessage();
 
         // when
-        List<Message> result = chatRepository.findAll(PageRequest.of(0, 19));
+        List<Message> result = chatRepository.findAllByTopicId("topic1", PageRequest.of(0, 19));
 
         // then
         assertThat(result.size()).isEqualTo(19);

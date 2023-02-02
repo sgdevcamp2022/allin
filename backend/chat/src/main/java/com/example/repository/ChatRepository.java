@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ChatRepository extends CrudRepository<Message, String> {
-  List<Message> findAll(Pageable pageable);
+  List<Message> findAllByTopicId(String topicId, Pageable pageable);
 }

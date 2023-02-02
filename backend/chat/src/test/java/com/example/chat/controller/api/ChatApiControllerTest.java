@@ -1,6 +1,8 @@
 package com.example.chat.controller.api;
 
+import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,13 +61,13 @@ class ChatApiControllerTest {
                                                            m.getSender(), m.getContent()))
                                                          .collect(Collectors.toList());
         String expectedResponse = objectMapper.writeValueAsString(new ApiResponse<>(chatMessages));
-        given(chatService.findAll(any(ChatMessagePagingRequest.class)))
+        given(chatService.findAll(anyString(), any(ChatMessagePagingRequest.class)))
           .willReturn(chatMessages);
 
         // when, then
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("page", "0");
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chats")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/chats/topic1")
                                               .params(params))
                                               .andExpect(status().isOk())
                                               .andExpect(content().json(expectedResponse));
@@ -89,6 +91,29 @@ class ChatApiControllerTest {
                                                                      .andExpect(status().is4xxClientError())
                                                                      .andReturn().getResponse();
         res.getContentAsString().contains("page는 양수이거나 0이어야합니다.");
+      }
+    }
+
+    @Nested
+    @DisplayName("존재하지 않는 토픽이라면")
+    class ContextWithNonexistentTopic {
+
+      @Test
+      @DisplayName("예외 메시지를 반환한다")
+      void ItThrowsExceptionResponse() throws Exception {
+        // given
+        given(chatService.findAll(anyString(), any(ChatMessagePagingRequest.class)))
+          .willThrow(new IllegalArgumentException(NONEXISTENT_TOPIC.getMessage()));
+
+        // when, then
+        LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("page", "0");
+        MockHttpServletResponse res = mockMvc.perform(
+                                               MockMvcRequestBuilders.get("/api/v1/chats/topic2")
+                                                                     .params(params))
+                                             .andExpect(status().is4xxClientError())
+                                             .andReturn().getResponse();
+        res.getContentAsString().contains("존재하지 않는 topic입니다.");
       }
     }
   }

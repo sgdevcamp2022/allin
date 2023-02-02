@@ -8,5 +8,5 @@ import java.util.List;
 public interface ChatService {
 
   void send(String id, ChatMessageRequest message);
-  List<ChatMessageResponse> findAll(ChatMessagePagingRequest request);
+  List<ChatMessageResponse> findAll(String topicId, ChatMessagePagingRequest request);
 }

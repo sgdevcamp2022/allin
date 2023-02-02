@@ -9,6 +9,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatApiController {
   private final ChatService chatService;
 
-  @GetMapping
-  ApiResponse<List<ChatMessageResponse>> findAll(@ModelAttribute @Valid ChatMessagePagingRequest request) {
-    return new ApiResponse<>(chatService.findAll(request));
+  @GetMapping("{topicId}")
+  ApiResponse<List<ChatMessageResponse>> findAll(@PathVariable String topicId, @ModelAttribute @Valid ChatMessagePagingRequest request) {
+    return new ApiResponse<>(chatService.findAll(topicId, request));
   }
 }

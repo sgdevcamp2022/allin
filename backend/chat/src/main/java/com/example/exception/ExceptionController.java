@@ -1,6 +1,7 @@
 package com.example.exception;
 
 
+import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
 import static com.example.exception.ErrorMessage.REQUEST_DATA_NOT_FOUND;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,14 @@ public class ExceptionController {
       e.getClass().getName(), REQUEST_DATA_NOT_FOUND.getMessage());
   }
 
+  @ExceptionHandler(IllegalArgumentException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ExceptionResponse handleIllegalArgumentException(IllegalArgumentException e) {
+    log.warn("handleIllegalArgumentException: {}", e);
+    return ExceptionResponse.of(calculateCode(HttpStatus.BAD_REQUEST,
+        NONEXISTENT_TOPIC.getCode()),
+      e.getClass().getName(), NONEXISTENT_TOPIC.getMessage());
+  }
   private String calculateCode(HttpStatus status, String code) {
     return status.value() + SERVER_NUM + code;
   }

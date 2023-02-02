@@ -102,15 +102,36 @@ class ChatServiceImplTest {
       @DisplayName("채팅 메시지 리스트를 반환한다")
       void ItReturnsChatMessageList() {
         // given
+        String topicId = "topic1";
         List<Message> messages = createChatMessage();
-        given(chatRepository.findAll(any(Pageable.class)))
+        given(topicService.findById(anyString()))
+          .willReturn(Topic.from(topicId, LocalDateTime.now().plusMinutes(5)));
+        given(chatRepository.findAllByTopicId(anyString(), any(Pageable.class)))
           .willReturn(messages);
 
         // when
-        List<ChatMessageResponse> result = chatService.findAll(new ChatMessagePagingRequest(0));
+        List<ChatMessageResponse> result = chatService.findAll(topicId, new ChatMessagePagingRequest(0));
 
         // then
         assertThat(result.size()).isEqualTo(messages.size());
+      }
+    }
+
+    @Nested
+    @DisplayName("존재하지 않는 토픽이라면")
+    class ContextWithNonexistentTopic {
+
+      @Test
+      @DisplayName("IllegalArgumentException 에러를 발생시킨다")
+      void ItThrowsIllegalArgumentException() {
+        // given
+        String id = "topic1";
+        given(topicService.findById(anyString()))
+          .willThrow(new IllegalArgumentException());
+
+        // when, then
+        assertThatThrownBy(() -> chatService.findAll(id, new ChatMessagePagingRequest(0)))
+          .isInstanceOf(IllegalArgumentException.class);
       }
     }
   }
