@@ -55,7 +55,7 @@ public class RoomInfo {
         this.sqlDatetime = new SqlDateTime.modifiedAndDeleteAt();
     }
 
-    public static RoomInfo create(Room room, RoomInfoDTO roomInfoDTO) {
+    public static RoomInfo of(Room room, RoomInfoDTO roomInfoDTO) {
         return new RoomInfo(
             room,
             roomInfoDTO.getTitle(),

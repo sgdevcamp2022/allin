@@ -13,7 +13,6 @@ import com.All_IN.manager.service.room.dto.RoomInfoDTO;
 import com.All_IN.manager.service.room.dto.RoomInfoResponse;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
 import com.All_IN.manager.service.room.exception.RoomServiceValidateException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -37,10 +36,10 @@ public class RoomService {
         if (repository.existsByPublisher(publisher)) {
             throw new RoomServiceValidateException(RoomServiceException.ALREADY_HAVE_ROOM);
         }
-        Room room = Room.create(publisher);
+        Room room = Room.from(publisher);
         repository.save(room);
 
-        roomInfoRepository.save(RoomInfo.create(room, roomInfoDTO));
+        roomInfoRepository.save(RoomInfo.of(room, roomInfoDTO));
     }
 
     @Profile("test")

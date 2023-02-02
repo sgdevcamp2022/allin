@@ -41,7 +41,7 @@ public class Room {
         this.sqlDateTime = new SqlDateTime.createAndDeleteAt();
     }
 
-    public static Room create(Publisher publisher) {
+    public static Room from(Publisher publisher) {
         return new Room(publisher);
     }
 }
