@@ -7,7 +7,9 @@ import './index.css'
 import App from './App'
 import SignInMobilePage from './Pages/Mobile/Account/SignIn.page'
 import { isMobile } from 'react-device-detect'
-import SignInDesktopPage from './Pages/Desktop/Account/SignIn.page'
+import SignInDesktopPage from './Pages/Desktop/Sign/SignIn.page'
+import SignUpMobilePage from './Pages/Mobile/Account/SignUp.page'
+import SignUpDesktopPage from './Pages/Desktop/Sign/SignUp.page'
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/sign-in',
     element: isMobile ? <SignInMobilePage /> : <SignInDesktopPage />,
+  },
+  {
+    path: '/sign-up',
+    element: isMobile ? <SignUpMobilePage /> : <SignUpDesktopPage />,
   },
 ])
 

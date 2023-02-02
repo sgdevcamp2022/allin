@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react'
-import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SingIn.atom'
-import { InputSecretTextForm, InputTextForm } from '../../../Elements/Input/InputTextForm.element'
+import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SignIn.atom'
 import { useRecoilValue } from 'recoil'
+import InputForm from '../../../Elements/Input/InputForm.element'
 
 const SignInMobilePage = () => {
   const singInId = useRecoilValue(signInIdTextState)
@@ -32,17 +32,18 @@ const SignInMobilePage = () => {
           <img src="/src/assets/logo.svg" alt="" />
         </div>
         <div className="w-full">
-          <InputTextForm
+          <InputForm
             textState={signInIdTextState}
             className="w-full py-[5%] font-light text-base text-mainText"
             inputTextClassName="text-sm p-2 rounded-sm"
             formTitle="아이디"
           />
-          <InputSecretTextForm
+          <InputForm
             textState={signInPwTextState}
             className="w-full py-[5%] font-light text-base text-mainText"
             inputTextClassName="text-sm p-2 rounded-sm"
             formTitle="비밀번호"
+            type="password"
           />
           <div className="flex justify-between w-full text-sm items-center flex-1">
             <button className="text-warningText" onClick={goFindPassword}>

@@ -12,6 +12,8 @@ module.exports = {
       subText: '#424242',
       pointText: '#5F5ACE',
       warningText: '#ED2E51',
+      white: '#fff',
+      black: '#000',
     },
     extend: {
       borderRadius: {
