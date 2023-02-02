@@ -1,3 +1,4 @@
+import { useRecoilValue } from 'recoil'
 import {
   signUpCheckEmailNumberState,
   signUpCheckPwTextState,
@@ -5,8 +6,24 @@ import {
   signUpPwTextState,
 } from '../../../Atoms/Sign/SignUp.atom'
 import InputForm from '../../../Elements/Input/InputForm.element'
+import { useEffect, useState } from 'react'
+import { isEmail } from '../../../utils/validator'
 
 const SignUpDesktopPage = () => {
+  const signUpId = useRecoilValue(signUpIdTextState)
+  const signUpPw = useRecoilValue(signUpPwTextState)
+  const signUpCheckPw = useRecoilValue(signUpCheckPwTextState)
+  const [isValidId, setIsValidId] = useState(true)
+  const [isValidPw, setisValidPw] = useState(true)
+
+  useEffect(() => {
+    setIsValidId(signUpId == '' || isEmail(signUpId))
+  }, [signUpId])
+
+  useEffect(() => {
+    setisValidPw(signUpPw == signUpCheckPw)
+  }, [signUpPw, signUpCheckPw])
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
       <img src="/src/assets/logo.svg" alt="" />
@@ -14,25 +31,30 @@ const SignUpDesktopPage = () => {
         <InputForm
           textState={signUpIdTextState}
           formTitle="이메일 주소"
-          className="flex my-4 justify-between text-xl items-center"
+          className="flex my-10 justify-between text-xl items-center "
           inputTextClassName="w-[75%] text-base p-2 rounded-sm"
+          warningClassName=""
           placeholder="example@smilegate.com"
+          isWarning={!isValidId}
+          warningText="이메일 형식이 틀렸습니다."
         />
         <InputForm
           textState={signUpPwTextState}
           formTitle="비밀번호"
-          className="flex my-4 justify-between text-xl items-center"
+          className="flex my-10 justify-between text-xl items-center"
           inputTextClassName="w-[75%] text-base p-2 rounded-sm"
           type="password"
         />
         <InputForm
           textState={signUpCheckPwTextState}
           formTitle="비밀번호 확인"
-          className="flex my-4 justify-between text-xl items-center"
+          className="flex my-10 justify-between text-xl items-center"
           inputTextClassName="w-[75%] text-base p-2 rounded-sm"
           type="password"
+          isWarning={!isValidPw}
+          warningText="비밀번호가 맞지 않습니다."
         />
-        <div className="flex w-full items-center my-4">
+        <div className="flex w-full items-center my-10">
           <InputForm
             textState={signUpCheckEmailNumberState}
             formTitle="이메일 인증"
