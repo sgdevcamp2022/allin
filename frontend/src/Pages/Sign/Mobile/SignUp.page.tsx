@@ -8,6 +8,7 @@ import {
 import { ChangeEvent, useEffect, useState } from 'react'
 import InputForm from '../../../Elements/Input/InputForm.element'
 import { isEmail } from '../../../utils/validator'
+import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
 
 const SignUpMobilePage = () => {
   const signUpId = useRecoilValue(signUpIdTextState)
@@ -44,14 +45,7 @@ const SignUpMobilePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between items-center px-[10%]">
       <div className="w-full flex flex-col items-center">
-        <button
-          onClick={() => {
-            location.href = '/'
-          }}
-          className="p-16 mt-12"
-        >
-          <img src="/src/assets/logo.svg" alt="" />
-        </button>
+        <HomeButtonElement className="p-16 mt-12" />
         <div className="w-full">
           <InputForm
             formTitle="이메일 주소"

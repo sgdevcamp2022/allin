@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SignIn.atom'
 import { useRecoilValue } from 'recoil'
 import InputForm from '../../../Elements/Input/InputForm.element'
+import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
 
 const SignInMobilePage = () => {
   const singInId = useRecoilValue(signInIdTextState)
@@ -28,14 +29,7 @@ const SignInMobilePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between items-center px-[10%]">
       <div className="w-full flex flex-col items-center">
-        <button
-          onClick={() => {
-            location.href = '/'
-          }}
-          className="p-16 mt-28"
-        >
-          <img src="/src/assets/logo.svg" alt="" />
-        </button>
+        <HomeButtonElement className="p-16 mt-28" />
         <div className="w-full">
           <InputForm
             textState={signInIdTextState}

@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from 'react'
 import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SignIn.atom'
 import { useRecoilValue } from 'recoil'
 import InputForm from '../../../Elements/Input/InputForm.element'
+import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
 
 const SignInDesktopPage = () => {
   const singInId = useRecoilValue(signInIdTextState)
@@ -26,13 +27,7 @@ const SignInDesktopPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <button
-        onClick={() => {
-          location.href = '/'
-        }}
-      >
-        <img src="/src/assets/logo.svg" alt="" />
-      </button>
+      <HomeButtonElement className="p-16 mt-28" />
       <div className="min-w-[32rem] w-[40%] border-border px-12 py-10 border-[1px] rounded-xl mt-8">
         <InputForm
           textState={signInIdTextState}

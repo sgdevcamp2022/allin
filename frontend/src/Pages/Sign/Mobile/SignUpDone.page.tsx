@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import checkAnimationData from '../../../assets/black_check.json'
 import Lottie from 'lottie-web'
+import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
 
 const SignUpDoneDesktopPage = () => {
   let isLottieDone = false
@@ -23,14 +24,7 @@ const SignUpDoneDesktopPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col  items-center">
-      <button
-        onClick={() => {
-          location.href = '/'
-        }}
-        className="p-16 mt-28"
-      >
-        <img src="/src/assets/logo.svg" alt="" />
-      </button>
+      <HomeButtonElement className="p-16 mt-28" />
       <div id="check" className="w-40 m-12"></div>
       <div className="text-2xl">회원가입을 해주셔서 감사합니다!</div>
       <button
