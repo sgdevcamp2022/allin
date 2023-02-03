@@ -23,7 +23,12 @@ const SignUpDoneDesktopPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col  items-center">
-      <button className="p-16 mt-28">
+      <button
+        onClick={() => {
+          location.href = '/'
+        }}
+        className="p-16 mt-28"
+      >
         <img src="/src/assets/logo.svg" alt="" />
       </button>
       <div id="check" className="w-40 m-12"></div>

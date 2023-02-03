@@ -3,20 +3,20 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { RecoilRoot } from 'recoil'
 import './index.css'
-
-import App from './App'
-import SignInMobilePage from './Pages/Mobile/Sign/SignIn.page'
+import SignInMobilePage from './Pages/Sign/Mobile/SignIn.page'
 import { isMobile } from 'react-device-detect'
-import SignInDesktopPage from './Pages/Desktop/Sign/SignIn.page'
-import SignUpMobilePage from './Pages/Mobile/Sign/SignUp.page'
-import SignUpDesktopPage from './Pages/Desktop/Sign/SignUp.page'
-import SignUpDoneMobilePage from './Pages/Mobile/Sign/SignUpDone.page'
-import SignUpDoneDesktopPage from './Pages/Desktop/Sign/SignUpDone.page'
+import SignInDesktopPage from './Pages/Sign/Desktop/SignIn.page'
+import SignUpMobilePage from './Pages/Sign/Mobile/SignUp.page'
+import SignUpDesktopPage from './Pages/Sign/Desktop/SignUp.page'
+import SignUpDoneMobilePage from './Pages/Sign/Mobile/SignUpDone.page'
+import SignUpDoneDesktopPage from './Pages/Sign/Desktop/SignUpDone.page'
+import HomeMobilePage from './Pages/Home/Mobile/Home.page'
+import HomeDesktopPage from './Pages/Home/Desktop/Home.page'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: isMobile ? <HomeMobilePage /> : <HomeDesktopPage />,
   },
   {
     path: '/sign-in',

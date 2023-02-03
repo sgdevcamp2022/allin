@@ -28,7 +28,12 @@ const SignInMobilePage = () => {
   return (
     <div className="w-screen h-screen flex flex-col justify-between items-center px-[10%]">
       <div className="w-full flex flex-col items-center">
-        <button className="p-16 mt-28">
+        <button
+          onClick={() => {
+            location.href = '/'
+          }}
+          className="p-16 mt-28"
+        >
           <img src="/src/assets/logo.svg" alt="" />
         </button>
         <div className="w-full">
