@@ -1,5 +1,6 @@
 package com.example.domain;
 
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -15,6 +16,7 @@ public class Topic {
   @Id
   private final String id;
 
+  @NotNull
   private final LocalDateTime expireAt;
 
   public static Topic from(String id, LocalDateTime expireAt) {

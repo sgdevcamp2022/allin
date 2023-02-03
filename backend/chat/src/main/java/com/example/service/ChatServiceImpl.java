@@ -3,10 +3,17 @@ package com.example.service;
 
 import com.example.domain.Message;
 import com.example.domain.Topic;
+import com.example.dto.ChatMessagePagingRequest;
 import com.example.dto.ChatMessageRequest;
+import com.example.dto.ChatMessageResponse;
 import com.example.repository.ChatRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 
+  private static final int PAGE_SIZE = 19;
   private final TopicService topicService;
   private final MessagePublisher publisher;
 
@@ -26,5 +34,17 @@ public class ChatServiceImpl implements ChatService {
       foundTopic.getExpireAt());
     chatRepository.save(sendMessage);
     publisher.publish(foundTopic.getId(), message);
+  }
+
+  @Override
+  public List<ChatMessageResponse> findAll(String topicId, ChatMessagePagingRequest request) {
+    Topic topic = topicService.findById(topicId);
+    Pageable page = PageRequest.of(request.getPage(), PAGE_SIZE, Sort.by("createAt").descending());
+    return chatRepository.findAllByTopicId(topic.getId(), page)
+                         .stream()
+                         .map(
+                           (message) -> ChatMessageResponse.of(message.getSender(),
+                             message.getContent()))
+                         .collect(Collectors.toList());
   }
 }

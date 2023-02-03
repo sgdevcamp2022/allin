@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public enum ErrorMessage {
-  NONEXISTENT_TOPIC("존재하지 않는 topic입니다.");
+  REQUEST_DATA_NOT_FOUND("001", "요청 데이터가 올바르지 않습니다."),
+  NONEXISTENT_TOPIC("002", "존재하지 않는 topic입니다.");
+
+  private final String code;
   private final String message;
 }
