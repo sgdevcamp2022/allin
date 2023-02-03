@@ -12,7 +12,6 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @RequiredArgsConstructor
-@EnableRedisRepositories
 @ConfigurationProperties("spring.data.redis")
 public class RedisConfig {
 
