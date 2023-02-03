@@ -1,27 +1,20 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import checkAnimationData from '../../../assets/black_check.json'
 import Lottie from 'lottie-web'
 import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
 
 const SignUpDoneDesktopPage = () => {
-  let isLottieDone = false
-  const lottieDone = () => {
-    if (!isLottieDone) document.querySelectorAll('svg')[0].remove()
-    isLottieDone = true
-  }
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const check = document.querySelector('#check')
-    Lottie.loadAnimation({
+    const animation = Lottie.loadAnimation({
       container: check!,
       renderer: 'svg',
       loop: true,
       autoplay: true,
       animationData: checkAnimationData,
     })
-    lottieDone()
+    return () => animation.destroy()
   }, [])
-
   return (
     <div className="w-screen h-screen flex flex-col  items-center">
       <HomeButtonElement className="p-16 mt-28" />
