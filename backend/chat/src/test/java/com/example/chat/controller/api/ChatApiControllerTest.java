@@ -86,7 +86,7 @@ class ChatApiControllerTest {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("page", "-1");
         MockHttpServletResponse res = mockMvc.perform(
-                                               MockMvcRequestBuilders.get("/api/v1/chats")
+                                               MockMvcRequestBuilders.get("/api/v1/chats/topic1")
                                                                      .params(params))
                                                                      .andExpect(status().is4xxClientError())
                                                                      .andReturn().getResponse();
