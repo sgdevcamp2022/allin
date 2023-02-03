@@ -11,6 +11,7 @@ public class MongoTestContainerConfig implements BeforeAllCallback {
   private static final String MONGO_IMAGE = "mongo:5.0.14";
 
   private static final int MONGO_PORT = 27017;
+  private static final String DATABASE = "chat";
 
   private MongoDBContainer mongoDB;
 
@@ -29,7 +30,7 @@ public class MongoTestContainerConfig implements BeforeAllCallback {
     System.setProperty("spring.data.mongodb.host", mongoDB.getHost());
     System.setProperty("spring.data.mongodb.port", String.valueOf(mongoDB.getMappedPort(MONGO_PORT
     )));
-
+    System.setProperty("spring.data.mongodb.database", DATABASE);
   }
 
   private boolean isNestedClass(Class<?> currentClass) {

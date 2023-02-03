@@ -30,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 
-@AutoConfigureDataMongo
 @WebMvcTest(controllers = ChatApiController.class)
 class ChatApiControllerTest {
 
