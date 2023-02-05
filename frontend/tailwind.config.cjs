@@ -7,6 +7,7 @@ module.exports = {
       intacitve: '#B790E9',
       border: '#DCDCE7',
       hidden: '#F5F6F8',
+      warning: '#FFEFF2',
       mainText: '#090909',
       mainTextWhite: '#D0D0D0',
       subText: '#424242',

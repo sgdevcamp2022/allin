@@ -1,21 +1,23 @@
 import { atom } from 'recoil'
 
-export const signUpIdTextState = atom({
+const signUpIdTextState = atom({
   key: 'signUpIdTextState',
   default: '',
 })
 
-export const signUpPwTextState = atom({
+const signUpPwTextState = atom({
   key: 'signUpPwTextState',
   default: '',
 })
 
-export const signUpCheckPwTextState = atom({
+const signUpCheckPwTextState = atom({
   key: 'signUpCheckPwTextState',
   default: '',
 })
 
-export const signUpCheckEmailNumberState = atom({
+const signUpCheckEmailNumberState = atom({
   key: 'signUpCheckEmailNumberState',
   default: '',
 })
+
+export { signUpIdTextState, signUpPwTextState, signUpCheckPwTextState, signUpCheckEmailNumberState }

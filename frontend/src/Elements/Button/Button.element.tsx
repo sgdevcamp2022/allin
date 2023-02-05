@@ -23,7 +23,7 @@ const getClassNameByType = (type: ButtonType): string => {
 }
 
 const getClassNameBySize = (type: ButtonSizeType): string => {
-  // TODO: make this
+  // TODO: button make this
   switch (type) {
     case 'lg':
       return ''

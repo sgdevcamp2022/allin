@@ -7,12 +7,14 @@ type InputElementType = {
   className?: string
   placeholder?: string
   type?: InputType
+  disabled?: boolean
 }
 
 const InputElement = ({
   textState,
   className = '',
   placeholder = '',
+  disabled = false,
   type = 'text',
 }: InputElementType) => {
   const [text, setText] = useRecoilState(textState)
@@ -28,6 +30,7 @@ const InputElement = ({
       value={text}
       onChange={onChange}
       placeholder={placeholder}
+      disabled={disabled}
     />
   )
 }

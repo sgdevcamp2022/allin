@@ -1,8 +1,8 @@
 import { useRecoilValue } from 'recoil'
-import { userStatusBooleanState } from '../../Atoms/Sign/Status.atom'
+import { signStatusBooleanState } from '../../Atoms/Sign/SignStatus.atom'
 
 const SignInButtonElement = () => {
-  const userStatus = useRecoilValue(userStatusBooleanState)
+  const userStatus = useRecoilValue(signStatusBooleanState)
 
   const goSignIn = () => {
     location.href = '/sign-in'
@@ -12,7 +12,7 @@ const SignInButtonElement = () => {
     ? 'bg-hidden text-subText border-border'
     : 'bg-point text-white border-point'
   const loginButtonClassNameByUserStatus =
-    'text-xs px-8 py-2 rounded border-[1px] ' + loginButtonColorByStatus
+    'text-xs w-28 py-2 rounded border-[1px] ' + loginButtonColorByStatus
 
   return (
     <button onClick={goSignIn} className={loginButtonClassNameByUserStatus}>
