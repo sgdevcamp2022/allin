@@ -14,7 +14,6 @@ import com.All_IN.manager.service.room.dto.RoomInfoResponse;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
 import com.All_IN.manager.service.room.exception.RoomServiceValidateException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,19 +39,6 @@ public class RoomService {
         repository.save(room);
 
         roomInfoRepository.save(RoomInfo.of(room, roomInfoDTO));
-    }
-
-    @Profile("test")
-    @Transactional
-    public void clear_all() {
-        repository.deleteAll();
-        roomInfoRepository.deleteAll();
-    }
-
-    @Profile("test")
-    @Transactional
-    public void clear_room_info() {
-        roomInfoRepository.deleteAll();
     }
 
     @Transactional

@@ -13,7 +13,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="manager.main" target="11" />
       <module name="untitled" target="11" />
       <module name="untitled_main" target="11" />
       <module name="untitled_test" target="11" />

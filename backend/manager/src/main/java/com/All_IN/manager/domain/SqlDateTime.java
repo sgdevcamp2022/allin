@@ -10,8 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @UtilityClass
 public class SqlDateTime {
 
-    @Embeddable
     @Getter
+    @Embeddable
     public static class All {
 
         @DateTimeFormat(pattern = "yyy-MM-dd 'T' HH::mm")
@@ -43,6 +43,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class createAt {
 
@@ -56,6 +57,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class modifiedAt {
 
@@ -74,6 +76,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class deleteAt {
 
@@ -92,6 +95,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class createAndModifiedAt {
 
@@ -115,6 +119,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class createAndDeleteAt {
 
@@ -138,6 +143,7 @@ public class SqlDateTime {
         }
     }
 
+    @Getter
     @Embeddable
     public static class modifiedAndDeleteAt {
 
