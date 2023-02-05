@@ -32,8 +32,8 @@ class BroadCastServiceTest {
     @Autowired
     BroadCastRepository broadCastRepository;
 
-    Long memberId = 1L;
-    Long publisherId = 1L;
+    static Long memberId = 1L;
+    static Long publisherId = 1L;
 
     String key;
     String password;
