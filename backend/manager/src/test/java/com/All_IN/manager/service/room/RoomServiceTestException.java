@@ -1,5 +1,8 @@
 package com.All_IN.manager.service.room;
 
+import com.All_IN.manager.domain.publisher.PublisherRepository;
+import com.All_IN.manager.domain.room.RoomInfoRepository;
+import com.All_IN.manager.domain.room.RoomRepository;
 import com.All_IN.manager.domain.room.ScheduleVO;
 import com.All_IN.manager.service.publisher.PublisherService;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
@@ -26,6 +29,15 @@ public class RoomServiceTestException {
     @Autowired
     PublisherService publisherService;
 
+    @Autowired
+    PublisherRepository publisherRepository;
+
+    @Autowired
+    RoomRepository roomRepository;
+
+    @Autowired
+    RoomInfoRepository roomInfoRepository;
+
     private static Long roomId = 1L;
     private static Long memberId = 1L;
 
@@ -48,11 +60,23 @@ public class RoomServiceTestException {
 
     @AfterEach
     void clear() {
-        publisherService.clear();
+        clearData();
         memberId++;
-
-        roomService.clear_all();
         roomId++;
+    }
+
+    private void clearData() {
+        clearPublisherData();
+        clearRoomData();
+    }
+
+    private void clearPublisherData() {
+        publisherRepository.deleteAll();
+    }
+
+    private void clearRoomData() {
+        roomRepository.deleteAll();
+        roomInfoRepository.deleteAll();
     }
 
     @Test
@@ -81,7 +105,7 @@ public class RoomServiceTestException {
     @Test
     void editRoomInfo_NO_MATCH_ROOM() {
         //Given
-        roomService.clear_all();
+        clearRoomData();
 
         //When
         Assertions.assertThatThrownBy(() -> roomService.editRoomInfo(roomId, null))
@@ -94,7 +118,7 @@ public class RoomServiceTestException {
     @Test
     void editRoomInfo_NO_ROOM_INFORMATION() {
         //Given
-        roomService.clear_room_info();
+        roomInfoRepository.deleteAll();
 
         //When
         Assertions.assertThatThrownBy(() -> roomService.editRoomInfo(roomId, null))
@@ -107,7 +131,7 @@ public class RoomServiceTestException {
     @Test
     void browseRoomInfo_NO_MATCH_ROOM() {
         //Given
-        roomService.clear_all();
+        clearRoomData();
 
         //When
         Assertions.assertThatThrownBy(() -> roomService.browseRoomInfo(roomId))
@@ -120,7 +144,7 @@ public class RoomServiceTestException {
     @Test
     void browseRoomInfo_NO_MATCH_ROOM_INFO() {
         //Given
-        roomService.clear_room_info();
+        roomInfoRepository.deleteAll();
 
         //When
         Assertions.assertThatThrownBy(() -> roomService.browseRoomInfo(roomId))

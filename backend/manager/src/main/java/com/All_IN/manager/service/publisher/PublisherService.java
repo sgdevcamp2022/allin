@@ -8,7 +8,6 @@ import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceValidateException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +27,6 @@ public class PublisherService {
         }
 
         repository.save(new Publisher(memberId));
-    }
-
-    @Profile(value = "test")
-    @Transactional
-    public void clear() {
-        repository.deleteAll();
     }
 
     public String getKey(Long publisherId) {

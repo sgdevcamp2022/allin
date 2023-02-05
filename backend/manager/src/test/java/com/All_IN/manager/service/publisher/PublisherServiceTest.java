@@ -1,5 +1,6 @@
 package com.All_IN.manager.service.publisher;
 
+import com.All_IN.manager.domain.publisher.PublisherRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -19,25 +20,30 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 class PublisherServiceTest {
 
     @Autowired
-    private PublisherService publisherService;
+    PublisherService publisherService;
 
     @Mock
-    private PublisherService mockPublisherService;
+    PublisherService mockPublisherService;
 
-    private static Long publisherId = 1L;
+    @Autowired
+    PublisherRepository publisherRepository;
+
+    static Long publisherId = 1L;
 
     @BeforeEach
     void save_data() {
         publisherService.save(999L);
-        System.out.println("before publisherId = " + publisherId);
     }
 
 
     @AfterEach
     void clear() {
-        publisherService.clear();
+        clearData();
         publisherId++;
-        System.out.println("after publisherId = " + publisherId);
+    }
+
+    private void clearData() {
+        publisherRepository.deleteAll();
     }
 
     @Test
