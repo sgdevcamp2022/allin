@@ -1,6 +1,5 @@
 package com.All_IN.manager.domain.broadCast;
 
-import com.All_IN.manager.domain.SqlDateTime;
 import com.All_IN.manager.domain.SqlDateTime.createAndModifiedAt;
 import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
@@ -52,7 +51,7 @@ public class BroadCast {
     }
 
     public void end() {
-        this.state = BroadCastState.END;
+        this.state = state.end();
         this.sqlDateTime = sqlDateTime.modify();
     }
 }

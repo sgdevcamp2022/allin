@@ -10,4 +10,8 @@ public enum BroadCastState {
     }
 
     private String state;
+
+    public BroadCastState end() {
+        return END;
+    }
 }
