@@ -1,6 +1,8 @@
 package com.All_IN.manager.service.braodCast;
 
 
+import com.All_IN.manager.domain.broadCast.BroadCastRepository;
+import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.service.publisher.PublisherService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -23,14 +25,21 @@ class BroadCastServiceTest {
     @Autowired
     PublisherService publisherService;
 
-    private static Long memberId = 1L;
-    private static Long publisherId = 1L;
 
-    private static String key;
-    private static String password;
+    @Autowired
+    PublisherRepository publisherRepository;
+
+    @Autowired
+    BroadCastRepository broadCastRepository;
+
+    Long memberId = 1L;
+    Long publisherId = 1L;
+
+    String key;
+    String password;
 
     @BeforeEach
-    public void data() {
+    void data() {
         publisherService.save(memberId);
 
         key = publisherService.getKey(publisherId);
@@ -40,12 +49,16 @@ class BroadCastServiceTest {
     }
 
     @AfterEach
-    public void clear() {
+    void clear() {
         publisherId++;
         memberId++;
 
-        publisherService.clear();
-        broadCastService.clear();
+        clearData();
+    }
+
+    private void clearData() {
+        publisherRepository.deleteAll();
+        broadCastRepository.deleteAll();
     }
 
     @Test

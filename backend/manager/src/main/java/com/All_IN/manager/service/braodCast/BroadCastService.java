@@ -14,7 +14,6 @@ import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceValidateException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +27,6 @@ public class BroadCastService {
     private final PublisherRepository fkRepository;
     private final PublisherPasswordRepository publisherPasswordRepository;
 
-    @Profile("test")
-    @Transactional
-    public void clear() {
-        repository.deleteAll();
-    }
 
     @Transactional
     public void startLive(String key, String password) {

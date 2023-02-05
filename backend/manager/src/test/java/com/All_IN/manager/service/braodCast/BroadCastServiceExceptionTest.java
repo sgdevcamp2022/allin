@@ -1,5 +1,7 @@
 package com.All_IN.manager.service.braodCast;
 
+import com.All_IN.manager.domain.broadCast.BroadCastRepository;
+import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.service.braodCast.exception.BroadCastServiceException;
 import com.All_IN.manager.service.publisher.PublisherService;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
@@ -23,14 +25,20 @@ class BroadCastServiceExceptionTest {
     @Autowired
     PublisherService publisherService;
 
-    private static Long memberId = 1L;
-    private static Long publisherId = 1L;
+    @Autowired
+    PublisherRepository publisherRepository;
 
-    private static String key;
-    private static String password;
+    @Autowired
+    BroadCastRepository broadCastRepository;
+
+    static Long memberId = 1L;
+    static Long publisherId = 1L;
+
+    static String key;
+    static String password;
 
     @BeforeEach
-    public void data() {
+    void data() {
         publisherService.save(memberId);
 
         key = publisherService.getKey(publisherId);
@@ -40,12 +48,16 @@ class BroadCastServiceExceptionTest {
     }
 
     @AfterEach
-    public void clear() {
+    void clear() {
         publisherId++;
         memberId++;
 
-        publisherService.clear();
-        broadCastService.clear();
+        clearData();
+    }
+
+    private void clearData() {
+        publisherRepository.deleteAll();
+        broadCastRepository.deleteAll();
     }
 
     @Test

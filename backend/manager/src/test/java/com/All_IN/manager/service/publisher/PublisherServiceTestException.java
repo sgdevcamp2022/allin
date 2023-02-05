@@ -1,5 +1,6 @@
 package com.All_IN.manager.service.publisher;
 
+import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.service.publisher.PublisherService;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +19,12 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 class PublisherServiceTestException {
 
     @Autowired
-    private PublisherService publisherService;
+    PublisherService publisherService;
 
-    private static Long publisherId = 1L;
+    @Autowired
+    PublisherRepository publisherRepository;
+
+    static Long publisherId = 1L;
 
     @BeforeEach
     void save_data() {
@@ -30,8 +34,12 @@ class PublisherServiceTestException {
 
     @AfterEach
     void clear() {
-        publisherService.clear();
+        clearData();
         publisherId++;
+    }
+
+    private void clearData() {
+        publisherRepository.deleteAll();
     }
 
     @Test
