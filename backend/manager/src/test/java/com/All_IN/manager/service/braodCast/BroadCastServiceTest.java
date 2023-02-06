@@ -2,8 +2,10 @@ package com.All_IN.manager.service.braodCast;
 
 
 import com.All_IN.manager.domain.broadCast.BroadCastRepository;
+import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.service.publisher.PublisherService;
+import com.All_IN.manager.service.publisher.PublisherValidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
@@ -25,6 +27,8 @@ class BroadCastServiceTest {
     @Autowired
     PublisherService publisherService;
 
+    @Autowired
+    PublisherValidateService publisherValidateService;
 
     @Autowired
     PublisherRepository publisherRepository;
@@ -32,11 +36,15 @@ class BroadCastServiceTest {
     @Autowired
     BroadCastRepository broadCastRepository;
 
+
     static Long memberId = 1L;
+
     static Long publisherId = 1L;
 
-    String key;
-    String password;
+    static String key;
+
+    static String password;
+
 
     @BeforeEach
     void data() {
@@ -45,15 +53,17 @@ class BroadCastServiceTest {
         key = publisherService.getKey(publisherId);
         password = publisherService.generatePassword(publisherId);
 
-        broadCastService.startLive(key, password);
+        Publisher publisher = publisherValidateService.validatePublisher(key, password);
+
+        broadCastService.startLive(publisher);
     }
 
     @AfterEach
     void clear() {
+        clearData();
+
         publisherId++;
         memberId++;
-
-        clearData();
     }
 
     private void clearData() {
@@ -75,9 +85,10 @@ class BroadCastServiceTest {
     @Test
     void endLive() {
         //Given
+        Publisher publisher = publisherValidateService.validatePublisher(key);
 
         //When
-        broadCastService.endLive(key);
+        broadCastService.endLive(publisher);
         int onLive = broadCastService.liveList().getLiveBroadCasts().size();
 
         //Then
@@ -90,8 +101,9 @@ class BroadCastServiceTest {
         Long newPublisherId = newPublisher();
         String newKey = publisherService.getKey(newPublisherId);
         String newPassword = publisherService.generatePassword(newPublisherId);
+        Publisher publisher = publisherValidateService.validatePublisher(newKey, newPassword);
 
-        broadCastService.startLive(newKey, newPassword);
+        broadCastService.startLive(publisher);
 
         //When
         int onLive = broadCastService.liveList().getLiveBroadCasts().size();

@@ -1,11 +1,14 @@
 package com.All_IN.manager.service.room;
 
 
+import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
 import com.All_IN.manager.domain.room.ScheduleVO;
 import com.All_IN.manager.service.publisher.PublisherService;
+import com.All_IN.manager.service.publisher.PublisherValidateIdType;
+import com.All_IN.manager.service.publisher.PublisherValidateService;
 import com.All_IN.manager.service.room.dto.RoomInfoDTO;
 import com.All_IN.manager.service.room.dto.RoomInfoResponse;
 import java.time.LocalTime;
@@ -40,18 +43,23 @@ class RoomServiceTest {
     PublisherRepository publisherRepository;
 
     @Autowired
+    PublisherValidateService publisherValidateService;
+
+    @Autowired
     RoomRepository roomRepository;
 
     @Autowired
     RoomInfoRepository roomInfoRepository;
 
 
-    private static Long roomId = 1L;
-    private static Long memberId = 1L;
+    static Long roomId = 1L;
 
-    private static RoomInfoDTO roomInfoDTO = setRoomInfoDTO();
+    static Long memberId = 1L;
 
-    private static RoomInfoDTO setRoomInfoDTO() {
+    static RoomInfoDTO roomInfoDTO = setRoomInfoDTO();
+
+
+    static RoomInfoDTO setRoomInfoDTO() {
         RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
         roomInfoDTO.setTitle("test title");
         roomInfoDTO.setDescription("test description");
@@ -59,16 +67,20 @@ class RoomServiceTest {
         return roomInfoDTO;
     }
 
+
     @BeforeEach
-    public void save_data() {
+    void data() {
         publisherService.save(memberId);
 
-        roomService.save(memberId, roomInfoDTO);
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+
+        roomService.save(publisher, roomInfoDTO);
     }
 
     @AfterEach
     void clear() {
         clearData();
+
         memberId++;
         roomId++;
     }
@@ -99,11 +111,13 @@ class RoomServiceTest {
         roomInfoDTO.setDescription("test description");
         roomInfoDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
 
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+
         // When
-        mockRoomService.save(memberId, roomInfoDTO);
+        mockRoomService.save(publisher, roomInfoDTO);
 
         // Then
-        Mockito.verify(mockRoomService, Mockito.times(1)).save(memberId, roomInfoDTO);
+        Mockito.verify(mockRoomService, Mockito.times(1)).save(publisher, roomInfoDTO);
     }
 
     @Test
@@ -139,4 +153,5 @@ class RoomServiceTest {
         Assertions.assertThat(roomInfoResponse.getStartTime().toString()).isEqualTo(roomInfoDTO.getScheduleVO().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         Assertions.assertThat(roomInfoResponse.getEndTime().toString()).contains(roomInfoDTO.getScheduleVO().getEndTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
+
 }

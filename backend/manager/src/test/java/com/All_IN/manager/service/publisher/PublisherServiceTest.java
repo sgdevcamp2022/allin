@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +27,27 @@ class PublisherServiceTest {
     @Autowired
     PublisherRepository publisherRepository;
 
+    @Autowired
+    PublisherValidateService publisherValidateService;
+
+
     static Long publisherId = 1L;
 
-    @BeforeEach
-    void save_data() {
-        publisherService.save(999L);
-    }
+    static Long memberId = 1L;
 
+
+
+    @BeforeEach
+    void data() {
+        publisherService.save(memberId);
+    }
 
     @AfterEach
     void clear() {
         clearData();
+
         publisherId++;
+        memberId++;
     }
 
     private void clearData() {
@@ -52,10 +60,10 @@ class PublisherServiceTest {
         // Given
 
         // When
-        mockPublisherService.save(1L);
+        mockPublisherService.save(memberId);
 
         // Then
-        Mockito.verify(mockPublisherService, Mockito.times(1)).save(1L);
+        Mockito.verify(mockPublisherService, Mockito.times(1)).save(memberId);
 
     }
 
@@ -122,7 +130,7 @@ class PublisherServiceTest {
         String key = publisherService.getKey(publisherId);
 
         // When
-        publisherService.validatePublisher(key, password);
+        publisherValidateService.validatePublisher(key, password);
 
         // Then
     }
