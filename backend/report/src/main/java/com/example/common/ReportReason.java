@@ -14,7 +14,7 @@ public enum ReportReason {
   HARM_TO_ADOLESCENTS("청소년에게 유해한 내용입니다."),
   SWEAR_WORD_OR_LIFE_THREAT_OR_HATE_EXPRESSION_OR_DISCRIMINATORY_EXPRESSION(
     "욕설/생명경시/혐오/차별적 표현입니다."),
-  PERSONAL_INFORMATION_DISCLOSURE("개인정 노출 게시물입니다"),
+  PERSONAL_INFORMATION_DISCLOSURE("개인정 노출 게시물입니다."),
   UNPLEASANT_EXPRESSION("불쾌한 표현이 있습니다.");
 
   private final String reason;
