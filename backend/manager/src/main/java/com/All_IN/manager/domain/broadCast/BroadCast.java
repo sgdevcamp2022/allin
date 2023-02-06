@@ -1,6 +1,5 @@
 package com.All_IN.manager.domain.broadCast;
 
-import com.All_IN.manager.domain.SqlDateTime;
 import com.All_IN.manager.domain.SqlDateTime.createAndModifiedAt;
 import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
@@ -41,6 +40,7 @@ public class BroadCast {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
+
     private BroadCast(Publisher publisher) {
         this.state = BroadCastState.LIVE;
         this.sqlDateTime = new createAndModifiedAt();
@@ -51,8 +51,10 @@ public class BroadCast {
         return new BroadCast(publisher);
     }
 
+
     public void end() {
-        this.state = BroadCastState.END;
-        this.sqlDateTime = sqlDateTime.modify();
+        state = BroadCastState.end();
+        sqlDateTime = sqlDateTime.modify();
     }
+
 }
