@@ -21,8 +21,10 @@ public class ScheduleVO {
     @Column(name = "room_info_end_time")
     private LocalTime endTime;
 
+
     public ScheduleVO(LocalTime startTime, LocalTime endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
+
 }

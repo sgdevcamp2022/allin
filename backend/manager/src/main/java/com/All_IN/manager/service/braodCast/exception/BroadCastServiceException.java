@@ -9,10 +9,13 @@ public enum BroadCastServiceException {
     private String message;
     private String code;
 
+
     BroadCastServiceException(String code, String message) {
         this.code = code;
         this.message = message;
     }
+
+
 
     public String getMessage() {
         return message;
@@ -21,4 +24,5 @@ public enum BroadCastServiceException {
     public String getCode() {
         return code;
     }
+
 }

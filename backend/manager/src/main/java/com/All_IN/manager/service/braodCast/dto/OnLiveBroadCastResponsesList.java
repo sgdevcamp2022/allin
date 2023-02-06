@@ -14,6 +14,7 @@ public class OnLiveBroadCastResponsesList {
         this.liveBroadCasts = liveBroadCasts;
     }
 
+
     public static OnLiveBroadCastResponsesList of(List<BroadCast> liveBroadCastList) {
         List<BroadCastResponseDTO> broadCastResponseDTOList = liveBroadCastList
             .stream()

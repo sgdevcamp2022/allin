@@ -11,10 +11,12 @@ public enum RoomServiceException {
     private String message;
     private String code;
 
+
     RoomServiceException(String code, String message) {
         this.code = code;
         this.message = message;
     }
+
 
     public String getMessage() {
         return message;
@@ -23,4 +25,5 @@ public enum RoomServiceException {
     public String getCode() {
         return code;
     }
+
 }

@@ -47,6 +47,7 @@ public class RoomInfo {
     @Embedded
     private SqlDateTime.modifiedAndDeleteAt sqlDatetime;
 
+
     private RoomInfo(Room room, String title, String description, ScheduleVO scheduleVO) {
         this.room = room;
         this.title = title;
@@ -64,11 +65,12 @@ public class RoomInfo {
         );
     }
 
+
     public void updateInfo(RoomInfoDTO roomInfoDTO) {
-        this.title = roomInfoDTO.getTitle();
-        this.description = roomInfoDTO.getDescription();
-        this.scheduleVO = roomInfoDTO.getScheduleVO();
-        this.sqlDatetime = sqlDatetime.modify();
+        title = roomInfoDTO.getTitle();
+        description = roomInfoDTO.getDescription();
+        scheduleVO = roomInfoDTO.getScheduleVO();
+        sqlDatetime = sqlDatetime.modify();
     }
 
 }

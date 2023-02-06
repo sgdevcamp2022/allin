@@ -42,6 +42,7 @@ public class PublisherPassword {
     @Embedded
     private SqlDateTime.createAt sqlDateTime;
 
+
     public PublisherPassword(Publisher publisher) {
         this.publisher = publisher;
         this.value = UUID.randomUUID().toString();
@@ -49,11 +50,13 @@ public class PublisherPassword {
         this.sqlDateTime = new SqlDateTime.createAt();
     }
 
+
     public void use() {
-        this.used = true;
+        used = true;
     }
 
-    public boolean checkPassword(String publisher_password) {
-        return this.value.equals(publisher_password);
+    public boolean checkPassword(String publisherPassword) {
+        return value.equals(publisherPassword);
     }
+
 }

@@ -10,8 +10,10 @@ public class BroadCastResponseDTO {
     private Long broadCastId;
     private LocalDateTime startTime;
 
+
     public BroadCastResponseDTO(BroadCast broadCast) {
         this.broadCastId = broadCast.getId();
         this.startTime = broadCast.getSqlDateTime().getCreateAt();
     }
+
 }
