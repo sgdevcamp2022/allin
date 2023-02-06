@@ -4,7 +4,8 @@ import com.All_IN.manager.domain.broadCast.BroadCast;
 import com.All_IN.manager.domain.broadCast.BroadCastRepository;
 import com.All_IN.manager.domain.broadCast.BroadCastState;
 import com.All_IN.manager.domain.publisher.Publisher;
-import com.All_IN.manager.service.braodCast.dto.OnLiveBroadCastResponsesList;
+import com.All_IN.manager.mapper.broadCast.BroadCastMapper;
+import com.All_IN.manager.mapper.broadCast.OnLiveBroadCastListDTO;
 import com.All_IN.manager.service.braodCast.exception.BroadCastServiceException;
 import com.All_IN.manager.service.braodCast.exception.BroadCastServiceValidateException;
 import java.util.List;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class BroadCastService {
 
     private final BroadCastRepository repository;
+
+    private final BroadCastMapper mapper;
 
 
     @Transactional
@@ -38,10 +41,10 @@ public class BroadCastService {
         liveBroadCast.end();
     }
 
-    public OnLiveBroadCastResponsesList liveList() {
+    public OnLiveBroadCastListDTO liveList() {
         List<BroadCast> onLiveBroadCastList = repository.findAllByState(BroadCastState.LIVE);
 
-        return OnLiveBroadCastResponsesList.of(onLiveBroadCastList);
+        return mapper.of(onLiveBroadCastList);
     }
 
 }
