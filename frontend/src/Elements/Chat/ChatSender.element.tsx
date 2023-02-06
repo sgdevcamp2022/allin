@@ -35,9 +35,7 @@ const ChatSenderElement = () => {
   return (
     <div
       className={
-        bgColor +
-        ' w-full px-5 py-3 flex items-center rounded-full border-[1px] my-4 ' +
-        borderColor
+        bgColor + ' w-full px-5 py-3 flex items-center rounded-full border-[1px] ' + borderColor
       }
     >
       <InputElement
