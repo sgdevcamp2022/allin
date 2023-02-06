@@ -1,14 +1,11 @@
 package com.All_IN.manager.service.room;
 
 import com.All_IN.manager.domain.publisher.Publisher;
-import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.domain.room.Room;
 import com.All_IN.manager.domain.room.RoomInfo;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
 import com.All_IN.manager.service.ResponseMapper;
-import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
-import com.All_IN.manager.service.publisher.exception.PublisherServiceValidateException;
 import com.All_IN.manager.service.room.dto.RoomInfoDTO;
 import com.All_IN.manager.service.room.dto.RoomInfoResponse;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
@@ -24,14 +21,10 @@ public class RoomService {
 
     private final RoomRepository repository;
     private final RoomInfoRepository roomInfoRepository;
-    private final PublisherRepository fkRepository;
+
 
     @Transactional
-    public void save(Long memberId, RoomInfoDTO roomInfoDTO) {
-        Publisher publisher = fkRepository.findByMemberId(memberId)
-            .orElseThrow(
-                () -> new PublisherServiceValidateException(PublisherServiceException.NO_SUCH_PUBLISHER));
-
+    public void save(Publisher publisher, RoomInfoDTO roomInfoDTO) {
         if (repository.existsByPublisher(publisher)) {
             throw new RoomServiceValidateException(RoomServiceException.ALREADY_HAVE_ROOM);
         }
