@@ -59,7 +59,7 @@ class TopicServiceImplTest {
                        .addMessageListener(any(MessageListener.class), any(
                          ChannelTopic.class));
         given(topicRepository.save(any(Topic.class)))
-          .willReturn(Topic.from(id, LocalDateTime.now()));
+          .willReturn(Topic.of(id, LocalDateTime.now()));
 
         // when
         topicService.create(request);
@@ -86,7 +86,7 @@ class TopicServiceImplTest {
         // given
         String id = "topic1";
         given(topicRepository.findById(anyString()))
-          .willReturn(Optional.of(Topic.from(id, LocalDateTime.now())));
+          .willReturn(Optional.of(Topic.of(id, LocalDateTime.now())));
         // when
         Topic topic = topicService.findById(id);
 

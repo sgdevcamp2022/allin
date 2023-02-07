@@ -19,7 +19,7 @@ public class Topic {
   @NotNull
   private final LocalDateTime expireAt;
 
-  public static Topic from(String id, LocalDateTime expireAt) {
+  public static Topic of(String id, LocalDateTime expireAt) {
     return Topic.builder()
                 .id(id)
                 .expireAt(expireAt)
