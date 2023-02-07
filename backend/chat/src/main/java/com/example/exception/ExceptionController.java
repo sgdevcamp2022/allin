@@ -2,7 +2,7 @@ package com.example.exception;
 
 
 import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
-import static com.example.exception.ErrorMessage.REQUEST_DATA_NOT_FOUND;
+import static com.example.exception.ErrorMessage.REQUEST_DATA_NOT_VALID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,8 +22,8 @@ public class ExceptionController {
   public ExceptionResponse handleBindException(BindException e) {
     log.warn("handleBindException: {}", e);
     return ExceptionResponse.of(calculateCode(HttpStatus.BAD_REQUEST,
-        REQUEST_DATA_NOT_FOUND.getCode()),
-      e.getClass().getName(), REQUEST_DATA_NOT_FOUND.getMessage());
+        REQUEST_DATA_NOT_VALID.getCode()),
+      e.getClass().getName(), REQUEST_DATA_NOT_VALID.getMessage());
   }
 
   @ExceptionHandler(IllegalArgumentException.class)

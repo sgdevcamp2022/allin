@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.Mockito.verify;
 
+import com.example.dto.TopicCreateRequest;
 import com.example.domain.Topic;
 import com.example.repository.TopicRepository;
 import com.example.service.RedisSubscriber;
@@ -53,6 +54,7 @@ class TopicServiceImplTest {
       void ItSavesTopic() {
         // given
         String id = "topic1";
+        TopicCreateRequest request = new TopicCreateRequest(id, LocalDateTime.now());
         willDoNothing().given(redisMessageListenerContainer)
                        .addMessageListener(any(MessageListener.class), any(
                          ChannelTopic.class));
@@ -60,7 +62,7 @@ class TopicServiceImplTest {
           .willReturn(Topic.from(id, LocalDateTime.now()));
 
         // when
-        topicService.create(id, LocalDateTime.now());
+        topicService.create(request);
 
         // then
         verify(redisMessageListenerContainer).addMessageListener(any(MessageListener.class), any(

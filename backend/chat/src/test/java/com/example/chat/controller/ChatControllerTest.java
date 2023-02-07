@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import com.example.chat.MongoTestContainerConfig;
 import com.example.chat.RedisTestContainerConfig;
 import com.example.controller.ChatController;
+import com.example.dto.TopicCreateRequest;
 import com.example.domain.Message;
 import com.example.dto.ChatMessageRequest;
 import com.example.dto.ChatMessageResponse;
@@ -93,7 +94,9 @@ class ChatControllerTest {
         // given
         String topicId = "topicId";
         String subUri = String.format("/topic/%s", topicId);
-        topicService.create(topicId, LocalDateTime.now());
+        TopicCreateRequest request = new TopicCreateRequest(topicId,
+          LocalDateTime.now());
+        topicService.create(request);
 
         ChatMessageRequest message = ChatMessageRequest.of("user1", "hi~");
         BlockingQueue<ChatMessageResponse> queue = new ArrayBlockingQueue<>(1);

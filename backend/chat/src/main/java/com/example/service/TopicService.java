@@ -1,11 +1,11 @@
 package com.example.service;
 
+import com.example.dto.TopicCreateRequest;
 import com.example.domain.Topic;
-import java.time.LocalDateTime;
 
 public interface TopicService {
 
-  void create(String id, LocalDateTime expireAt);
+  void create(TopicCreateRequest request);
 
   Topic findById(String id);
 }
