@@ -1,0 +1,8 @@
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: {KAFKA_PRODUCER_SERVER}
+
+media:
+  base:
+    path: {MEDIA_BASE_PATH}
