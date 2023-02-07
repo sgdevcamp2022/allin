@@ -1,6 +1,6 @@
 package com.example.service;
 
-import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
+import static com.example.exception.ExceptionMessage.NONEXISTENT_TOPIC;
 
 import com.example.dto.TopicCreateRequest;
 import com.example.domain.Topic;
