@@ -4,6 +4,7 @@ import com.All_IN.media.live.dto.LiveDTO;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,7 @@ public class LiveSender {
 
     private final Integer RENEWAL_TIME = 3;
 
+    private final Integer SHORT_RENEWAL_TIME = 1;
 
 
     private final KafkaTemplate<String, LiveDTO> liveKafkaTemplate;
@@ -80,13 +82,22 @@ public class LiveSender {
     }
 
     @Async
-    public void broadCastLiveIndex(String key) throws IOException {
+    public void broadCastLiveIndex(String key) throws IOException, InterruptedException {
         String m3U8 = getM3U8(BASE_URL + DASH + HLS + DASH + key + DOT_M3U8);
         kafkaTemplate.send(TOPIC_LIVE_INDEX, key, m3U8);
     }
 
-    private String getM3U8(String url) throws IOException {
-        byte[] m3u8 = Files.readAllBytes(Paths.get(url));
+    private String getM3U8(String url) throws IOException, InterruptedException {
+        byte[] m3u8 = null;
+
+        while (m3u8 == null) {
+            try {
+                m3u8 = Files.readAllBytes(Paths.get(url));
+            } catch (NoSuchFileException noSuchFileException) {
+                TimeUnit.SECONDS.sleep(SHORT_RENEWAL_TIME);
+            }
+        }
+
         return new String(m3u8, StandardCharsets.UTF_8);
     }
 
