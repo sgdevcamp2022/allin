@@ -1,7 +1,6 @@
 package com.All_IN.manager.service.publisher;
 
 import com.All_IN.manager.domain.publisher.PublisherRepository;
-import com.All_IN.manager.service.publisher.PublisherService;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
@@ -16,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext.ClassMode;
 @Slf4j
 @SpringBootTest
 @DirtiesContext(classMode = ClassMode.BEFORE_CLASS)
-class PublisherServiceTestException {
+class PublisherServiceExceptionTest {
 
     @Autowired
     PublisherService publisherService;
@@ -24,17 +23,22 @@ class PublisherServiceTestException {
     @Autowired
     PublisherRepository publisherRepository;
 
+    @Autowired
+    PublisherValidateService publisherValidateService;
+
+
     static Long publisherId = 1L;
 
+
     @BeforeEach
-    void save_data() {
+    void data() {
         publisherService.save(1L);
     }
-
 
     @AfterEach
     void clear() {
         clearData();
+
         publisherId++;
     }
 
@@ -161,7 +165,7 @@ class PublisherServiceTestException {
         // When
 
         // Then
-        Assertions.assertThatThrownBy(() -> publisherService.validatePublisher("key", "password"))
+        Assertions.assertThatThrownBy(() -> publisherValidateService.validatePublisher("key", "password"))
             .hasMessage(PublisherServiceException.NO_SUCH_PUBLISHER.getMessage());
     }
 
@@ -173,7 +177,7 @@ class PublisherServiceTestException {
         // When
 
         // Then
-        Assertions.assertThatThrownBy(() -> publisherService.validatePublisher(key, "password"))
+        Assertions.assertThatThrownBy(() -> publisherValidateService.validatePublisher(key, "password"))
             .hasMessage(PublisherServiceException.NO_PASSWORD.getMessage());
     }
 
@@ -186,7 +190,7 @@ class PublisherServiceTestException {
         // When
 
         // Then
-        Assertions.assertThatThrownBy(() -> publisherService.validatePublisher(key, "password"))
+        Assertions.assertThatThrownBy(() -> publisherValidateService.validatePublisher(key, "password"))
             .hasMessage(PublisherServiceException.NO_MATCH_PASSWORD.getMessage());
     }
 
@@ -212,4 +216,5 @@ class PublisherServiceTestException {
         Assertions.assertThatThrownBy(() -> publisherService.getKey(2L))
             .hasMessage(PublisherServiceException.NO_SUCH_PUBLISHER.getMessage());
     }
+
 }

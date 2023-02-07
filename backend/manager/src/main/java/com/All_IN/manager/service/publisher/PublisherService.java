@@ -6,7 +6,9 @@ import com.All_IN.manager.domain.publisher.PublisherPasswordRepository;
 import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
 import com.All_IN.manager.service.publisher.exception.PublisherServiceValidateException;
+import com.All_IN.manager.utils.Md5;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,10 @@ public class PublisherService {
     private final PublisherRepository repository;
     private final PublisherPasswordRepository publisherPasswordRepository;
 
+    private final PublisherValidateService validateService;
+
+    private final Md5 md5;
+
     @Transactional
     public void save(long memberId) {
         Optional<Publisher> byMemberId = repository.findByMemberId(memberId);
@@ -26,25 +32,22 @@ public class PublisherService {
             throw new PublisherServiceValidateException(PublisherServiceException.EXIST_PUBLISHER);
         }
 
-        repository.save(new Publisher(memberId));
+        String key = md5.encode(UUID.randomUUID().toString());
+
+        repository.save(new Publisher(memberId, key));
     }
 
     public String getKey(Long publisherId) {
-        Publisher publisher = repository.findById(publisherId)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
+        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
         return publisher.getKey();
     }
 
     @Transactional
     public String generatePassword(Long publisherId) {
-        Publisher publisher = repository.findById(publisherId)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
+        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
-        Optional<PublisherPassword> passwordByPublisher = publisherPasswordRepository.findByPublisher(
-            publisher);
+        Optional<PublisherPassword> passwordByPublisher = publisherPasswordRepository.findByPublisher(publisher);
         if (passwordByPublisher.isPresent()) {
             throw new PublisherServiceValidateException(
                 PublisherServiceException.ALREADY_GENERATE_PASSWORD);
@@ -58,63 +61,41 @@ public class PublisherService {
 
     @Transactional
     public void resetPassword(Long publisherId) {
-        Publisher publisher = repository.findById(publisherId)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
+        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
-        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(
-            publisher).orElseThrow(
-            () -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
+        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(publisher)
+            .orElseThrow(() -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
 
         publisherPassword.use();
 
-        // todo password 반환으로
     }
 
     public String generateURL(Long publisherId) {
-        Publisher publisher = repository.findById(publisherId)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
+        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
-        publisherPasswordRepository.findByPublisher(
-            publisher).orElseThrow(
-            () -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
+        publisherPasswordRepository.findByPublisher(publisher)
+            .orElseThrow(() -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
 
         return publisher.getKey() + "?pw=";
     }
 
-    public void validatePublisher(String key, String password) {
-        Publisher publisher = repository.findByKey(key)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
-
-        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(
-            publisher).orElseThrow(
-            () -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
-
-        if (!publisherPassword.checkPassword(password)) {
-            throw new PublisherServiceValidateException(
-                PublisherServiceException.NO_MATCH_PASSWORD);
-        }
-
-    }
-
     @Transactional
     public void usePassword(String password) {
-        PublisherPassword publisherPassword = publisherPasswordRepository.findByValue(
-            password).orElseThrow(
-            () -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_MATCH_PASSWORD));
+        PublisherPassword publisherPassword = publisherPasswordRepository.findByValue(password)
+            .orElseThrow(
+                () -> new PublisherServiceValidateException(
+                    PublisherServiceException.NO_MATCH_PASSWORD));
 
         publisherPassword.use();
     }
 
     @Transactional
     public void updateKey(Long publisherId) {
-        Publisher publisher = repository.findById(publisherId)
-            .orElseThrow(() -> new PublisherServiceValidateException(
-                PublisherServiceException.NO_SUCH_PUBLISHER));
+        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
-        publisher.updateKey();
+        String key = md5.encode(UUID.randomUUID().toString());
+
+        publisher.updateKey(key);
     }
+
 }

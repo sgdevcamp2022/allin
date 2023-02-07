@@ -40,6 +40,7 @@ public class BroadCast {
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
+
     private BroadCast(Publisher publisher) {
         this.state = BroadCastState.LIVE;
         this.sqlDateTime = new createAndModifiedAt();
@@ -50,8 +51,10 @@ public class BroadCast {
         return new BroadCast(publisher);
     }
 
+
     public void end() {
-        this.state = state.end();
-        this.sqlDateTime = sqlDateTime.modify();
+        state = BroadCastState.end();
+        sqlDateTime = sqlDateTime.modify();
     }
+
 }

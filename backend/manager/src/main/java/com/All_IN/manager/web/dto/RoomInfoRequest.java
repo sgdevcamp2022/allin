@@ -1,10 +1,10 @@
-package com.All_IN.manager.service.room.dto;
+package com.All_IN.manager.web.dto;
 
 import com.All_IN.manager.domain.room.ScheduleVO;
 import lombok.Data;
 
 @Data
-public class RoomInfoDTO {
+public class RoomInfoRequest {
 
     private String title;
 

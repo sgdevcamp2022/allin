@@ -1,8 +1,6 @@
 package com.All_IN.manager.domain.publisher;
 
 import com.All_IN.manager.domain.SqlDateTime;
-import com.All_IN.manager.utils.Md5;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -37,14 +35,17 @@ public class Publisher {
     @Embedded
     private SqlDateTime.All sqlDateTime;
 
-    public Publisher(Long memberId) {
+
+    public Publisher(Long memberId, String key) {
         this.memberId = memberId;
-        this.key = Md5.encode(UUID.randomUUID().toString());
+        this.key = key;
         this.sqlDateTime = new SqlDateTime.All();
     }
 
-    public void updateKey() {
-        this.key = Md5.encode(UUID.randomUUID().toString());
-        this.sqlDateTime = sqlDateTime.modify();
+
+    public void updateKey(String updateKey) {
+        key = updateKey;
+        sqlDateTime = sqlDateTime.modify();
     }
+
 }

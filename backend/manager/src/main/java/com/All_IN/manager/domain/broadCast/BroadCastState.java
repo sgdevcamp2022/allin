@@ -5,13 +5,16 @@ public enum BroadCastState {
     END("END"),
     ;
 
+
     BroadCastState(String state) {
         this.state = state;
     }
 
+
     private String state;
 
-    public BroadCastState end() {
-        return END;
+    public static BroadCastState end() {
+        return BroadCastState.END;
     }
+
 }

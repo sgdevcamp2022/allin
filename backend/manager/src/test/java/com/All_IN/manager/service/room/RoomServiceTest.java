@@ -1,13 +1,16 @@
 package com.All_IN.manager.service.room;
 
 
+import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
 import com.All_IN.manager.domain.room.ScheduleVO;
 import com.All_IN.manager.service.publisher.PublisherService;
-import com.All_IN.manager.service.room.dto.RoomInfoDTO;
-import com.All_IN.manager.service.room.dto.RoomInfoResponse;
+import com.All_IN.manager.service.publisher.PublisherValidateIdType;
+import com.All_IN.manager.service.publisher.PublisherValidateService;
+import com.All_IN.manager.web.dto.RoomInfoRequest;
+import com.All_IN.manager.mapper.room.RoomInfoDTO;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import lombok.extern.slf4j.Slf4j;
@@ -40,35 +43,44 @@ class RoomServiceTest {
     PublisherRepository publisherRepository;
 
     @Autowired
+    PublisherValidateService publisherValidateService;
+
+    @Autowired
     RoomRepository roomRepository;
 
     @Autowired
     RoomInfoRepository roomInfoRepository;
 
 
-    private static Long roomId = 1L;
-    private static Long memberId = 1L;
+    static Long roomId = 1L;
 
-    private static RoomInfoDTO roomInfoDTO = setRoomInfoDTO();
+    static Long memberId = 1L;
 
-    private static RoomInfoDTO setRoomInfoDTO() {
-        RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
-        roomInfoDTO.setTitle("test title");
-        roomInfoDTO.setDescription("test description");
-        roomInfoDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
-        return roomInfoDTO;
+    static RoomInfoRequest roomInfoRequest = setRoomInfoDTO();
+
+
+    static RoomInfoRequest setRoomInfoDTO() {
+        RoomInfoRequest roomInfoRequest = new RoomInfoRequest();
+        roomInfoRequest.setTitle("test title");
+        roomInfoRequest.setDescription("test description");
+        roomInfoRequest.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
+        return roomInfoRequest;
     }
 
+
     @BeforeEach
-    public void save_data() {
+    void data() {
         publisherService.save(memberId);
 
-        roomService.save(memberId, roomInfoDTO);
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+
+        roomService.save(publisher, roomInfoRequest);
     }
 
     @AfterEach
     void clear() {
         clearData();
+
         memberId++;
         roomId++;
     }
@@ -94,22 +106,24 @@ class RoomServiceTest {
         memberId++;
         publisherService.save(memberId);
 
-        RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
-        roomInfoDTO.setTitle("test title");
-        roomInfoDTO.setDescription("test description");
-        roomInfoDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
+        RoomInfoRequest roomInfoRequest = new RoomInfoRequest();
+        roomInfoRequest.setTitle("test title");
+        roomInfoRequest.setDescription("test description");
+        roomInfoRequest.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
+
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
 
         // When
-        mockRoomService.save(memberId, roomInfoDTO);
+        mockRoomService.save(publisher, roomInfoRequest);
 
         // Then
-        Mockito.verify(mockRoomService, Mockito.times(1)).save(memberId, roomInfoDTO);
+        Mockito.verify(mockRoomService, Mockito.times(1)).save(publisher, roomInfoRequest);
     }
 
     @Test
     void editRoomInfo() {
         //Given
-        RoomInfoDTO roomInfoEditDTO = new RoomInfoDTO();
+        RoomInfoRequest roomInfoEditDTO = new RoomInfoRequest();
         roomInfoEditDTO.setTitle("edit test title");
         roomInfoEditDTO.setDescription("edit test description");
         roomInfoEditDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(2L)));
@@ -118,12 +132,12 @@ class RoomServiceTest {
         roomService.editRoomInfo(roomId, roomInfoEditDTO);
 
         //Then
-        RoomInfoResponse roomInfoResponse = roomService.browseRoomInfo(roomId);
+        RoomInfoDTO roomInfoDTO = roomService.browseRoomInfo(roomId);
 
-        Assertions.assertThat(roomInfoResponse.getTitle()).isEqualTo(roomInfoEditDTO.getTitle());
-        Assertions.assertThat(roomInfoResponse.getDescription()).isEqualTo(roomInfoEditDTO.getDescription());
-        Assertions.assertThat(roomInfoResponse.getStartTime().toString()).isEqualTo(roomInfoEditDTO.getScheduleVO().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        Assertions.assertThat(roomInfoResponse.getEndTime().toString()).contains(roomInfoEditDTO.getScheduleVO().getEndTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        Assertions.assertThat(roomInfoDTO.getTitle()).isEqualTo(roomInfoEditDTO.getTitle());
+        Assertions.assertThat(roomInfoDTO.getDescription()).isEqualTo(roomInfoEditDTO.getDescription());
+        Assertions.assertThat(roomInfoDTO.getStartTime().toString()).isEqualTo(roomInfoEditDTO.getScheduleVO().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        Assertions.assertThat(roomInfoDTO.getEndTime().toString()).contains(roomInfoEditDTO.getScheduleVO().getEndTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 
     @Test
@@ -131,12 +145,15 @@ class RoomServiceTest {
         //Given
 
         //When
-        RoomInfoResponse roomInfoResponse = roomService.browseRoomInfo(roomId);
+        RoomInfoDTO roomInfoDTO = roomService.browseRoomInfo(roomId);
 
         //Then
-        Assertions.assertThat(roomInfoResponse.getTitle()).isEqualTo(roomInfoDTO.getTitle());
-        Assertions.assertThat(roomInfoResponse.getDescription()).isEqualTo(roomInfoDTO.getDescription());
-        Assertions.assertThat(roomInfoResponse.getStartTime().toString()).isEqualTo(roomInfoDTO.getScheduleVO().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        Assertions.assertThat(roomInfoResponse.getEndTime().toString()).contains(roomInfoDTO.getScheduleVO().getEndTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        Assertions.assertThat(roomInfoDTO.getTitle()).isEqualTo(roomInfoRequest.getTitle());
+        Assertions.assertThat(roomInfoDTO.getDescription()).isEqualTo(roomInfoRequest.getDescription());
+        Assertions.assertThat(roomInfoDTO.getStartTime().toString()).isEqualTo(
+            roomInfoRequest.getScheduleVO().getStartTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        Assertions.assertThat(roomInfoDTO.getEndTime().toString()).contains(
+            roomInfoRequest.getScheduleVO().getEndTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
+
 }

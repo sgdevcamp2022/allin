@@ -1,13 +1,14 @@
 package com.All_IN.manager.service.room;
 
+import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
 import com.All_IN.manager.domain.room.ScheduleVO;
 import com.All_IN.manager.service.publisher.PublisherService;
-import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
-import com.All_IN.manager.service.room.dto.RoomInfoDTO;
-import com.All_IN.manager.service.room.dto.RoomInfoResponse;
+import com.All_IN.manager.service.publisher.PublisherValidateIdType;
+import com.All_IN.manager.service.publisher.PublisherValidateService;
+import com.All_IN.manager.web.dto.RoomInfoRequest;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
 import java.time.LocalTime;
 import org.assertj.core.api.Assertions;
@@ -30,6 +31,9 @@ public class RoomServiceTestException {
     PublisherService publisherService;
 
     @Autowired
+    PublisherValidateService publisherValidateService;
+
+    @Autowired
     PublisherRepository publisherRepository;
 
     @Autowired
@@ -38,29 +42,35 @@ public class RoomServiceTestException {
     @Autowired
     RoomInfoRepository roomInfoRepository;
 
-    private static Long roomId = 1L;
-    private static Long memberId = 1L;
 
-    private static RoomInfoDTO roomInfoDTO = setRoomInfoDTO();
+    static Long roomId = 1L;
 
-    private static RoomInfoDTO setRoomInfoDTO() {
-        RoomInfoDTO roomInfoDTO = new RoomInfoDTO();
-        roomInfoDTO.setTitle("test title");
-        roomInfoDTO.setDescription("test description");
-        roomInfoDTO.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
-        return roomInfoDTO;
+    static Long memberId = 1L;
+
+    static RoomInfoRequest roomInfoRequest = setRoomInfoDTO();
+
+
+    static RoomInfoRequest setRoomInfoDTO() {
+        RoomInfoRequest roomInfoRequest = new RoomInfoRequest();
+        roomInfoRequest.setTitle("test title");
+        roomInfoRequest.setDescription("test description");
+        roomInfoRequest.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
+        return roomInfoRequest;
     }
 
     @BeforeEach
-    public void save_data() {
+    void data() {
         publisherService.save(memberId);
 
-        roomService.save(memberId, roomInfoDTO);
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.MEMBER);
+
+        roomService.save(publisher, roomInfoRequest);
     }
 
     @AfterEach
     void clear() {
         clearData();
+
         memberId++;
         roomId++;
     }
@@ -80,22 +90,17 @@ public class RoomServiceTestException {
     }
 
     @Test
-    void save_NO_SUCH_PUBLISHER() {
-        Assertions.assertThatThrownBy(() -> roomService.save(999L, roomInfoDTO))
-            .hasMessage(PublisherServiceException.NO_SUCH_PUBLISHER.getMessage());
-    }
-
-    @Test
     void save_ALREADY_HAVE_ROOM() {
         // Given
         memberId++;
         publisherService.save(memberId);
-        roomService.save(memberId, roomInfoDTO);
+        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+        roomService.save(publisher, roomInfoRequest);
         roomId++;
 
 
         // When
-        Assertions.assertThatThrownBy(() -> roomService.save(memberId, roomInfoDTO))
+        Assertions.assertThatThrownBy(() -> roomService.save(publisher, roomInfoRequest))
             .hasMessage(RoomServiceException.ALREADY_HAVE_ROOM.getMessage());
 
         // Then
@@ -153,4 +158,5 @@ public class RoomServiceTestException {
         //Then
 
     }
+
 }

@@ -1,16 +1,13 @@
 package com.All_IN.manager.service.room;
 
 import com.All_IN.manager.domain.publisher.Publisher;
-import com.All_IN.manager.domain.publisher.PublisherRepository;
 import com.All_IN.manager.domain.room.Room;
 import com.All_IN.manager.domain.room.RoomInfo;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
-import com.All_IN.manager.service.ResponseMapper;
-import com.All_IN.manager.service.publisher.exception.PublisherServiceException;
-import com.All_IN.manager.service.publisher.exception.PublisherServiceValidateException;
-import com.All_IN.manager.service.room.dto.RoomInfoDTO;
-import com.All_IN.manager.service.room.dto.RoomInfoResponse;
+import com.All_IN.manager.mapper.room.RoomMapper;
+import com.All_IN.manager.web.dto.RoomInfoRequest;
+import com.All_IN.manager.mapper.room.RoomInfoDTO;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
 import com.All_IN.manager.service.room.exception.RoomServiceValidateException;
 import lombok.RequiredArgsConstructor;
@@ -24,25 +21,30 @@ public class RoomService {
 
     private final RoomRepository repository;
     private final RoomInfoRepository roomInfoRepository;
-    private final PublisherRepository fkRepository;
+
+    private final RoomMapper mapper;
+
 
     @Transactional
-    public void save(Long memberId, RoomInfoDTO roomInfoDTO) {
-        Publisher publisher = fkRepository.findByMemberId(memberId)
-            .orElseThrow(
-                () -> new PublisherServiceValidateException(PublisherServiceException.NO_SUCH_PUBLISHER));
-
+    public void save(Publisher publisher, RoomInfoRequest roomInfoRequest) {
         if (repository.existsByPublisher(publisher)) {
             throw new RoomServiceValidateException(RoomServiceException.ALREADY_HAVE_ROOM);
         }
         Room room = Room.from(publisher);
         repository.save(room);
 
-        roomInfoRepository.save(RoomInfo.of(room, roomInfoDTO));
+        roomInfoRepository.save(
+            RoomInfo.of(
+                room,
+                roomInfoRequest.getTitle(),
+                roomInfoRequest.getDescription(),
+                roomInfoRequest.getScheduleVO()
+            )
+        );
     }
 
     @Transactional
-    public void editRoomInfo(Long roomId, RoomInfoDTO roomInfoDTO) {
+    public void editRoomInfo(Long roomId, RoomInfoRequest roomInfoRequest) {
         Room room = repository.findById(roomId)
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM));
@@ -51,10 +53,14 @@ public class RoomService {
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_ROOM_INFORMATION));
 
-        existRoomInfo.updateInfo(roomInfoDTO);
+        existRoomInfo.updateInfo(
+            roomInfoRequest.getTitle(),
+            roomInfoRequest.getDescription(),
+            roomInfoRequest.getScheduleVO()
+        );
     }
 
-    public RoomInfoResponse browseRoomInfo(Long roomId) {
+    public RoomInfoDTO browseRoomInfo(Long roomId) {
         Room room = repository.findById(roomId)
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM));
@@ -63,7 +69,7 @@ public class RoomService {
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM_INFO));
 
-        return ResponseMapper.valueOf(roomInfo);
+        return mapper.from(roomInfo);
     }
 
 }

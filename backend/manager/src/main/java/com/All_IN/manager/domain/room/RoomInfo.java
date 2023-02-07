@@ -1,7 +1,6 @@
 package com.All_IN.manager.domain.room;
 
 import com.All_IN.manager.domain.SqlDateTime;
-import com.All_IN.manager.service.room.dto.RoomInfoDTO;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -47,6 +46,7 @@ public class RoomInfo {
     @Embedded
     private SqlDateTime.modifiedAndDeleteAt sqlDatetime;
 
+
     private RoomInfo(Room room, String title, String description, ScheduleVO scheduleVO) {
         this.room = room;
         this.title = title;
@@ -55,20 +55,21 @@ public class RoomInfo {
         this.sqlDatetime = new SqlDateTime.modifiedAndDeleteAt();
     }
 
-    public static RoomInfo of(Room room, RoomInfoDTO roomInfoDTO) {
+    public static RoomInfo of(Room room, String title, String description, ScheduleVO scheduleVO) {
         return new RoomInfo(
             room,
-            roomInfoDTO.getTitle(),
-            roomInfoDTO.getDescription(),
-            roomInfoDTO.getScheduleVO()
+            title,
+            description,
+            scheduleVO
         );
     }
 
-    public void updateInfo(RoomInfoDTO roomInfoDTO) {
-        this.title = roomInfoDTO.getTitle();
-        this.description = roomInfoDTO.getDescription();
-        this.scheduleVO = roomInfoDTO.getScheduleVO();
-        this.sqlDatetime = sqlDatetime.modify();
+
+    public void updateInfo(String updateTitle, String updateDescription, ScheduleVO updateScheduleVO) {
+        title = updateTitle;
+        description = updateDescription;
+        scheduleVO = updateScheduleVO;
+        sqlDatetime = sqlDatetime.modify();
     }
 
 }
