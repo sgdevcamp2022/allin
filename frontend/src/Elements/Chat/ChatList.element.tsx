@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 const ChatListElement = () => {
   const [chatList, setChatList] = useRecoilState(chatListState)
+
   useEffect(() => {
     const chatList = document.querySelector('.chatList') as HTMLDivElement
     chatList.scrollTop = chatList?.scrollHeight
@@ -13,7 +14,7 @@ const ChatListElement = () => {
 
   return (
     <div className="w-3/12 border-border border-[1px] rounded-2xl p-6">
-      <div className="overflow-x-hidden h-[58vh] mb-4 chatList">
+      <div className="overflow-x-hidden h-[58vh] mb-4 chatList scrollbar-hide">
         {chatList.map((chat) => (
           <ChatElement chat={chat} className="w-full" />
         ))}

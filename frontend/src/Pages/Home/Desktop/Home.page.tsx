@@ -7,7 +7,7 @@ const HomeDesktopPage = () => {
     <div className="min-w-[80rem] w-screen">
       <div className="h-24"></div>
       <NavbarElement />
-      <div className="flex w-full px-20 justify-between items-center">
+      <div className="flex w-full px-20 justify-between items-start">
         <VideoElement />
         <ChatListElement />
       </div>

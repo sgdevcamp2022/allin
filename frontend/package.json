@@ -20,7 +20,8 @@
     "react-router-dom": "^6.8.0",
     "recoil": "^0.7.6",
     "sockjs": "^0.3.24",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

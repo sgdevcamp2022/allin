@@ -27,7 +27,7 @@ const SignUpDesktopPage = () => {
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center">
-      <HomeButtonElement className="p-16 mt-28" />
+      <HomeButtonElement className="p-16" />
       <div className="min-w-[42rem] w-[40%] border-border px-12 py-10 border-[1px] rounded-xl mt-8">
         <InputForm
           textState={signUpIdTextState}
