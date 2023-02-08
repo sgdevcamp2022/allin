@@ -1,0 +1,11 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_CONSUMER_SERVER}
+      group-id: ${KAFKA_CONSUMER_GROUP_ID}
+    listener:
+      ack-mode: count_time
+
+cdn:
+  base:
+    path: ${CDN_BASE_PATH}
