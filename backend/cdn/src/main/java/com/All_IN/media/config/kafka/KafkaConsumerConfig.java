@@ -16,10 +16,9 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
 @EnableKafka
 @Configuration
-@PropertySource(value = "application.yml")
 public class KafkaConsumerConfig {
 
-    @Value("${spring.kafka.bootstrap-servers}")
+    @Value("${spring.kafka.consumer.bootstrap-servers}")
     private String bootstrapAddress;
     @Value("${spring.kafka.consumer.group-id}")
     private String groupId;
