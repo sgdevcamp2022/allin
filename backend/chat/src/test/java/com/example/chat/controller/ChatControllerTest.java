@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import com.example.chat.MongoTestContainerConfig;
 import com.example.chat.RedisTestContainerConfig;
 import com.example.controller.ChatController;
+import com.example.domain.Topic;
 import com.example.dto.TopicCreateRequest;
 import com.example.domain.Message;
 import com.example.dto.ChatMessageRequest;
@@ -125,6 +126,28 @@ class ChatControllerTest {
       }
     }
 
+    @Nested
+    @DisplayName("종료된 토픽이라면")
+    class ContextWithClosedTopic {
+
+      @Test
+      @DisplayName("handleException을 호출한다")
+      void ItCallsHandleException() throws InterruptedException {
+        // given
+        String topicId = "topicId";
+        String userName = "user1";
+        topicRepository.save(Topic.of(topicId, LocalDateTime.now().minusDays(1)));
+
+        ChatMessageRequest message = ChatMessageRequest.of(topicId, userName);
+
+        // when
+        session.send(String.format("/chat/%s/send", topicId), message);
+
+        // then
+        sleep(1000);
+        verify(chatController).handleException(any(Exception.class));
+      }
+    }
     @Nested
     @DisplayName("메시지가 100자를 넘는다면")
     class ContextWithMessageLengthOver100 {
