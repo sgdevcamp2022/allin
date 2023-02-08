@@ -1,6 +1,6 @@
 package com.example.chat.controller.api;
 
-import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
+import static com.example.exception.ExceptionMessage.NONEXISTENT_TOPIC;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;

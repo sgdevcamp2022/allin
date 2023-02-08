@@ -1,4 +1,7 @@
+
 spring:
+  application:
+    name: chat-server
   data:
     redis:
       host: ${REDIS_HOST}
@@ -9,3 +12,11 @@ spring:
       database: ${MONGO_DATABASE}
   main:
     allow-bean-definition-overriding: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI}
+    instance:
+      prefer-ip-address: true
+server:
+  port: 9000

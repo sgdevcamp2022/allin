@@ -57,7 +57,7 @@ class ChatServiceImplTest {
         String id = "topic1";
         ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
         given(topicService.findById(anyString()))
-          .willReturn(Topic.from(id, LocalDateTime.now()));
+          .willReturn(Topic.of(id, LocalDateTime.now()));
         given(chatRepository.save(any(Message.class)))
           .willReturn(Message.of(id, message.getSender(), message.getContent(), LocalDateTime.now()));
 
@@ -105,7 +105,7 @@ class ChatServiceImplTest {
         String topicId = "topic1";
         List<Message> messages = createChatMessage();
         given(topicService.findById(anyString()))
-          .willReturn(Topic.from(topicId, LocalDateTime.now().plusMinutes(5)));
+          .willReturn(Topic.of(topicId, LocalDateTime.now().plusMinutes(5)));
         given(chatRepository.findAllByTopicId(anyString(), any(Pageable.class)))
           .willReturn(messages);
 
