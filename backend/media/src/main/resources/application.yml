@@ -1,5 +1,6 @@
 spring:
   kafka:
+    bootstrap-servers:  ${KAFKA_SERVER}
     producer:
       bootstrap-servers: ${KAFKA_PRODUCER_SERVER}
 
