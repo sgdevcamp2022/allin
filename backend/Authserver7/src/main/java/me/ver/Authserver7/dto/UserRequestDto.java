@@ -19,9 +19,6 @@ public class UserRequestDto {
     private String userName;
 
     private String nickName;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
     private Set<Authority> authorities;
 
     public User toMember(PasswordEncoder passwordEncoder, Set<Authority> authorities) {
@@ -30,8 +27,6 @@ public class UserRequestDto {
             .password(passwordEncoder.encode(password))
             .userName(userName)
             .nickName(nickName)
-            .createdAt(createdAt)
-            .modifiedAt(modifiedAt)
             .authorities(authorities)
             .build();
     }
