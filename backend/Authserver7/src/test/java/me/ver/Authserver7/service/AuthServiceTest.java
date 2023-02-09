@@ -2,7 +2,7 @@ package me.ver.Authserver7.service;
 
 import me.ver.Authserver7.domain.User;
 import me.ver.Authserver7.dto.UserRequestDto;
-import me.ver.Authserver7.dto.TokenDto;
+import me.ver.Authserver7.dto.TokenResponseDto;
 import me.ver.Authserver7.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ class AuthServiceTest {
         dto2.setPassword("1234");
 
         //when
-        TokenDto login = authService.login(dto2);
+        TokenResponseDto login = authService.login(dto2);
 
         //then
         assertEquals(login.getGrantType(), "bearer");

@@ -7,7 +7,7 @@ import me.ver.Authserver7.domain.User;
 import me.ver.Authserver7.domain.RefreshToken;
 import me.ver.Authserver7.dto.UserRequestDto;
 import me.ver.Authserver7.dto.UserResponseDto;
-import me.ver.Authserver7.dto.TokenDto;
+import me.ver.Authserver7.dto.TokenResponseDto;
 import me.ver.Authserver7.dto.TokenRequestDto;
 import me.ver.Authserver7.jwt.TokenProvider;
 import me.ver.Authserver7.repository.AuthorityRepository;
@@ -55,28 +55,28 @@ public class AuthService {
      * 로그인
      */
     @Transactional
-    public TokenDto login(UserRequestDto userRequestDto) {
+    public TokenResponseDto login(UserRequestDto userRequestDto) {
         UsernamePasswordAuthenticationToken authenticationToken = userRequestDto.toAuthentication();
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        TokenResponseDto tokenResponseDto = tokenProvider.generateTokenDto(authentication);
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
+                .value(tokenResponseDto.getRefreshToken())
                 .build();
 
         refreshTokenRepository.save(refreshToken);
 
-        return tokenDto;
+        return tokenResponseDto;
     }
 
     /**
      * 재발급
      */
     @Transactional
-    public TokenDto reissue(TokenRequestDto tokenRequestDto) {
+    public TokenResponseDto reissue(TokenRequestDto tokenRequestDto) {
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
         }
@@ -90,11 +90,11 @@ public class AuthService {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        TokenResponseDto tokenResponseDto = tokenProvider.generateTokenDto(authentication);
 
-        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
+        RefreshToken newRefreshToken = refreshToken.updateValue(tokenResponseDto.getRefreshToken());
         refreshTokenRepository.save(newRefreshToken);
 
-        return tokenDto;
+        return tokenResponseDto;
     }
 }

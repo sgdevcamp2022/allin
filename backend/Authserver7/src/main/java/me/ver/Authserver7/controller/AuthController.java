@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import me.ver.Authserver7.dto.UserRequestDto;
 import me.ver.Authserver7.dto.UserResponseDto;
-import me.ver.Authserver7.dto.TokenDto;
+import me.ver.Authserver7.dto.TokenResponseDto;
 import me.ver.Authserver7.dto.TokenRequestDto;
 import me.ver.Authserver7.service.AuthService;
 import me.ver.Authserver7.web.ApiResponse;
@@ -31,14 +31,14 @@ public class AuthController {
     // 로그인
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<TokenDto> login(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ApiResponse<TokenResponseDto> login(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ApiResponse.createSuccess(authService.login(userRequestDto));
     }
 
     // 토큰 재발급
     @PostMapping("/reissue")
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<TokenDto> reissue(@Valid @RequestBody TokenRequestDto tokenRequestDto) {
+    public ApiResponse<TokenResponseDto> reissue(@Valid @RequestBody TokenRequestDto tokenRequestDto) {
         return ApiResponse.createSuccess(authService.reissue(tokenRequestDto));
     }
 }
