@@ -1,6 +1,5 @@
 package me.ver.Authserver7.service.exception;
 
-import me.ver.Authserver7.service.exception.UserServiceException;
 import lombok.Getter;
 
 @Getter

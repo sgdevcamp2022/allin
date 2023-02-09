@@ -1,6 +1,5 @@
 package me.ver.Authserver7.dto;
 
-import java.time.LocalDateTime;
 import lombok.*;
 import me.ver.Authserver7.domain.Authority;
 import me.ver.Authserver7.domain.User;

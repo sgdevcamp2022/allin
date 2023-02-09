@@ -3,10 +3,7 @@ package me.ver.Authserver7.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import me.ver.Authserver7.domain.Authority;
 import me.ver.Authserver7.domain.User;
-
-import java.util.Set;
 
 @Getter
 @AllArgsConstructor
