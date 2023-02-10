@@ -16,7 +16,7 @@ class ChatServer {
 
   public getServer() {
     if (!ChatServer.stompServer) {
-      ChatServer.stompServer = Stomp.Stomp.client(`${process.env.CHAT_SERVER_URL}/ws`)
+      ChatServer.stompServer = Stomp.Stomp.client(`${import.meta.env.VITE_CHAT_SERVER_URL}/ws`)
     }
     if (ChatServer.stompServer.active) {
       alert('채팅서버에 연결할 수 없습니다.')

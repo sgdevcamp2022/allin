@@ -13,6 +13,14 @@ import SignUpDoneDesktopPage from './Pages/Sign/Desktop/SignUpDone.page'
 import HomeMobilePage from './Pages/Home/Mobile/Home.page'
 import HomeDesktopPage from './Pages/Home/Desktop/Home.page'
 
+import { worker } from './mocks/worker'
+
+const prepare = async (): Promise<void> => {
+  worker.start().then(() => {
+    return Promise.resolve()
+  })
+}
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -32,10 +40,12 @@ const router = createBrowserRouter([
   },
 ])
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <RouterProvider router={router} />
-    </RecoilRoot>
-  </React.StrictMode>
-)
+prepare().then(() => {
+  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <React.StrictMode>
+      <RecoilRoot>
+        <RouterProvider router={router} />
+      </RecoilRoot>
+    </React.StrictMode>
+  )
+})
