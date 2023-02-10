@@ -1,6 +1,7 @@
 package com.All_IN.media.live;
 
 import com.All_IN.media.live.dto.LiveDTO;
+import com.google.gson.Gson;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,11 +28,15 @@ public class LiveConsumer {
 
     private final String UNDER_BAR = "_";
 
+
+    private final Gson gson;
+    
     private final LiveRemover liveRemover;
 
 
-    @KafkaListener(topics = "live-topic", groupId = "live-group", containerFactory = "liveKafkaListenerContainerFactory")
-    public void listenLive(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key, LiveDTO live) throws IOException, InterruptedException {
+    @KafkaListener(topics = "live-topic", groupId = "live-group", containerFactory = "kafkaListenerContainerFactory")
+    public void listenLive(@Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) String key, String liveDTOJSON) throws IOException, InterruptedException {
+        LiveDTO live = gson.fromJson(liveDTOJSON, LiveDTO.class);
 
         String COMMON_URL = BASE_URL + DASH + HLS + DASH + key + UNDER_BAR + live.getType();
         String VIDEO_FILE = COMMON_URL + DASH + live.getTsFileName();
