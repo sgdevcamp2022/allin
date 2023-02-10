@@ -12,8 +12,11 @@ type LoginSuccessResponse = {
 const signInAxios = async (
   email: string,
   password: string,
-  setIsWrongLogin: Dispatch<SetStateAction<boolean>>
+  setIsWrongLogin: Dispatch<SetStateAction<boolean>>,
+  isAutoLogin: boolean
 ) => {
+  const storage = isAutoLogin ? localStorage : sessionStorage
+  localStorage.setItem('isAutoLogin', isAutoLogin.toString())
   try {
     const res = await Axios.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/login', {
       email,
@@ -26,8 +29,9 @@ const signInAxios = async (
     }
 
     const userData = res.data as LoginSuccessResponse
-    localStorage.setItem('accessToken', userData.accessToken)
-    localStorage.setItem('refreshToken', userData.refreshToken)
+    storage.setItem('accessToken', userData.accessToken)
+    storage.setItem('refreshToken', userData.refreshToken)
+    location.href = '/'
   } catch (err) {
     alert('예기치 못한 에러가 있습니다.')
     console.dir(err)
@@ -38,8 +42,9 @@ const signInAxios = async (
 }
 
 const getRefreshToken = async () => {
-  let accessToken = localStorage.getItem('accessToken') ?? ''
-  let refreshToken = localStorage.getItem('refreshToken') ?? ''
+  const stroage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
+  let accessToken = stroage.getItem('accessToken') ?? ''
+  let refreshToken = stroage.getItem('refreshToken') ?? ''
 
   if (!JWTUtil.isAuth(accessToken)) {
     try {
@@ -47,14 +52,14 @@ const getRefreshToken = async () => {
         accessToken,
         refreshToken,
       })) as LoginSuccessResponse
-      localStorage.setItem('accessToken', res.accessToken)
-      localStorage.setItem('refreshToken', res.refreshToken)
+      stroage.setItem('accessToken', res.accessToken)
+      stroage.setItem('refreshToken', res.refreshToken)
       accessToken = res.accessToken
       refreshToken = res.refreshToken
     } catch (err) {
       console.error('[_axios.sign.request] jwt : ' + err)
-      localStorage.setItem('accessToken', '')
-      localStorage.setItem('refreshToken', '')
+      stroage.setItem('accessToken', '')
+      stroage.setItem('refreshToken', '')
     }
   }
 }
