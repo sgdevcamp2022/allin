@@ -1,6 +1,7 @@
 
 package com.example.service;
 
+import static com.example.exception.ExceptionMessage.CLOSED_TOPIC;
 import com.example.domain.Message;
 import com.example.domain.Topic;
 import com.example.dto.ChatMessagePagingRequest;
@@ -30,6 +31,9 @@ public class ChatServiceImpl implements ChatService {
   @Override
   public void send(String id, ChatMessageRequest message) {
     Topic foundTopic = topicService.findById(id);
+    if (foundTopic.isClose()) {
+      throw new IllegalStateException(CLOSED_TOPIC.getMessage());
+    }
     Message sendMessage = Message.of(foundTopic.getId(), message.getSender(), message.getContent(),
       foundTopic.getExpireAt());
     chatRepository.save(sendMessage);

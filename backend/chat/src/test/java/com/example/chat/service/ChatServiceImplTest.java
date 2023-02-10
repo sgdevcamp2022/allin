@@ -88,6 +88,25 @@ class ChatServiceImplTest {
           .isInstanceOf(IllegalArgumentException.class);
       }
     }
+    @Nested
+    @DisplayName("이미 종료된 토픽이라면")
+    class ContextWithClosedTopic {
+
+      @Test
+      @DisplayName("IllegalStateException 에러를 발생시킨다")
+      void ItThrowsIllegalStateException() {
+        // given
+        String id = "topic1";
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
+        Topic topic = Topic.of(id, LocalDateTime.now().minusDays(1));
+        given(topicService.findById(anyString()))
+          .willReturn(topic);
+
+        // when, then
+        assertThatThrownBy(() -> chatService.send(id, message))
+          .isInstanceOf(IllegalStateException.class);
+      }
+    }
   }
 
   @Nested
