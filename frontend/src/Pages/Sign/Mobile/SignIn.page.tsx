@@ -1,18 +1,24 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SignIn.atom'
 import { useRecoilValue } from 'recoil'
 import InputForm from '../../../Elements/Input/InputForm.element'
 import HomeButtonElement from '../../../Elements/Button/HomeButton.element'
+import { signInAxios } from '../sign.axios'
 
 const SignInMobilePage = () => {
-  const singInId = useRecoilValue(signInIdTextState)
-  const singInPw = useRecoilValue(signInPwTextState)
+  const signInId = useRecoilValue(signInIdTextState)
+  const signInPw = useRecoilValue(signInPwTextState)
 
-  const [isMaintenanceLogin, setIsMaintenanceLogin] = useState(false)
-  const [isWorngLogin, setIsWorngLogin] = useState(false)
-  const changeMaintenanceLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsMaintenanceLogin(e.target.checked)
+  const [isAutoLogin, setIsAutoLogin] = useState(false)
+  const [isWrongLogin, setIsWrongLogin] = useState(false)
+  const changeAutoLogin = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsAutoLogin(e.target.checked)
   }
+
+  useEffect(() => {
+    localStorage.clear()
+    sessionStorage.clear()
+  })
 
   const goFindPassword = () => {
     location.href = '/find-password'
@@ -23,7 +29,7 @@ const SignInMobilePage = () => {
   }
 
   const goLogin = () => {
-    setIsWorngLogin(true)
+    signInAxios(signInId, signInPw, setIsWrongLogin, isAutoLogin)
   }
 
   return (
@@ -51,21 +57,26 @@ const SignInMobilePage = () => {
             <div className="flex items-center ">
               <input
                 type="checkbox"
-                name="maintenanceLogin"
-                id="maintenanceLogin"
+                name="autoLogin"
+                id="autoLogin"
                 className="accent-point"
-                checked={isMaintenanceLogin}
-                onChange={changeMaintenanceLogin}
+                checked={isAutoLogin}
+                onChange={changeAutoLogin}
               />
-              <label htmlFor="maintenanceLogin" className="pl-2 text-subText">
+              <label htmlFor="autoLogin" className="pl-2 text-subText">
                 로그인 상태 유지
               </label>
             </div>
           </div>
           <div className="text-warningText w-full text-center mt-6 h-6 text-sm">
-            {isWorngLogin ? '아이디 또는 비밀번호가 틀렸습니다.' : ''}
+            {isWrongLogin ? '아이디 또는 비밀번호가 틀렸습니다.' : ''}
           </div>
-          <button className="bg-point text-mainTextWhite rounded-sm w-full p-2 mt-4">로그인</button>
+          <button
+            className="bg-point text-mainTextWhite rounded-sm w-full p-2 mt-4"
+            onClick={goLogin}
+          >
+            로그인
+          </button>
         </div>
       </div>
       <button className="mb-8 text-subText text-sm" onClick={goSignUp}>

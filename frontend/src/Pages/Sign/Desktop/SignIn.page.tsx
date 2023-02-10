@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { signInIdTextState, signInPwTextState } from '../../../Atoms/Sign/SignIn.atom'
 import { useRecoilValue } from 'recoil'
 import InputForm from '../../../Elements/Input/InputForm.element'
@@ -14,6 +14,11 @@ const SignInDesktopPage = () => {
   const changeAutoLogin = (e: ChangeEvent<HTMLInputElement>) => {
     setIsAutoLogin(e.target.checked)
   }
+
+  useEffect(() => {
+    localStorage.clear()
+    sessionStorage.clear()
+  })
 
   const goLogin = () => {
     signInAxios(signInId, signInPw, setIsWrongLogin, isAutoLogin)

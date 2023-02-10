@@ -39,4 +39,32 @@ export const handlers = [
       })
     )
   }),
+  rest.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/signup', async (req, res, ctx) => {
+    const userData = await req.json()
+
+    if (userData.nickName !== 'loopy') {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          timestamp: '2023-02-07T06:34:02.698+00:00',
+          code: '4001000',
+          error: 'RuntimeException',
+          message: '이미 가입되어 있는 이메일입니다.',
+        })
+      )
+    }
+    return res(
+      ctx.status(201),
+      ctx.json({
+        email: '1234@naver.com',
+        userName: 'hayan',
+        nickName: 'dd',
+        authorities: [
+          {
+            authorityStatus: 'ROLE_USER',
+          },
+        ],
+      })
+    )
+  }),
 ]

@@ -9,6 +9,20 @@ type LoginSuccessResponse = {
   accessTokenExpiresIn: number
 }
 
+type SignUpSuccessResponse = {
+  email: string
+  userName: string
+  nickName: string
+  authorities: [{ authorityStatus: string }]
+}
+
+type FailResponse = {
+  timestamp: string
+  code: number
+  error: string
+  message: string
+}
+
 const signInAxios = async (
   email: string,
   password: string,
@@ -67,4 +81,33 @@ const getRefreshToken = async () => {
   }
 }
 
-export { signInAxios }
+const signUpAxios = async (email: string, password: string, nickName: string, userName: string) => {
+  try {
+    const res = await Axios.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/signup', {
+      email,
+      password,
+      userName,
+      nickName,
+    })
+
+    if (res.status !== 201) {
+      const errorData = res.data as FailResponse
+      throw new Error(errorData.message)
+    }
+
+    const signUpData = res.data as SignUpSuccessResponse
+    if (!signUpData.authorities.some((role) => role.authorityStatus === 'ROLE_USER')) {
+      console.error(signUpData)
+      console.log(signUpData.authorities, signUpData.authorities[0].authorityStatus === 'ROLE_USER')
+      throw new Error('Authorities must be ROLE_USER')
+    }
+
+    location.href = '/'
+  } catch (err) {
+    alert('예기치 못한 에러가 있습니다.')
+    console.dir(err)
+    return
+  }
+}
+
+export { signInAxios, signUpAxios }

@@ -15,9 +15,26 @@ const signUpCheckPwTextState = atom({
   default: '',
 })
 
+const signUpUserNameTextState = atom({
+  key: 'signUpUserNameTextState',
+  default: '',
+})
+
+const signUpNickNameTextState = atom({
+  key: 'signUpNickNameTextState',
+  default: '',
+})
+
 const signUpCheckEmailNumberState = atom({
   key: 'signUpCheckEmailNumberState',
   default: '',
 })
 
-export { signUpIdTextState, signUpPwTextState, signUpCheckPwTextState, signUpCheckEmailNumberState }
+export {
+  signUpIdTextState,
+  signUpPwTextState,
+  signUpCheckPwTextState,
+  signUpCheckEmailNumberState,
+  signUpUserNameTextState,
+  signUpNickNameTextState,
+}
