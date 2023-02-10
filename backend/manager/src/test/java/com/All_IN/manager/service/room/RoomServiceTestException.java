@@ -62,9 +62,9 @@ public class RoomServiceTestException {
     void data() {
         publisherService.save(memberId);
 
-        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.MEMBER);
+        Long validatePublisherId = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.MEMBER);
 
-        roomService.save(publisher, roomInfoRequest);
+        roomService.save(validatePublisherId, roomInfoRequest);
     }
 
     @AfterEach
@@ -94,13 +94,13 @@ public class RoomServiceTestException {
         // Given
         memberId++;
         publisherService.save(memberId);
-        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
-        roomService.save(publisher, roomInfoRequest);
+        Long validatePublisherId = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+        roomService.save(validatePublisherId, roomInfoRequest);
         roomId++;
 
 
         // When
-        Assertions.assertThatThrownBy(() -> roomService.save(publisher, roomInfoRequest))
+        Assertions.assertThatThrownBy(() -> roomService.save(validatePublisherId, roomInfoRequest))
             .hasMessage(RoomServiceException.ALREADY_HAVE_ROOM.getMessage());
 
         // Then

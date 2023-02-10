@@ -52,9 +52,9 @@ class BroadCastServiceExceptionTest {
         key = publisherService.getKey(publisherId);
         password = publisherService.generatePassword(publisherId);
 
-        Publisher publisher = publisherValidateService.validatePublisher(key, password);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key, password);
 
-        broadCastService.startLive(publisher);
+        broadCastService.startLive(validatePublisherId);
     }
 
     @AfterEach
@@ -73,10 +73,10 @@ class BroadCastServiceExceptionTest {
     @Test
     void startLive_already_on_live() {
         //Given
-        Publisher publisher = publisherValidateService.validatePublisher(key, password);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key, password);
 
         //When
-        Assertions.assertThatThrownBy(() -> broadCastService.startLive(publisher))
+        Assertions.assertThatThrownBy(() -> broadCastService.startLive(validatePublisherId))
             .hasMessage(BroadCastServiceException.ALREADY_ON_LIVE.getMessage());
 
         //Then
@@ -85,11 +85,11 @@ class BroadCastServiceExceptionTest {
     @Test
     void endLive_no_match_live() {
         //Given
-        Publisher publisher = publisherValidateService.validatePublisher(key);
-        broadCastService.endLive(publisher);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key);
+        broadCastService.endLive(validatePublisherId);
 
         //When
-        Assertions.assertThatThrownBy(() -> broadCastService.endLive(publisher))
+        Assertions.assertThatThrownBy(() -> broadCastService.endLive(validatePublisherId))
             .hasMessage(BroadCastServiceException.NO_MATCH_LIVE.getMessage());
 
         //Then
