@@ -1,3 +1,5 @@
+import Axios from '../../utils/axios'
+
 const SignInButtonElement = () => {
   const storage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
   const userStatus = storage.getItem('isLogined') === 'true'
@@ -7,8 +9,21 @@ const SignInButtonElement = () => {
       location.href = '/sign-in'
       return
     }
-    storage.clear()
-    location.reload()
+    Axios.get(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/user/logout')
+      .then((res) => {
+        if (res.status === 200) storage.clear()
+        else {
+          console.error('_axios.logout : ' + '이미 로그아웃 된 상태입니다.')
+        }
+        storage.clear()
+      })
+      .catch((err) => {
+        console.error('_axios.logout : ' + err)
+        storage.clear()
+      })
+      .then(() => {
+        location.reload()
+      })
   }
 
   const loginButtonColorByStatus = userStatus
