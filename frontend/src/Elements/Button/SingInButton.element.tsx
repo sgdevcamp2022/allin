@@ -1,11 +1,14 @@
-import { useRecoilValue } from 'recoil'
-import { signStatusBooleanState } from '../../Atoms/Sign/SignStatus.atom'
-
 const SignInButtonElement = () => {
-  const userStatus = useRecoilValue(signStatusBooleanState)
+  const storage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
+  const userStatus = storage.getItem('isLogined') === 'true'
 
   const goSignIn = () => {
-    location.href = '/sign-in'
+    if (!userStatus) {
+      location.href = '/sign-in'
+      return
+    }
+    storage.clear()
+    location.reload()
   }
 
   const loginButtonColorByStatus = userStatus

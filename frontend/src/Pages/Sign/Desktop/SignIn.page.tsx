@@ -9,14 +9,14 @@ const SignInDesktopPage = () => {
   const signInId = useRecoilValue(signInIdTextState)
   const signInPw = useRecoilValue(signInPwTextState)
 
-  const [isMaintenanceLogin, setIsMaintenanceLogin] = useState(false)
+  const [isAutoLogin, setIsAutoLogin] = useState(false)
   const [isWrongLogin, setIsWrongLogin] = useState(false)
-  const changeMaintenanceLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    setIsMaintenanceLogin(e.target.checked)
+  const changeAutoLogin = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsAutoLogin(e.target.checked)
   }
 
   const goLogin = () => {
-    signInAxios(signInId, signInPw, setIsWrongLogin, true)
+    signInAxios(signInId, signInPw, setIsWrongLogin, isAutoLogin)
   }
 
   return (
@@ -41,13 +41,13 @@ const SignInDesktopPage = () => {
           <div className="flex items-center">
             <input
               type="checkbox"
-              name="maintenanceLogin"
-              id="maintenanceLogin"
+              name="autoLogin"
+              id="autoLogin"
               className="accent-point"
-              checked={isMaintenanceLogin}
-              onChange={changeMaintenanceLogin}
+              checked={isAutoLogin}
+              onChange={changeAutoLogin}
             />
-            <label htmlFor="maintenanceLogin" className="pl-2 text-subText">
+            <label htmlFor="autoLogin" className="pl-2 text-subText">
               로그인 상태 유지
             </label>
           </div>

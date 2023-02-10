@@ -16,7 +16,8 @@ const signInAxios = async (
   isAutoLogin: boolean
 ) => {
   const storage = isAutoLogin ? localStorage : sessionStorage
-  localStorage.setItem('isAutoLogin', isAutoLogin.toString())
+  localStorage.setItem('isAutoLogin', isAutoLogin ? 'true' : 'false')
+
   try {
     const res = await Axios.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/login', {
       email,
@@ -31,6 +32,8 @@ const signInAxios = async (
     const userData = res.data as LoginSuccessResponse
     storage.setItem('accessToken', userData.accessToken)
     storage.setItem('refreshToken', userData.refreshToken)
+    storage.setItem('isLogined', 'true')
+
     location.href = '/'
   } catch (err) {
     alert('예기치 못한 에러가 있습니다.')
@@ -42,9 +45,9 @@ const signInAxios = async (
 }
 
 const getRefreshToken = async () => {
-  const stroage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
-  let accessToken = stroage.getItem('accessToken') ?? ''
-  let refreshToken = stroage.getItem('refreshToken') ?? ''
+  const storage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
+  let accessToken = storage.getItem('accessToken') ?? ''
+  let refreshToken = storage.getItem('refreshToken') ?? ''
 
   if (!JWTUtil.isAuth(accessToken)) {
     try {
@@ -52,14 +55,14 @@ const getRefreshToken = async () => {
         accessToken,
         refreshToken,
       })) as LoginSuccessResponse
-      stroage.setItem('accessToken', res.accessToken)
-      stroage.setItem('refreshToken', res.refreshToken)
+      storage.setItem('accessToken', res.accessToken)
+      storage.setItem('refreshToken', res.refreshToken)
       accessToken = res.accessToken
       refreshToken = res.refreshToken
     } catch (err) {
       console.error('[_axios.sign.request] jwt : ' + err)
-      stroage.setItem('accessToken', '')
-      stroage.setItem('refreshToken', '')
+      storage.setItem('accessToken', '')
+      storage.setItem('refreshToken', '')
     }
   }
 }
