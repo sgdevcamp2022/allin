@@ -1,18 +1,15 @@
 package com.All_IN.manager.domain.room;
 
 import com.All_IN.manager.domain.SqlDateTime;
-import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,6 +19,7 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Where(clause = "DELETE_AT IS NULL")
 @SQLDelete(sql = "UPDATE ROOM_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where ROOM_ID = ?")
+@Getter
 public class Room {
 
     @Id
@@ -29,21 +27,20 @@ public class Room {
     @Column(name = "room_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher;
+    @Column(name = "publisher_id")
+    private Long publisherId;
 
     @Embedded
     private SqlDateTime.createAndDeleteAt sqlDateTime;
 
 
-    private Room(Publisher publisher) {
-        this.publisher = publisher;
+    private Room(Long publisherId) {
+        this.publisherId = publisherId;
         this.sqlDateTime = new SqlDateTime.createAndDeleteAt();
     }
 
-    public static Room from(Publisher publisher) {
-        return new Room(publisher);
+    public static Room relatedFrom(Long publisherId) {
+        return new Room(publisherId);
     }
 
 }

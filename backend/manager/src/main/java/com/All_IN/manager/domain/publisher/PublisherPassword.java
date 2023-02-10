@@ -5,12 +5,9 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,9 +26,8 @@ public class PublisherPassword {
     @Column(name = "publisher_password_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher;
+    @Column(name = "publisher_id")
+    private Long publisherId;
 
     @Column(name = "publisher_password_value")
     private String value;
@@ -43,11 +39,15 @@ public class PublisherPassword {
     private SqlDateTime.createAt sqlDateTime;
 
 
-    public PublisherPassword(Publisher publisher) {
-        this.publisher = publisher;
+    private PublisherPassword(Long publisherId) {
+        this.publisherId = publisherId;
         this.value = UUID.randomUUID().toString();
         this.used = false;
         this.sqlDateTime = new SqlDateTime.createAt();
+    }
+
+    public static PublisherPassword relatedFrom(Long publisherId) {
+        return new PublisherPassword(publisherId);
     }
 
 
