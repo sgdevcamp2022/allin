@@ -1,6 +1,7 @@
 package com.All_IN.media.live;
 
 import com.All_IN.media.live.dto.LiveDTO;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -42,7 +43,7 @@ public class LiveSender {
     private final Integer SHORT_RENEWAL_TIME = 1;
 
 
-    private final KafkaTemplate<String, LiveDTO> liveKafkaTemplate;
+    private final Gson gson;
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -63,10 +64,12 @@ public class LiveSender {
 
             LiveDTO liveDTO = new LiveDTO(index, type, tsFileName, tsVideo);
 
-            liveKafkaTemplate.send(
+            String liveDTOJSON = gson.toJson(liveDTO);
+
+            kafkaTemplate.send(
                 TOPIC_LIVE,
                 key,
-                liveDTO
+                liveDTOJSON
             );
 
             TimeUnit.SECONDS.sleep(RENEWAL_TIME);
