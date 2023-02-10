@@ -7,7 +7,7 @@ import SignInButtonElement from '../Button/SingInButton.element'
  */
 const NavbarElement = () => {
   return (
-    <div className="flex w-screen h-24 px-20 py-10 justify-between items-center absolute top-0 z-50 backdrop-blur-sm">
+    <div className="flex w-screen h-24 px-20 py-10 justify-between items-center absolute top-0 z-40 backdrop-blur-sm">
       <HomeButtonElement imgClassName="w-[60%]" />
       <SignInButtonElement />
     </div>

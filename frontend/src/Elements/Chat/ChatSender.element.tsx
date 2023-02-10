@@ -1,7 +1,8 @@
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { chatBlockBooleanState, chatSendStringState } from '../../Atoms/Chat/Chat.atoms'
 import InputElement from '../Input/Input.element'
 import { useEffect, useState } from 'react'
+import { PopupedBooleanStatus, popupTitleTextStatus } from '../../Atoms/Home/Popup.atoms'
 
 const ChatSenderElement = () => {
   const chatText = useRecoilValue(chatSendStringState)
@@ -12,6 +13,8 @@ const ChatSenderElement = () => {
   const [placeholderColor, setPlaceholderColor] = useState('placeholder:text-subText')
   const [chatDisabled, setChatDisabled] = useState(false)
   const [bgColor, setBgColor] = useState('bg-hidden')
+  const setPopupTitle = useSetRecoilState(popupTitleTextStatus)
+  const setPopuped = useSetRecoilState(PopupedBooleanStatus)
 
   useEffect(() => {
     if (isChatBlock) {
@@ -32,6 +35,13 @@ const ChatSenderElement = () => {
     setBorderColor('border-subText')
   }, [chatText, isChatBlock])
 
+  const chatFocused = () => {
+    if (localStorage.getItem('isLogined') !== 'true') {
+      setPopupTitle('로그인을 해야\n채팅할 수 있습니다.')
+      setPopuped(true)
+    }
+  }
+
   return (
     <div
       className={
@@ -43,6 +53,7 @@ const ChatSenderElement = () => {
         textState={chatSendStringState}
         placeholder={placeholder}
         disabled={chatDisabled}
+        onFocus={chatFocused}
       />
       <button>
         <svg

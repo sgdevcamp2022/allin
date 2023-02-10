@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FocusEventHandler } from 'react'
 import { RecoilState, useRecoilState } from 'recoil'
 
 export type InputType = 'text' | 'password' | 'number'
@@ -8,6 +8,7 @@ type InputElementType = {
   placeholder?: string
   type?: InputType
   disabled?: boolean
+  onFocus?: FocusEventHandler
 }
 
 const InputElement = ({
@@ -16,6 +17,7 @@ const InputElement = ({
   placeholder = '',
   disabled = false,
   type = 'text',
+  onFocus,
 }: InputElementType) => {
   const [text, setText] = useRecoilState(textState)
 
@@ -31,6 +33,7 @@ const InputElement = ({
       onChange={onChange}
       placeholder={placeholder}
       disabled={disabled}
+      onFocus={onFocus}
     />
   )
 }
