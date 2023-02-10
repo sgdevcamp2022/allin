@@ -1,6 +1,5 @@
 package com.All_IN.manager.web.api.v1;
 
-import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.mapper.room.RoomInfoDTO;
 import com.All_IN.manager.service.publisher.PublisherValidateIdType;
 import com.All_IN.manager.service.publisher.PublisherValidateService;
@@ -31,8 +30,8 @@ public class RoomController {
 
     @PostMapping
     public ApiResponse<ApiResponse.withCodeAndMessage> makeRoom(Long publisherId, RoomInfoRequest roomInfoRequest) {
-        Publisher publisher = publisherValidateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
-        roomService.save(publisher, roomInfoRequest);
+        Long validatePublisherId = publisherValidateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        roomService.save(validatePublisherId, roomInfoRequest);
 
         return ApiResponseGenerator.success(
             HttpStatus.OK,

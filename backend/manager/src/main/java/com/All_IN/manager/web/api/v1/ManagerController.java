@@ -1,6 +1,5 @@
 package com.All_IN.manager.web.api.v1;
 
-import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.service.braodCast.BroadCastService;
 import com.All_IN.manager.service.publisher.PublisherService;
 import com.All_IN.manager.service.publisher.PublisherValidateService;
@@ -24,18 +23,18 @@ public class ManagerController {
 
     @PostMapping("/live")
     public void onLive(@RequestParam String name, @RequestParam String pw) {
-        Publisher publisher = publisherValidateService.validatePublisher(name, pw);
+        Long validatePublisherId = publisherValidateService.validatePublisher(name, pw);
 
         publisherService.usePassword(pw);
 
-        broadCastService.startLive(publisher);
+        broadCastService.startLive(validatePublisherId);
     }
 
     @PostMapping("/end")
     public void endLive(@RequestParam String name) {
-        Publisher publisher = publisherValidateService.validatePublisher(name);
+        Long validatePublisherId = publisherValidateService.validatePublisher(name);
 
-        broadCastService.endLive(publisher);
+        broadCastService.endLive(validatePublisherId);
     }
 
 }
