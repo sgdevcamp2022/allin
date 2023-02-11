@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { chatBlockBooleanState, chatSendStringState } from '../../Atoms/Chat/Chat.atoms'
 import InputElement from '../Input/Input.element'
 import { useEffect, useState } from 'react'
@@ -36,7 +36,8 @@ const ChatSenderElement = () => {
   }, [chatText, isChatBlock])
 
   const chatFocused = () => {
-    if (localStorage.getItem('isLogined') !== 'true') {
+    const storage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
+    if (storage.getItem('isLogined') !== 'true') {
       setPopupTitle('로그인을 해야\n채팅할 수 있습니다.')
       setPopuped(true)
     }

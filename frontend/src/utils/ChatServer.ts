@@ -1,8 +1,8 @@
-import * as Stomp from '@stomp/stompjs'
+import { CompatClient, Stomp, messageCallbackType } from '@stomp/stompjs'
 
 class ChatServer {
   private static instance: ChatServer
-  private static stompServer: Stomp.CompatClient
+  private static stompServer: CompatClient
   private static topicId: string
 
   private constructor() {}
@@ -16,14 +16,14 @@ class ChatServer {
 
   public getServer() {
     if (!ChatServer.stompServer) {
-      ChatServer.stompServer = Stomp.Stomp.client(`${import.meta.env.VITE_CHAT_SERVER_URL}/ws`)
+      ChatServer.stompServer = Stomp.over(new WebSocket(`${import.meta.env.VITE_CHAT_WS_URL}/ws`))
     }
-    if (ChatServer.stompServer.active) {
-      alert('채팅서버에 연결할 수 없습니다.')
+    if (!ChatServer.stompServer.active) {
+      // alert('채팅서버에 연결할 수 없습니다.')
     }
   }
 
-  public setChannal(topicId: string, callBack: Stomp.messageCallbackType) {
+  public setChannal(topicId: string, callBack: messageCallbackType) {
     ChatServer.stompServer.subscribe(`/message/${topicId}`, (data) => {
       callBack(JSON.parse(data.body))
     })
@@ -40,3 +40,5 @@ class ChatServer {
     )
   }
 }
+
+export default ChatServer

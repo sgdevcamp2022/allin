@@ -1,4 +1,5 @@
 import { rest } from 'msw'
+import { chatHandlers } from './chat.handlers'
 
 export const handlers = [
   rest.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/login', async (req, res, ctx) => {
@@ -67,4 +68,5 @@ export const handlers = [
       })
     )
   }),
+  ...chatHandlers,
 ]
