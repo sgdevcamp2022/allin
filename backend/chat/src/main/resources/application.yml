@@ -12,11 +12,32 @@ spring:
       database: ${MONGO_DATABASE}
   main:
     allow-bean-definition-overriding: true
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: ${EUREKA_URI}
-    instance:
-      prefer-ip-address: true
+
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_SERVER}
+      group-id: chat
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: reportEvent:com.example.service.ReportEvent
+            trusted:
+              packages: '*'
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+    topicName: report_topics
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URI}
+#    instance:
+#      prefer-ip-address: true
 server:
   port: 9000
