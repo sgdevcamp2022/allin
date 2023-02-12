@@ -38,8 +38,8 @@ public class PublisherController {
     }
 
     @PostMapping("/key")
-    public ApiResponse<ApiResponse.withData> generateKey(Long publisherId) {
-        String key = publisherService.getKey(publisherId);
+    public ApiResponse<ApiResponse.withData> generateKey(Long memberId) {
+        String key = publisherService.getKey(memberId);
 
         return ApiResponseGenerator.success(
             new KeyResponse(key),
@@ -50,10 +50,10 @@ public class PublisherController {
     }
 
     @PutMapping("/key")
-    public ApiResponse<ApiResponse.withData> updateKey(Long publisherId) {
-        publisherService.updateKey(publisherId);
+    public ApiResponse<ApiResponse.withData> updateKey(Long memberId) {
+        publisherService.updateKey(memberId);
 
-        String key = publisherService.getKey(publisherId);
+        String key = publisherService.getKey(memberId);
 
         return ApiResponseGenerator.success(
             new KeyResponse(key),
@@ -64,8 +64,8 @@ public class PublisherController {
     }
 
     @PostMapping("/password")
-    public ApiResponse<ApiResponse.withData> generatePassword(Long publisherId) {
-        String password = publisherService.generatePassword(publisherId);
+    public ApiResponse<ApiResponse.withData> generatePassword(Long memberId) {
+        String password = publisherService.generatePassword(memberId);
 
         return ApiResponseGenerator.success(
             new PasswordResponse(password),
@@ -76,8 +76,8 @@ public class PublisherController {
     }
 
     @DeleteMapping("/password")
-    public ApiResponse<withCodeAndMessage> resetPassword(Long publisherId) {
-        publisherService.resetPassword(publisherId);
+    public ApiResponse<withCodeAndMessage> resetPassword(Long memberId) {
+        publisherService.resetPassword(memberId);
 
         return ApiResponseGenerator.success(
             HttpStatus.OK,
@@ -87,8 +87,8 @@ public class PublisherController {
     }
 
     @PostMapping("/url")
-    public ApiResponse<ApiResponse.withData> generateUrl(Long publisherId) {
-        String url = publisherService.generateURL(publisherId);
+    public ApiResponse<ApiResponse.withData> generateUrl(Long memberId) {
+        String url = publisherService.generateURL(memberId);
 
         return ApiResponseGenerator.success(
             new UrlResponse(url),
