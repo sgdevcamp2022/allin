@@ -4,11 +4,13 @@ import com.All_IN.manager.domain.room.Room;
 import com.All_IN.manager.domain.room.RoomInfo;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
 import com.All_IN.manager.domain.room.RoomRepository;
+import com.All_IN.manager.domain.room.ScheduleVO;
 import com.All_IN.manager.mapper.room.RoomMapper;
 import com.All_IN.manager.web.dto.RoomInfoRequest;
 import com.All_IN.manager.mapper.room.RoomInfoDTO;
 import com.All_IN.manager.service.room.exception.RoomServiceException;
 import com.All_IN.manager.service.room.exception.RoomServiceValidateException;
+import java.time.LocalTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,10 @@ public class RoomService {
                 room.getId(),
                 roomInfoRequest.getTitle(),
                 roomInfoRequest.getDescription(),
-                roomInfoRequest.getScheduleVO()
+                new ScheduleVO(
+                    LocalTime.parse(roomInfoRequest.getStartTime()),
+                    LocalTime.parse(roomInfoRequest.getEndTime())
+                )
             )
         );
     }
@@ -55,7 +60,10 @@ public class RoomService {
         existRoomInfo.updateInfo(
             roomInfoRequest.getTitle(),
             roomInfoRequest.getDescription(),
-            roomInfoRequest.getScheduleVO()
+            new ScheduleVO(
+                LocalTime.parse(roomInfoRequest.getStartTime()),
+                LocalTime.parse(roomInfoRequest.getEndTime())
+            )
         );
     }
 

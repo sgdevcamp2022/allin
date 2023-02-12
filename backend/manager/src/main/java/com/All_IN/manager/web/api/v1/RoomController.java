@@ -5,6 +5,7 @@ import com.All_IN.manager.service.publisher.PublisherValidateIdType;
 import com.All_IN.manager.service.publisher.PublisherValidateService;
 import com.All_IN.manager.service.room.RoomService;
 import com.All_IN.manager.web.dto.RoomInfoRequest;
+import com.All_IN.manager.web.dto.RoomInfoResponse;
 import com.All_IN.manager.web.response.ApiResponse;
 import com.All_IN.manager.web.response.ApiResponseGenerator;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,11 +43,11 @@ public class RoomController {
     }
 
     @GetMapping
-    public ApiResponse<ApiResponse.withData> getRoomInfo(Long roomId) {
+    public ApiResponse<ApiResponse.withData> getRoomInfo(@RequestParam("roomId") Long roomId) {
         RoomInfoDTO roomInfoDTO = roomService.browseRoomInfo(roomId);
 
         return ApiResponseGenerator.success(
-            roomInfoDTO,
+            new RoomInfoResponse(roomInfoDTO),
             HttpStatus.OK,
             HttpStatus.OK.value() + ManagerServerCode,
             "success browse roomInfo"
@@ -54,7 +56,7 @@ public class RoomController {
 
 
     @PutMapping
-    public ApiResponse<ApiResponse.withCodeAndMessage> makeNewPublisher(Long roomId, RoomInfoRequest roomInfoRequest) {
+    public ApiResponse<ApiResponse.withCodeAndMessage> editRoom(Long roomId, RoomInfoRequest roomInfoRequest) {
         roomService.editRoomInfo(roomId, roomInfoRequest);
 
         return ApiResponseGenerator.success(

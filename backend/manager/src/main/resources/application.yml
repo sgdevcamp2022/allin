@@ -6,14 +6,14 @@ server:
 
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/sgdev_manager
+    url: ${DB_URL}
     username: sa
     password:
     driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -21,8 +21,7 @@ spring:
   sql:
     init:
       mode: always
-#      schema-locations: classpath*:data/schema.sql
-#      data-locations: classpath*:data/
+      schema-locations: classpath*:data/broadcast-schema.sql, classpath*:data/publisher-schema.sql, classpath*:data/room-schema.sql
 
 logging.level:
   org.hibernate.SQL: debug

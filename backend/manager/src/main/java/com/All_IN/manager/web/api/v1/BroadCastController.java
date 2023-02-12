@@ -2,6 +2,7 @@ package com.All_IN.manager.web.api.v1;
 
 import com.All_IN.manager.mapper.broadCast.OnLiveBroadCastListDTO;
 import com.All_IN.manager.service.braodCast.BroadCastService;
+import com.All_IN.manager.web.dto.OnLiveBroadCstListResponse;
 import com.All_IN.manager.web.response.ApiResponse;
 import com.All_IN.manager.web.response.ApiResponseGenerator;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class BroadCastController {
         OnLiveBroadCastListDTO onLiveBroadCastListDTO = broadCastService.liveList();
 
         return ApiResponseGenerator.success(
-            onLiveBroadCastListDTO,
+            new OnLiveBroadCstListResponse(onLiveBroadCastListDTO),
             HttpStatus.OK,
             HttpStatus.OK.value() + ManagerServerCode,
             "on live list"
