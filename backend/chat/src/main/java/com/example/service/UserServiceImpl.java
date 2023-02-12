@@ -15,4 +15,9 @@ public class UserServiceImpl implements UserService {
   public void block(String topicId, String name) {
     userRepository.save(User.of(topicId, name));
   }
+
+  @Override
+  public boolean isBlockedUser(String topicId, String name) {
+    return userRepository.existsByTopicIdAndName(topicId, name);
+  }
 }

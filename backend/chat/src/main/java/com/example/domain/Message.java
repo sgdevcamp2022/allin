@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Builder(access = AccessLevel.PRIVATE)
 public class Message {
-
+  private static final String HIDE_MESSAGE = "신고처리된 메시지입니다.";
   @Id
   private String id;
 
@@ -45,5 +45,8 @@ public class Message {
                   .content(content)
                   .expireAt(expireAt)
                   .build();
+  }
+  public void hide() {
+    this.content = HIDE_MESSAGE;
   }
 }

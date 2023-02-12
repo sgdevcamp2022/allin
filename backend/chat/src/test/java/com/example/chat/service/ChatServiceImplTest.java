@@ -16,6 +16,7 @@ import com.example.repository.ChatRepository;
 import com.example.service.ChatServiceImpl;
 import com.example.service.MessagePublisher;
 import com.example.service.TopicService;
+import com.example.service.UserService;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,6 +34,9 @@ class ChatServiceImplTest {
 
   @Mock
   TopicService topicService;
+
+  @Mock
+  UserService userService;
 
   @Mock
   MessagePublisher messagePublisher;
@@ -58,8 +62,11 @@ class ChatServiceImplTest {
         ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
         given(topicService.findById(anyString()))
           .willReturn(Topic.of(id, LocalDateTime.now()));
+        given(userService.isBlockedUser(anyString(), anyString()))
+          .willReturn(false);
         given(chatRepository.save(any(Message.class)))
-          .willReturn(Message.of(id, message.getSender(), message.getContent(), LocalDateTime.now()));
+          .willReturn(
+            Message.of(id, message.getSender(), message.getContent(), LocalDateTime.now()));
 
         // when
         chatService.send(id, message);
@@ -88,6 +95,28 @@ class ChatServiceImplTest {
           .isInstanceOf(IllegalArgumentException.class);
       }
     }
+
+    @Nested
+    @DisplayName("채팅이 차단된 사용자라면")
+    class ContextWithBlockedUser {
+
+      @Test
+      @DisplayName("IllegalStateException 에러를 발생시킨다")
+      void ItThrowsIllegalStateException() {
+        // given
+        String id = "topic1";
+        ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
+        given(topicService.findById(anyString()))
+          .willReturn(Topic.of(id, LocalDateTime.now().plusMinutes(10)));
+        given(userService.isBlockedUser(anyString(), anyString()))
+          .willReturn(true);
+
+        // when, then
+        assertThatThrownBy(() -> chatService.send(id, message))
+          .isInstanceOf(IllegalStateException.class);
+      }
+    }
+
     @Nested
     @DisplayName("이미 종료된 토픽이라면")
     class ContextWithClosedTopic {
@@ -129,7 +158,8 @@ class ChatServiceImplTest {
           .willReturn(messages);
 
         // when
-        List<ChatMessageResponse> result = chatService.findAll(topicId, new ChatMessagePagingRequest(0));
+        List<ChatMessageResponse> result = chatService.findAll(topicId,
+          new ChatMessagePagingRequest(0));
 
         // then
         assertThat(result.size()).isEqualTo(messages.size());
