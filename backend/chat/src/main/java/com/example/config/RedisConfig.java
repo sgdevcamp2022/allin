@@ -1,6 +1,8 @@
 package com.example.config;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
@@ -18,13 +20,15 @@ public class RedisConfig {
   private final String host;
   private final int port;
 
+  @Value("${spring.data.redis.cluster.nodes}")
+  private final List<String> clusterNodes;
+
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
-    RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration();
+    RedisClusterConfiguration clusterConfiguration = new RedisClusterConfiguration(clusterNodes);
     clusterConfiguration.clusterNode(host, port);
     return new LettuceConnectionFactory(clusterConfiguration);
   }
-
 
   @Bean
   public RedisMessageListenerContainer redisMessageListenerContainer(
