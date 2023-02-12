@@ -8,7 +8,7 @@ https://documenter.getpostman.com/view/17873656/2s935uGg1W
 #### GET Lives
 
 ```
-curl --location --request GET 'http://localhost:8080/api/v1/broadcast/lives'
+curl --location --request GET 'http://3.36.7.55:8080/api/v1/broadcast/lives'
 ```
 
 ```
@@ -40,13 +40,13 @@ curl --location --request GET 'http://localhost:8080/api/v1/broadcast/lives'
 #### POST LIVE
 
 ```
-curl --location -g --request POST 'http://localhost:8080/api/v1/manager/live?name={{key}}&pw={{pw}}'
+curl --location -g --request POST 'http://3.36.7.55:8080/api/v1/manager/live?name={{key}}&pw={{pw}}'
 ```
 
 #### POST END
 
 ```
-curl --location -g --request POST 'http://localhost:8080/api/v1/manager/end?name={{key}}'
+curl --location -g --request POST 'http://3.36.7.55:8080/api/v1/manager/end?name={{key}}'
 ```
 
 ---
@@ -56,7 +56,7 @@ curl --location -g --request POST 'http://localhost:8080/api/v1/manager/end?name
 #### POST SAVE
 
 ```
-curl --location --request POST 'http://localhost:8080/api/v1/publisher' \
+curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher' \
 --data-urlencode 'memberId=1'
 ```
 
@@ -73,7 +73,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/publisher' \
 #### POST KEY
 
 ```
-curl --location --request POST 'http://localhost:8080/api/v1/publisher/key' \
+curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/key' \
 --data-urlencode 'publisherId=1'
 ```
 
@@ -93,7 +93,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/publisher/key' \
 #### PUT UPDATE KEY
 
 ```
-curl --location --request PUT 'http://localhost:8080/api/v1/publisher/key' \
+curl --location --request PUT 'http://3.36.7.55:8080/api/v1/publisher/key' \
 --data-urlencode 'publisherId=1'
 ```
 
@@ -113,7 +113,7 @@ curl --location --request PUT 'http://localhost:8080/api/v1/publisher/key' \
 #### POST PASSWORD
 
 ```
-curl --location --request POST 'http://localhost:8080/api/v1/publisher/password' \
+curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/password' \
 --data-urlencode 'publisherId=1'
 ```
 
@@ -133,7 +133,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/publisher/password'
 #### DELETE PASSWORD
 
 ```
-curl --location --request DELETE 'http://localhost:8080/api/v1/publisher/password' \
+curl --location --request DELETE 'http://3.36.7.55:8080/api/v1/publisher/password' \
 --data-urlencode 'publisherId=1'
 ```
 
@@ -141,7 +141,7 @@ curl --location --request DELETE 'http://localhost:8080/api/v1/publisher/passwor
 #### POST URL
 
 ```
-curl --location --request POST 'http://localhost:8080/api/v1/publisher/url' \
+curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/url' \
 --data-urlencode 'publisherId=1'
 ```
 
@@ -165,7 +165,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/publisher/url' \
 #### POST SAVE
 
 ```
-curl --location --request POST 'http://localhost:8080/api/v1/room' \
+curl --location --request POST 'http://3.36.7.55:8080/api/v1/room' \
 --data-urlencode 'publisherId=1' \
 --data-urlencode 'title=title' \
 --data-urlencode 'description=description' \
@@ -186,7 +186,7 @@ curl --location --request POST 'http://localhost:8080/api/v1/room' \
 #### GET INFO
 
 ```
-curl --location --request GET 'http://localhost:8080/api/v1/room?roomId=1'
+curl --location --request GET 'http://3.36.7.55:8080/api/v1/room?roomId=1'
 ```
 
 ```
@@ -209,7 +209,7 @@ curl --location --request GET 'http://localhost:8080/api/v1/room?roomId=1'
 #### PUT EDIT
 
 ```
-curl --location --request PUT 'http://localhost:8080/api/v1/room' \
+curl --location --request PUT 'http://3.36.7.55:8080/api/v1/room' \
 --form 'roomId="1"' \
 --form 'title="title"' \
 --form 'description="description"' \
