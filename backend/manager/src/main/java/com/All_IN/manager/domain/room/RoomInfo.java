@@ -18,7 +18,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "room_info_table")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Where(clause = "DELETE_AT IS NULL")
+@Where(clause = "DELETE_AT != MODIFIED_AT")
 @SQLDelete(sql = "UPDATE ROOM_INFO_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where ROOM_INFO_ID = ?")
 public class RoomInfo {
 

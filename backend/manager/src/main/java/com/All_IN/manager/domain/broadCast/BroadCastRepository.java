@@ -8,15 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface BroadCastRepository extends JpaRepository<BroadCast, Long> {
 
-    @Query(nativeQuery = true,
-        value =
-            "select exists("
-            + "select b.BROADCAST_ID from BROAD_CAST_TABLE b "
-                + "where b.PUBLISHER_ID = :publisherId "
-                    + "and b.BROADCAST_STATE = 'LIVE'"
-            + ")"
-    )
-    boolean existByPublisherAndStateIsLive(@Param("publisherId") Long publisherId);
+    @Query("select count (b.id) > 0 from BroadCast b where b.publisherId = :publisherId and b.state = 'LIVE' ")
+        boolean existByPublisherAndStateIsLive(@Param("publisherId") Long publisherId);
 
     @Query("select bc from BroadCast bc where bc.publisherId = :publisherId and bc.state = :state")
     Optional<BroadCast> findByPublisherAndState(@Param("publisherId") Long publisherId, @Param("state") BroadCastState state);
