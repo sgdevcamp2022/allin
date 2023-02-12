@@ -1,11 +1,15 @@
 package com.example.config;
 
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+
+@EnableConfigurationProperties(value = {RedisConfig.class})
 @EnableRedisRepositories
 @EnableMongoAuditing
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
+@Configuration
 public class CommonConfig {
 
 }
