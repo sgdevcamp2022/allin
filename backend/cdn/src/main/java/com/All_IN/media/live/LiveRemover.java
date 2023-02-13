@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LiveRemover {
 
-    private final Integer RENEWAL_TIME = 6;
+    private final Integer RENEWAL_TIME = 9;
 
 
     @Async
