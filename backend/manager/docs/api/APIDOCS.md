@@ -43,10 +43,32 @@ curl --location --request GET 'http://3.36.7.55:8080/api/v1/broadcast/lives'
 curl --location -g --request POST 'http://3.36.7.55:8080/api/v1/manager/live?name={{key}}&pw={{pw}}'
 ```
 
+```
+# Exception Example  
+
+{
+  "timestamp": "2023-02-13T08:48:27.890+00:00",
+  "code": "400104",
+  "error": "PublisherServiceValidateException",
+  "message": "no generated password"
+}
+```
+
 #### POST END
 
 ```
 curl --location -g --request POST 'http://3.36.7.55:8080/api/v1/manager/end?name={{key}}'
+```
+
+```
+# Exception Example  
+
+{
+  "timestamp": "2023-02-13T08:49:51.440+00:00",
+  "code": "400000",
+  "error": "BroadCastServiceValidateException",
+  "message": "no match live"
+}
 ```
 
 ---
@@ -68,6 +90,15 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher' \
     "code": "200400",
     "message": "success convert type to Publisher"
 }
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:41:39.135+00:00",
+  "code": "400101",
+  "error": "PublisherServiceValidateException",
+  "message": "exist publisher"
+}
 ```
 
 #### POST KEY
@@ -87,6 +118,15 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/key' \
     "data": {
         "key": "be320d738302af383e4d375f9b4a121b"
     }
+}
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:42:39.602+00:00",
+  "code": "400102",
+  "error": "PublisherServiceValidateException",
+  "message": "no such publisher"
 }
 ```
 
@@ -108,6 +148,15 @@ curl --location --request PUT 'http://3.36.7.55:8080/api/v1/publisher/key' \
         "key": "8353cb8b935be6e9c6d5810a7ad3b149"
     }
 }
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:43:47.155+00:00",
+  "code": "400102",
+  "error": "PublisherServiceValidateException",
+  "message": "no such publisher"
+}
 ```
 
 #### POST PASSWORD
@@ -128,6 +177,15 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/password'
         "password": "2f4acf2f-209a-48a7-9d97-48e8b1ffd64e"
     }
 }
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:44:36.838+00:00",
+  "code": "400103",
+  "error": "PublisherServiceValidateException",
+  "message": "already generate password"
+}
 ```
 
 #### DELETE PASSWORD
@@ -144,6 +202,15 @@ curl --location --request DELETE 'http://3.36.7.55:8080/api/v1/publisher/passwor
     "timestamp": "2023-02-12T22:37:39.550+00:00",
     "code": "200400",
     "message": "success reset password, can't use password more time"
+}
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:45:16.209+00:00",
+  "code": "400102",
+  "error": "PublisherServiceValidateException",
+  "message": "no such publisher"
 }
 ```
 
@@ -164,6 +231,15 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/url' \
     "data": {
         "url": "8353cb8b935be6e9c6d5810a7ad3b149?pw="
     }
+}
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:45:39.352+00:00",
+  "code": "400104",
+  "error": "PublisherServiceValidateException",
+  "message": "no generated password"
 }
 ```
 
@@ -190,6 +266,15 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/room' \
     "code": "200400",
     "message": "success make room"
 }
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:46:18.379+00:00",
+  "code": "400204",
+  "error": "RoomServiceValidateException",
+  "message": "publisher already has room"
+}
 ```
 
 #### GET INFO
@@ -213,6 +298,15 @@ curl --location --request GET 'http://3.36.7.55:8080/api/v1/room?roomId=1'
         "endTime": "18:00:00"
     }
 }
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:47:04.954+00:00",
+  "code": "400201",
+  "error": "RoomServiceValidateException",
+  "message": "no match room"
+}
 ```
 
 #### PUT EDIT
@@ -233,6 +327,15 @@ curl --location --request PUT 'http://3.36.7.55:8080/api/v1/room' \
     "timestamp": "2023-02-12T16:17:50.964+00:00",
     "code": "200400",
     "message": "success edit roomInfo"
+}
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:47:30.219+00:00",
+  "code": "400201",
+  "error": "RoomServiceValidateException",
+  "message": "no match room"
 }
 ```
 
@@ -256,6 +359,15 @@ curl --location --request GET 'http://3.36.7.55:8080/api/v1/room/member/1'
         "startTime": "16:00:00",
         "endTime": "18:00:00"
     }
+}
+
+# Exception Example
+
+{
+  "timestamp": "2023-02-13T08:47:55.767+00:00",
+  "code": "400102",
+  "error": "PublisherServiceValidateException",
+  "message": "no such publisher"
 }
 ```
 
