@@ -74,7 +74,7 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher' \
 
 ```
 curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/key' \
---data-urlencode 'publisherId=1'
+--data-urlencode 'memberId=1'
 ```
 
 ```
@@ -94,7 +94,7 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/key' \
 
 ```
 curl --location --request PUT 'http://3.36.7.55:8080/api/v1/publisher/key' \
---data-urlencode 'publisherId=1'
+--data-urlencode 'memberId=1'
 ```
 
 ```
@@ -114,7 +114,7 @@ curl --location --request PUT 'http://3.36.7.55:8080/api/v1/publisher/key' \
 
 ```
 curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/password' \
---data-urlencode 'publisherId=1'
+--data-urlencode 'memberId=1'
 ```
 
 ```
@@ -134,15 +134,24 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/password'
 
 ```
 curl --location --request DELETE 'http://3.36.7.55:8080/api/v1/publisher/password' \
---data-urlencode 'publisherId=1'
+--data-urlencode 'memberId=1'
 ```
 
+```
+# Example
+
+{
+    "timestamp": "2023-02-12T22:37:39.550+00:00",
+    "code": "200400",
+    "message": "success reset password, can't use password more time"
+}
+```
 
 #### POST URL
 
 ```
 curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/url' \
---data-urlencode 'publisherId=1'
+--data-urlencode 'memberId=1'
 ```
 
 ```
@@ -166,7 +175,7 @@ curl --location --request POST 'http://3.36.7.55:8080/api/v1/publisher/url' \
 
 ```
 curl --location --request POST 'http://3.36.7.55:8080/api/v1/room' \
---data-urlencode 'publisherId=1' \
+--data-urlencode 'memberId=1' \
 --data-urlencode 'title=title' \
 --data-urlencode 'description=description' \
 --data-urlencode 'startTime=16:00:00' \
@@ -226,3 +235,54 @@ curl --location --request PUT 'http://3.36.7.55:8080/api/v1/room' \
     "message": "success edit roomInfo"
 }
 ```
+
+#### GET MEMBER'S ROOM INFO
+
+```
+curl --location --request GET 'http://3.36.7.55:8080/api/v1/room/member/1'
+```
+
+```
+# Example 
+
+{
+    "timestamp": "2023-02-13T00:00:05.324+00:00",
+    "code": "200400",
+    "message": "success member's roomInfo",
+    "data": {
+        "id": 1,
+        "title": "title",
+        "description": "description",
+        "startTime": "16:00:00",
+        "endTime": "18:00:00"
+    }
+}
+```
+
+#### GET ALL ROOM INFO
+
+```
+curl --location --request GET 'http://3.36.7.55:8080/api/v1/room/all'
+```
+
+````
+# Example
+
+{
+    "timestamp": "2023-02-13T00:04:41.856+00:00",
+    "code": "200400",
+    "message": "success browse all room list",
+    "data": {
+        "roomList": [
+            {
+                "id": 1,
+                "publisherId": 2
+            },
+            {
+                "id": 2,
+                "publisherId": 1
+            }
+        ]
+    }
+}
+````
