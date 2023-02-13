@@ -25,6 +25,7 @@ public class LiveSendService {
 
     @Async
     public void onLive(String key) throws IOException, InterruptedException {
+        live.put(key, true);
         liveSender.broadCastLiveIndex(key);
 
         liveSender.broadCastLiveVideo(live, key, HI);
