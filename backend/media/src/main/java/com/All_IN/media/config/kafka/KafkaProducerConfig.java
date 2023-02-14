@@ -1,7 +1,5 @@
 package com.All_IN.media.config.kafka;
 
-import com.All_IN.media.live.dto.LiveDTO;
-import com.All_IN.media.live.dto.LiveSerializer;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -35,6 +33,7 @@ public class KafkaProducerConfig {
         configProps.put(
             ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
             StringSerializer.class);
+        configProps.put(ProducerConfig.ACKS_CONFIG, "0");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
@@ -43,29 +42,4 @@ public class KafkaProducerConfig {
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
-
-    @Bean
-    public ProducerFactory<String, LiveDTO> liveProducerFactory() {
-        Map<String, Object> configProps = new HashMap<>();
-
-        configProps.put(
-            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,
-            bootstrapAddress);
-        configProps.put(
-            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG,
-            StringSerializer.class);
-        configProps.put(
-            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
-            LiveSerializer.class);
-        configProps.put(ProducerConfig.ACKS_CONFIG, "0");
-
-        return new DefaultKafkaProducerFactory<>(configProps);
-    }
-
-
-    @Bean
-    public KafkaTemplate<String, LiveDTO> liveKafkaTemplate() {
-        return new KafkaTemplate<>(liveProducerFactory());
-    }
-
 }
