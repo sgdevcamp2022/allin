@@ -5,6 +5,7 @@ import ChatSenderElement from './ChatSender.element'
 import { useEffect, useState } from 'react'
 import ChatServer from '../../utils/ChatServer'
 import axios from 'axios'
+import ChatReportPopupElement from '../Popup/ChatReportPopup.element'
 
 type chatPageResponse = {
   result: string
@@ -14,10 +15,6 @@ type chatPageResponse = {
 const ChatListElement = () => {
   const [chatList, setChatList] = useRecoilState(chatListState)
   const [chatPage, setChatPage] = useState(0)
-  useEffect(() => {
-    const chatList = document.querySelector('.chatList') as HTMLDivElement
-    chatList.scrollTop = chatList?.scrollHeight
-  }, [chatList])
 
   const getPrevChats = async () => {
     try {
@@ -44,15 +41,20 @@ const ChatListElement = () => {
   }
 
   useEffect(() => {
+    const chatListElement = document.querySelector('.chatList') as HTMLDivElement
+    chatListElement.scrollTop = chatListElement?.scrollHeight
+  }, [chatList])
+
+  useEffect(() => {
     getPrevChats()
   }, [])
 
-  const chatServer = ChatServer.getInstance()
+  // const chatServer = ChatServer.getInstance()
   // chatServer.getServer()
   // chatServer.setChannal('channalName', () => {})
 
   return (
-    <div className="w-3/12 border-border border-[1px] rounded-2xl p-6">
+    <div className="border-border border-[1px] rounded-2xl p-6">
       <div className="overflow-x-hidden h-[58vh] mb-4 chatList scrollbar-hide">
         {chatList.map((chat) => (
           <ChatElement chat={chat} className="w-full" />

@@ -10,9 +10,9 @@ const popupSubTitleTextStatus = atom({
   default: '',
 })
 
-const PopupedBooleanStatus = atom({
-  key: 'PopupedBooleanStatus',
+const popupedBooleanStatus = atom({
+  key: 'popupedBooleanStatus',
   default: false,
 })
 
-export { popupSubTitleTextStatus, popupTitleTextStatus, PopupedBooleanStatus }
+export { popupSubTitleTextStatus, popupTitleTextStatus, popupedBooleanStatus }

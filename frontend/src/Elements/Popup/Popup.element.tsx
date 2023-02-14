@@ -1,13 +1,13 @@
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
-  PopupedBooleanStatus,
+  popupedBooleanStatus,
   popupSubTitleTextStatus,
   popupTitleTextStatus,
 } from '../../Atoms/Home/Popup.atoms'
 import { useEffect, useState } from 'react'
 
 const PopupElement = () => {
-  const [popuped, setPopuped] = useRecoilState(PopupedBooleanStatus)
+  const [popuped, setPopuped] = useRecoilState(popupedBooleanStatus)
   const title = useRecoilValue(popupTitleTextStatus)
   const subtitle = useRecoilValue(popupSubTitleTextStatus)
   const [popupDisplay, setPopupDisplay] = useState('hidden')

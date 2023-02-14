@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { chatBlockBooleanState, chatSendStringState } from '../../Atoms/Chat/Chat.atoms'
 import InputElement from '../Input/Input.element'
 import { useEffect, useState } from 'react'
-import { PopupedBooleanStatus, popupTitleTextStatus } from '../../Atoms/Home/Popup.atoms'
+import { popupedBooleanStatus, popupTitleTextStatus } from '../../Atoms/Home/Popup.atoms'
 
 const ChatSenderElement = () => {
   const chatText = useRecoilValue(chatSendStringState)
@@ -14,7 +14,7 @@ const ChatSenderElement = () => {
   const [chatDisabled, setChatDisabled] = useState(false)
   const [bgColor, setBgColor] = useState('bg-hidden')
   const setPopupTitle = useSetRecoilState(popupTitleTextStatus)
-  const setPopuped = useSetRecoilState(PopupedBooleanStatus)
+  const setPopuped = useSetRecoilState(popupedBooleanStatus)
 
   useEffect(() => {
     if (isChatBlock) {
