@@ -26,8 +26,6 @@ All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 OBS를 통해 
   + 방송방 정보 조회
   + 방송방 정보 수정
 + **[방송 (BroadCast)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/BroadCast.md)**
-  + 방송 시작
-  + 방송 종료
   + 방송 목록 조회
 + **[매니저 (Manager)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/Manager.md)**
   + 방송 시작
