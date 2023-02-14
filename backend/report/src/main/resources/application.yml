@@ -26,3 +26,16 @@ spring:
       schema-locations:
         - classpath:sql/report_schema.sql
       mode: always
+  kafka:
+    producer:
+      bootstrap-servers: ${KAFKA_SERVER}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: reportEvent:com.example.service.ReportEvent
+    topicName: report_topics
+server:
+  port: 8081

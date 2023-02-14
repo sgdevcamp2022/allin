@@ -1,8 +1,6 @@
 package com.example.exception;
 
 
-import static com.example.exception.ErrorMessage.REQUEST_DATA_NOT_VALID;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,9 +21,10 @@ public class ExceptionController {
   public ExceptionResponse handleMethodArgumentNotValidException(
     MethodArgumentNotValidException e) {
     log.warn("handleMethodArgumentNotValidException: {}", e);
+    ExceptionMessage exceptionMessage = ExceptionMessage.findByMessage(e.getMessage());
     return ExceptionResponse.of(calculateCode(HttpStatus.BAD_REQUEST,
-        REQUEST_DATA_NOT_VALID.getCode()),
-      e.getClass().getName(), REQUEST_DATA_NOT_VALID.getMessage());
+        exceptionMessage.getCode()),
+      e.getClass().getName(), exceptionMessage.getMessage());
   }
 
   private String calculateCode(HttpStatus status, String code) {

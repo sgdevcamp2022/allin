@@ -11,15 +11,25 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
-
+  private static final long threshold = 10;
   private final ReportRepository reportRepository;
   private final ReportCountRepository reportCountRepository;
+
+  private final ReportProducer reportProducer;
 
   @Override
   @Transactional
   public void report(ReportRequest request) {
-    reportCountRepository.increaseReportCount(request.getTopicId(), request.getReportedUser());
+    long count = reportCountRepository.increaseReportCount(request.getTopicId(),
+      request.getReportedUser());
+    sendMessage(count, request.getTopicId(), request.getReportedUser());
     Report report = Report.of(request.getReportedUser(), request.getMessage(), request.getReason());
     reportRepository.save(report);
+  }
+
+  private void sendMessage(long count, String topicId, String reportedUser) {
+    if (count == threshold) {
+      reportProducer.send(topicId, reportedUser);
+    }
   }
 }

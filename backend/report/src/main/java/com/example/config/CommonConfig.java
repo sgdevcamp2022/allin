@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Configuration
 @EnableJpaAuditing
-@EnableConfigurationProperties(value = {RedisConfig.class})
+@EnableConfigurationProperties(value = {RedisConfig.class, KafkaTopicConfig.class})
 public class CommonConfig {
 
 }
