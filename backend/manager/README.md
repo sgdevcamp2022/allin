@@ -1,16 +1,16 @@
 ## Manager Server
 
-### 소개
+### 간단 소개
 
 **매니저 서버는 방송 송출자를 위한 API를 제공하는 서버입니다.**
 
-All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 네이버의 **.Now**를 기반하고 있습니다.
+All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 OBS를 통해 방송을 송출합니다.
 
-**.Now**는 한 명의 방송 송출자가 존재하고 그 방송을 시청하는 N명의 시청자가 존재하는 **1:N 구조**입니다.
+또 인증 받은 스트리머만 방송을 송출 할 수 있습니다.
 
-**.Now**의 경우 방송 송출자가 연예인과 같은 특정인들로 한정되어 있어 방송 송출이 어떠한 방식으로 이루어지는지는 확인하는데 한계가 있었습니다.
+매니저 서버는 위와 같은 서비스의 요구사항을 충족 하기 위하여 개발되었습니다.
 
-그렇기에 매니저 서버는 **.Now**의 **1:N 구조**와 비슷한 **트위치**의 방송 송출 시스템을 기반으로 구현하였습니다.
+자세한 사항은 [링크](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/INTRODUCE.md)를 통해 소개하도록 하겠습니다.
 
 ### 기능
 + **[방송 송출자 관련 기능 (Publisher)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/Publisher.md)**
@@ -38,6 +38,9 @@ All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 네이버의 *
 + Java 11
 + Springboot
 + MariaDB / H2
+
+### 클래스 다이어그램
+![exported_from_idea drawio (1)](https://user-images.githubusercontent.com/102807742/218646181-26213c8b-502c-4969-b38c-ff897c68b940.png)
 
 
 ### POSTMAN DOCS
