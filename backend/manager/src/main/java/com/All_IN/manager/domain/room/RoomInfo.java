@@ -36,6 +36,9 @@ public class RoomInfo {
     @Embedded
     private ScheduleVO scheduleVO;
 
+    /**
+     * {@link Room} RoomInfo는 Room의 id를 FK로 가지고 있습니다.
+     */
     @Column(name = "room_id")
     private Long roomId;
 

@@ -1,6 +1,7 @@
 package com.All_IN.manager.domain.broadCast;
 
 import com.All_IN.manager.domain.SqlDateTime.createAndModifiedAt;
+import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -32,6 +33,9 @@ public class BroadCast {
     @Embedded
     private createAndModifiedAt sqlDateTime;
 
+    /**
+     * {@link Publisher} BroadCast는 Publisher의 id를 FK로 가지고 있습니다.
+     */
     @Column(name = "publisher_id")
     private Long publisherId;
 
