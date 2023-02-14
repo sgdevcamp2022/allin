@@ -1,6 +1,5 @@
 package com.All_IN.manager.service.room;
 
-import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.domain.room.Room;
 import com.All_IN.manager.domain.room.RoomInfo;
 import com.All_IN.manager.domain.room.RoomInfoRepository;
@@ -26,16 +25,16 @@ public class RoomService {
 
 
     @Transactional
-    public void save(Publisher publisher, RoomInfoRequest roomInfoRequest) {
-        if (repository.existsByPublisher(publisher)) {
+    public void save(Long publisherId, RoomInfoRequest roomInfoRequest) {
+        if (repository.existsByPublisher(publisherId)) {
             throw new RoomServiceValidateException(RoomServiceException.ALREADY_HAVE_ROOM);
         }
-        Room room = Room.from(publisher);
+        Room room = Room.relatedFrom(publisherId);
         repository.save(room);
 
         roomInfoRepository.save(
-            RoomInfo.of(
-                room,
+            RoomInfo.relatedOf(
+                room.getId(),
                 roomInfoRequest.getTitle(),
                 roomInfoRequest.getDescription(),
                 roomInfoRequest.getScheduleVO()
@@ -49,7 +48,7 @@ public class RoomService {
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM));
 
-        RoomInfo existRoomInfo = roomInfoRepository.findByRoom(room)
+        RoomInfo existRoomInfo = roomInfoRepository.findByRoom(room.getId())
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_ROOM_INFORMATION));
 
@@ -65,7 +64,7 @@ public class RoomService {
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM));
 
-        RoomInfo roomInfo = roomInfoRepository.findByRoom(room)
+        RoomInfo roomInfo = roomInfoRepository.findByRoom(room.getId())
             .orElseThrow(
                 () -> new RoomServiceValidateException(RoomServiceException.NO_MATCH_ROOM_INFO));
 

@@ -20,39 +20,43 @@ public class PublisherValidateService {
     private final PublisherPasswordRepository publisherPasswordRepository;
 
 
-    public Publisher validatePublisher(Long id, PublisherValidateIdType type) {
+    public Long validatePublisher(Long id, PublisherValidateIdType type) {
         switch (type) {
             case PUBLISHER:
-                return repository.findById(id)
+                Publisher publisherById = repository.findById(id)
                     .orElseThrow(
                         () -> new PublisherServiceValidateException(
                             PublisherServiceException.NO_SUCH_PUBLISHER));
+                return publisherById.getId();
             case MEMBER:
-                return repository.findByMemberId(id)
+                Publisher publisherByMember = repository.findByMemberId(id)
                     .orElseThrow(
-                        () -> new PublisherServiceValidateException(PublisherServiceException.NO_SUCH_PUBLISHER));
+                        () -> new PublisherServiceValidateException(
+                            PublisherServiceException.NO_SUCH_PUBLISHER));
+                return publisherByMember.getId();
             default:
                 throw new PublisherServiceValidateException(PublisherServiceException.NO_SUCH_VALIDATE_TYPE);
         }
     }
 
-    public Publisher validatePublisher(String key) {
-        return repository.findByKey(key)
+    public Long validatePublisher(String key) {
+        Publisher publisher = repository.findByKey(key)
             .orElseThrow(
                 () -> new PublisherServiceValidateException(
                     PublisherServiceException.NO_SUCH_PUBLISHER));
+        return publisher.getId();
     }
 
-    public Publisher validatePublisher(String key, String password) {
-        Publisher publisher = validatePublisher(key);
+    public Long validatePublisher(String key, String password) {
+        Long publisherId = validatePublisher(key);
 
-        validatePublisherPassword(publisher, password);
+        validatePublisherPassword(publisherId, password);
 
-        return publisher;
+        return publisherId;
     }
 
-    private void validatePublisherPassword(Publisher publisher, String password) {
-        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(publisher)
+    private void validatePublisherPassword(Long publisherId, String password) {
+        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(publisherId)
             .orElseThrow(
                 () -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
 

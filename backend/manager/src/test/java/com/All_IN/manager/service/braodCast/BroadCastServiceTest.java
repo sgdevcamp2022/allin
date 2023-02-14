@@ -53,9 +53,9 @@ class BroadCastServiceTest {
         key = publisherService.getKey(publisherId);
         password = publisherService.generatePassword(publisherId);
 
-        Publisher publisher = publisherValidateService.validatePublisher(key, password);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key, password);
 
-        broadCastService.startLive(publisher);
+        broadCastService.startLive(validatePublisherId);
     }
 
     @AfterEach
@@ -85,10 +85,10 @@ class BroadCastServiceTest {
     @Test
     void endLive() {
         //Given
-        Publisher publisher = publisherValidateService.validatePublisher(key);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key);
 
         //When
-        broadCastService.endLive(publisher);
+        broadCastService.endLive(validatePublisherId);
         int onLive = broadCastService.liveList().getLiveBroadCasts().size();
 
         //Then
@@ -101,9 +101,9 @@ class BroadCastServiceTest {
         Long newPublisherId = newPublisher();
         String newKey = publisherService.getKey(newPublisherId);
         String newPassword = publisherService.generatePassword(newPublisherId);
-        Publisher publisher = publisherValidateService.validatePublisher(newKey, newPassword);
+        Long validatePublisherId = publisherValidateService.validatePublisher(newKey, newPassword);
 
-        broadCastService.startLive(publisher);
+        broadCastService.startLive(validatePublisherId);
 
         //When
         int onLive = broadCastService.liveList().getLiveBroadCasts().size();

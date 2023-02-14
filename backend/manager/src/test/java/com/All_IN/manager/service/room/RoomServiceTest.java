@@ -72,9 +72,9 @@ class RoomServiceTest {
     void data() {
         publisherService.save(memberId);
 
-        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+        Long validatePublisherId = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
 
-        roomService.save(publisher, roomInfoRequest);
+        roomService.save(validatePublisherId, roomInfoRequest);
     }
 
     @AfterEach
@@ -111,13 +111,13 @@ class RoomServiceTest {
         roomInfoRequest.setDescription("test description");
         roomInfoRequest.setScheduleVO(new ScheduleVO(LocalTime.now(), LocalTime.now().plusHours(1L)));
 
-        Publisher publisher = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
+        Long validatePublisherId = publisherValidateService.validatePublisher(memberId, PublisherValidateIdType.PUBLISHER);
 
         // When
-        mockRoomService.save(publisher, roomInfoRequest);
+        mockRoomService.save(validatePublisherId, roomInfoRequest);
 
         // Then
-        Mockito.verify(mockRoomService, Mockito.times(1)).save(publisher, roomInfoRequest);
+        Mockito.verify(mockRoomService, Mockito.times(1)).save(validatePublisherId, roomInfoRequest);
     }
 
     @Test

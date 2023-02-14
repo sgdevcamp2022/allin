@@ -1,18 +1,14 @@
 package com.All_IN.manager.domain.broadCast;
 
 import com.All_IN.manager.domain.SqlDateTime.createAndModifiedAt;
-import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,19 +32,17 @@ public class BroadCast {
     @Embedded
     private createAndModifiedAt sqlDateTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id")
-    private Publisher publisher;
+    @Column(name = "publisher_id")
+    private Long publisherId;
 
-
-    private BroadCast(Publisher publisher) {
+    private BroadCast(Long publisherId) {
         this.state = BroadCastState.LIVE;
         this.sqlDateTime = new createAndModifiedAt();
-        this.publisher = publisher;
+        this.publisherId = publisherId;
     }
 
-    public static BroadCast from(Publisher publisher) {
-        return new BroadCast(publisher);
+    public static BroadCast relatedFrom(Long publisherId) {
+        return new BroadCast(publisherId);
     }
 
 

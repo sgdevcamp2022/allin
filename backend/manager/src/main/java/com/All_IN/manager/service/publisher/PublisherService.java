@@ -21,9 +21,18 @@ public class PublisherService {
     private final PublisherRepository repository;
     private final PublisherPasswordRepository publisherPasswordRepository;
 
-    private final PublisherValidateService validateService;
 
     private final Md5 md5;
+
+
+    private Publisher browsePublisher(Long publisherId) {
+        Publisher publisher = repository.findById(publisherId)
+            .orElseThrow(
+                () -> new PublisherServiceValidateException(
+                    PublisherServiceException.NO_SUCH_PUBLISHER));
+        return publisher;
+    }
+
 
     @Transactional
     public void save(long memberId) {
@@ -38,22 +47,22 @@ public class PublisherService {
     }
 
     public String getKey(Long publisherId) {
-        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        Publisher publisher = browsePublisher(publisherId);
 
         return publisher.getKey();
     }
 
     @Transactional
     public String generatePassword(Long publisherId) {
-        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        Publisher publisher = browsePublisher(publisherId);
 
-        Optional<PublisherPassword> passwordByPublisher = publisherPasswordRepository.findByPublisher(publisher);
+        Optional<PublisherPassword> passwordByPublisher = publisherPasswordRepository.findByPublisher(publisher.getId());
         if (passwordByPublisher.isPresent()) {
             throw new PublisherServiceValidateException(
                 PublisherServiceException.ALREADY_GENERATE_PASSWORD);
         }
 
-        PublisherPassword publisherPassword = new PublisherPassword(publisher);
+        PublisherPassword publisherPassword = PublisherPassword.relatedFrom(publisher.getId());
         publisherPasswordRepository.save(publisherPassword);
 
         return publisherPassword.getValue();
@@ -61,9 +70,9 @@ public class PublisherService {
 
     @Transactional
     public void resetPassword(Long publisherId) {
-        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        Publisher publisher = browsePublisher(publisherId);
 
-        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(publisher)
+        PublisherPassword publisherPassword = publisherPasswordRepository.findByPublisher(publisher.getId())
             .orElseThrow(() -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
 
         publisherPassword.use();
@@ -71,9 +80,9 @@ public class PublisherService {
     }
 
     public String generateURL(Long publisherId) {
-        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        Publisher publisher = browsePublisher(publisherId);
 
-        publisherPasswordRepository.findByPublisher(publisher)
+        publisherPasswordRepository.findByPublisher(publisher.getId())
             .orElseThrow(() -> new PublisherServiceValidateException(PublisherServiceException.NO_PASSWORD));
 
         return publisher.getKey() + "?pw=";
@@ -91,7 +100,7 @@ public class PublisherService {
 
     @Transactional
     public void updateKey(Long publisherId) {
-        Publisher publisher = validateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
+        Publisher publisher = browsePublisher(publisherId);
 
         String key = md5.encode(UUID.randomUUID().toString());
 

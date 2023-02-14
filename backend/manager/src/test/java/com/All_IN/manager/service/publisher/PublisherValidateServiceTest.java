@@ -62,11 +62,10 @@ class PublisherValidateServiceTest {
         //Given
 
         //When
-        Publisher publisher = publisherValidateService.validatePublisher(publisherId,
-            PublisherValidateIdType.PUBLISHER);
+        Long validatePublisherId = publisherValidateService.validatePublisher(publisherId, PublisherValidateIdType.PUBLISHER);
 
         //Then
-        Assertions.assertThat(publisher.getId()).isEqualTo(publisherId);
+        Assertions.assertThat(validatePublisherId).isEqualTo(publisherId);
     }
 
     @Test
@@ -74,11 +73,11 @@ class PublisherValidateServiceTest {
         //Given
 
         //When
-        Publisher publisher = publisherValidateService.validatePublisher(memberId,
+        Long validatePublisherId = publisherValidateService.validatePublisher(memberId,
             PublisherValidateIdType.MEMBER);
 
         //Then
-        Assertions.assertThat(publisher.getId()).isEqualTo(publisherId);
+        Assertions.assertThat(validatePublisherId).isEqualTo(publisherId);
     }
 
     @Test
@@ -86,10 +85,10 @@ class PublisherValidateServiceTest {
         //Given
 
         //When
-        Publisher publisher = publisherValidateService.validatePublisher(key, password);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key, password);
 
         //Then
-        Assertions.assertThat(publisher.getId()).isEqualTo(publisherId);
+        Assertions.assertThat(validatePublisherId).isEqualTo(publisherId);
     }
 
     @Test
@@ -97,9 +96,9 @@ class PublisherValidateServiceTest {
         //Given
 
         //When
-        Publisher publisher = publisherValidateService.validatePublisher(key);
+        Long validatePublisherId = publisherValidateService.validatePublisher(key);
 
         //Then
-        Assertions.assertThat(publisher.getId()).isEqualTo(publisherId);
+        Assertions.assertThat(validatePublisherId).isEqualTo(publisherId);
     }
 }

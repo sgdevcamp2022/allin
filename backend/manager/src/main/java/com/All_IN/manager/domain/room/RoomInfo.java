@@ -4,12 +4,9 @@ import com.All_IN.manager.domain.SqlDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -39,25 +36,24 @@ public class RoomInfo {
     @Embedded
     private ScheduleVO scheduleVO;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private Room room;
+    @Column(name = "room_id")
+    private Long roomId;
 
     @Embedded
     private SqlDateTime.modifiedAndDeleteAt sqlDatetime;
 
 
-    private RoomInfo(Room room, String title, String description, ScheduleVO scheduleVO) {
-        this.room = room;
+    private RoomInfo(Long roomId, String title, String description, ScheduleVO scheduleVO) {
+        this.roomId = roomId;
         this.title = title;
         this.description = description;
         this.scheduleVO = scheduleVO;
         this.sqlDatetime = new SqlDateTime.modifiedAndDeleteAt();
     }
 
-    public static RoomInfo of(Room room, String title, String description, ScheduleVO scheduleVO) {
+    public static RoomInfo relatedOf(Long roomId, String title, String description, ScheduleVO scheduleVO) {
         return new RoomInfo(
-            room,
+            roomId,
             title,
             description,
             scheduleVO

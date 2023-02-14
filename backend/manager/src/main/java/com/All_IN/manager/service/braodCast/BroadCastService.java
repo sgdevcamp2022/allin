@@ -3,7 +3,6 @@ package com.All_IN.manager.service.braodCast;
 import com.All_IN.manager.domain.broadCast.BroadCast;
 import com.All_IN.manager.domain.broadCast.BroadCastRepository;
 import com.All_IN.manager.domain.broadCast.BroadCastState;
-import com.All_IN.manager.domain.publisher.Publisher;
 import com.All_IN.manager.mapper.broadCast.BroadCastMapper;
 import com.All_IN.manager.mapper.broadCast.OnLiveBroadCastListDTO;
 import com.All_IN.manager.service.braodCast.exception.BroadCastServiceException;
@@ -24,18 +23,18 @@ public class BroadCastService {
 
 
     @Transactional
-    public void startLive(Publisher publisher) {
-        if (repository.existByPublisherAndStateIsLive(publisher)) {
+    public void startLive(Long publisherId) {
+        if (repository.existByPublisherAndStateIsLive(publisherId)) {
             throw new BroadCastServiceValidateException(BroadCastServiceException.ALREADY_ON_LIVE);
         }
 
-        BroadCast broadCast = BroadCast.from(publisher);
+        BroadCast broadCast = BroadCast.relatedFrom(publisherId);
         repository.save(broadCast);
     }
 
     @Transactional
-    public void endLive(Publisher publisher) {
-        BroadCast liveBroadCast = repository.findByPublisherAndState(publisher, BroadCastState.LIVE)
+    public void endLive(Long publisherId) {
+        BroadCast liveBroadCast = repository.findByPublisherAndState(publisherId, BroadCastState.LIVE)
             .orElseThrow(() -> new BroadCastServiceValidateException(BroadCastServiceException.NO_MATCH_LIVE));
 
         liveBroadCast.end();
