@@ -1,8 +1,9 @@
 package com.example.repository;
 
 import com.example.domain.User;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, String> {
-  boolean existsByTopicIdAndName(String topicId, String name);
+  List<User> findAllByIsDone(boolean isDone);
 }

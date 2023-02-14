@@ -8,13 +8,16 @@ import static org.mockito.Mockito.verify;
 import com.example.chat.MongoTestContainerConfig;
 import com.example.chat.RedisTestContainerConfig;
 import com.example.controller.ChatController;
-import com.example.domain.Topic;
-import com.example.dto.TopicCreateRequest;
 import com.example.domain.Message;
+import com.example.domain.Topic;
+import com.example.domain.User;
 import com.example.dto.ChatMessageRequest;
 import com.example.dto.ChatMessageResponse;
+import com.example.dto.TopicCreateRequest;
 import com.example.repository.ChatRepository;
 import com.example.repository.TopicRepository;
+import com.example.repository.UserRepository;
+import com.example.service.ReportConsumer;
 import com.example.service.TopicService;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
@@ -57,6 +60,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+
 @ExtendWith({RedisTestContainerConfig.class, MongoTestContainerConfig.class})
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ChatControllerTest {
@@ -95,6 +99,10 @@ class ChatControllerTest {
       return redisTemplate;
     }
   }
+
+  @MockBean
+  ReportConsumer reportConsumer;
+
   @LocalServerPort
   Integer port;
 
@@ -102,13 +110,17 @@ class ChatControllerTest {
   ChatController chatController;
 
   @Autowired
+  TopicService topicService;
+  
+  @Autowired
   TopicRepository topicRepository;
 
   @Autowired
-  TopicService topicService;
+  UserRepository userRepository;
 
   @Autowired
   ChatRepository chatRepository;
+
   WebSocketStompClient webSocketStompClient;
   StompSession session;
 
@@ -170,6 +182,29 @@ class ChatControllerTest {
     }
 
     @Nested
+    @DisplayName("채팅 차단된 사용자라면")
+    class ContextWithBlockedUser {
+
+      @Test
+      @DisplayName("handleException을 호출한다")
+      void ItCallsHandleException() throws InterruptedException {
+        // given
+        String topicId = "topicId";
+        String userName = "user1";
+        userRepository.save(User.of(topicId, userName));
+
+        ChatMessageRequest message = ChatMessageRequest.of(topicId, userName);
+
+        // when
+        session.send(String.format("/chat/%s/send", topicId), message);
+
+        // then
+        sleep(1000);
+        verify(chatController).handleException(any(Exception.class));
+      }
+    }
+
+    @Nested
     @DisplayName("종료된 토픽이라면")
     class ContextWithClosedTopic {
 
@@ -191,6 +226,7 @@ class ChatControllerTest {
         verify(chatController).handleException(any(Exception.class));
       }
     }
+
     @Nested
     @DisplayName("메시지가 100자를 넘는다면")
     class ContextWithMessageLengthOver100 {
