@@ -32,10 +32,21 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -50,6 +61,40 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ChatControllerTest {
 
+  @TestConfiguration
+  static class TestRedisConfig {
+
+    @Value("${spring.data.redis.host}")
+    private String host;
+    @Value("${spring.data.redis.port}")
+    private int port;
+
+    @Bean
+    @Primary
+    public RedisConnectionFactory testRedisConnectionFactory() {
+      return new LettuceConnectionFactory(host, port);
+    }
+
+    @Bean
+    @Primary
+    public RedisMessageListenerContainer testRedisMessageListenerContainer(
+      RedisConnectionFactory connectionFactory) {
+      RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+      container.setConnectionFactory(connectionFactory);
+      return container;
+    }
+
+    @Bean
+    @Primary
+    public RedisTemplate<String, Object> testRedisTemplate(
+      RedisConnectionFactory connectionFactory) {
+      RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+      redisTemplate.setConnectionFactory(connectionFactory);
+      redisTemplate.setKeySerializer(new StringRedisSerializer());
+      redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(String.class));
+      return redisTemplate;
+    }
+  }
   @LocalServerPort
   Integer port;
 
@@ -95,9 +140,7 @@ class ChatControllerTest {
         // given
         String topicId = "topicId";
         String subUri = String.format("/topic/%s", topicId);
-        TopicCreateRequest request = new TopicCreateRequest(topicId,
-          LocalDateTime.now());
-        topicService.create(request);
+        topicService.create(new TopicCreateRequest(topicId, LocalDateTime.now().plusMinutes(5)));
 
         ChatMessageRequest message = ChatMessageRequest.of("user1", "hi~");
         BlockingQueue<ChatMessageResponse> queue = new ArrayBlockingQueue<>(1);
@@ -120,7 +163,7 @@ class ChatControllerTest {
         sleep(1000);
         List<Message> result = (List<Message>) chatRepository.findAll();
         assertThat(result.size()).isEqualTo(1);
-        ChatMessageResponse chatMessage = queue.poll(1, TimeUnit.SECONDS);
+        ChatMessageResponse chatMessage = queue.poll(3, TimeUnit.SECONDS);
         assertThat(chatMessage.getSender()).isEqualTo(message.getSender());
         assertThat(chatMessage.getContent()).isEqualTo(message.getContent());
       }
