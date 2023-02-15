@@ -36,3 +36,4 @@ OBS에서 RTMP 신호를 미디어 서버의 NGiNX RTMP 모듈을 통해 `.m3u8`
 
 ### QUESTION
 
+https://github.com/belljun3395/allin/blob/belljun/backend/media/docs/question/QUESTION.md

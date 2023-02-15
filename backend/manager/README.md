@@ -10,10 +10,10 @@ All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 OBS를 통해 
 
 매니저 서버는 위와 같은 서비스의 요구사항을 충족 하기 위하여 개발되었습니다.
 
-자세한 사항은 [링크](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/INTRODUCE.md)를 통해 소개하도록 하겠습니다.
+자세한 사항은 [링크](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/INTRODUCE.md)를 통해 소개하도록 하겠습니다.
 
 ### 기능
-+ **[방송 송출자 관련 기능 (Publisher)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/Publisher.md)**
++ **[방송 송출자 관련 기능 (Publisher)](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/domain/Publisher.md)**
   + 방송 송출자 등록
   + 방송 키 조회
   + 방송 키 수정
@@ -21,13 +21,13 @@ All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 OBS를 통해 
   + 방송 비밀번호 초기화
   + 방송 비밀번호 사용
   + 방송 주소 조회
-+ **[방송방 관련 기능 (Room)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/Room.md)**
++ **[방송방 관련 기능 (Room)](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/domain/Room.md)**
   + 방송방 생성
   + 방송방 정보 조회
   + 방송방 정보 수정
-+ **[방송 (BroadCast)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/BroadCast.md)**
++ **[방송 (BroadCast)](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/domain/BroadCast.md)**
   + 방송 목록 조회
-+ **[매니저 (Manager)](https://github.com/belljun3395/allin/blob/main/backend/manager/docs/domain/Manager.md)**
++ **[매니저 (Manager)](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/domain/Manager.md)**
   + 방송 시작
   + 방송 종료
 
@@ -47,7 +47,7 @@ https://documenter.getpostman.com/view/17873656/2s935uGg1W
 
 ### QUESTION
 
-https://github.com/belljun3395/allin/blob/main/backend/manager/docs/question/QUESTION.md
+https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/question/QUESTION.md
 
 + Mapper
 + 도메인간 연관관계
