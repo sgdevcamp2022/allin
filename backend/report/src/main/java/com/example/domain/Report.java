@@ -30,6 +30,10 @@ public class Report extends BaseTime {
 
   @NotNull
   @NotBlank
+  @Size(max = 255)
+  private String reporter;
+  @NotNull
+  @NotBlank
   @Size(max = 100)
   private String message;
 
@@ -38,16 +42,20 @@ public class Report extends BaseTime {
   private ReportReason reason;
 
   @Builder(access = AccessLevel.PRIVATE)
-  private Report(Long id, String reportedUser, String content, ReportReason reason) {
+  private Report(Long id, String reportedUser, String reporter, String content,
+    ReportReason reason) {
     this.id = id;
     this.reportedUser = reportedUser;
+    this.reporter = reporter;
     this.message = content;
     this.reason = reason;
   }
 
-  public static Report of(String reportedUser, String content, ReportReason reason) {
+  public static Report of(String reportedUser, String reporter, String content,
+    ReportReason reason) {
     return Report.builder()
                  .reportedUser(reportedUser)
+                 .reporter(reporter)
                  .content(content)
                  .reason(reason)
                  .build();
