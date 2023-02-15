@@ -25,12 +25,12 @@ public class Report extends BaseTime {
 
   @NotNull
   @NotBlank
-  @Size(max = 255)
+  @Size(max = 8)
   private String reportedUser;
 
   @NotNull
   @NotBlank
-  @Size(max = 255)
+  @Size(max = 8)
   private String reporter;
   @NotNull
   @NotBlank

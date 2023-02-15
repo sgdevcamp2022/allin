@@ -62,8 +62,8 @@ class ReportApiControllerTest {
     }
 
     @Nested
-    @DisplayName("reportedUser가 255자를 넘는다면")
-    class ContextWithReportedUserLengthOver255 {
+    @DisplayName("reportedUser가 8자를 넘는다면")
+    class ContextWithReportedUserLengthOver8 {
 
       @Test
       @DisplayName("예외 메시지를 반환한다")
@@ -71,7 +71,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(256), "별로에요",
+        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(9), "별로에요",
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -109,8 +109,8 @@ class ReportApiControllerTest {
     }
 
     @Nested
-    @DisplayName("reporter가 255자를 넘는다면")
-    class ContextWithReporterLengthOver255 {
+    @DisplayName("reporter가 8자를 넘는다면")
+    class ContextWithReporterLengthOver8 {
 
       @Test
       @DisplayName("예외 메시지를 반환한다")
@@ -118,7 +118,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(256), "별로에요",
+        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(9), "별로에요",
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
