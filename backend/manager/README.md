@@ -10,7 +10,7 @@ All-IN 팀이 Smilegate-WinterDev에서 구현하는 서비스는 OBS를 통해 
 
 매니저 서버는 위와 같은 서비스의 요구사항을 충족 하기 위하여 개발되었습니다.
 
-자세한 사항은 [링크](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/INTRODUCE.md)를 통해 소개하도록 하겠습니다.
+프로젝트에 대한 자세한 사항은 [링크](https://github.com/belljun3395/allin/tree/belljun/backend/manager/docs)를 통해 소개하도록 하겠습니다.
 
 ### 기능
 + **[방송 송출자 관련 기능 (Publisher)](https://github.com/belljun3395/allin/blob/belljun/backend/manager/docs/domain/Publisher.md)**

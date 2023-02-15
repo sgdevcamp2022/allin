@@ -17,7 +17,7 @@ LINE Engineering 블로그의 [LINE LIVE 서비스의 인코더 레이어 구조
 
 그리고 변환된 파일을 카프카를 통해 CDN 서버로 전달합니다.(Kafka)
 
-자세한 사항은 [링크](https://github.com/belljun3395/allin/blob/belljun/backend/media/docs/INTRODUCE.md)를 통해 소개하도록 하겠습니다.
+프로젝트에 대한 자세한 사항은 [링크](https://github.com/belljun3395/allin/tree/belljun/backend/media/docs)를 통해 소개하도록 하겠습니다.
 
 ### 아키텍처
 
