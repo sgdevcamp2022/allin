@@ -28,7 +28,7 @@ public class User {
     private String userName;
     @Column
     private String password;
-    @Column(unique = true)
+    @Column(unique = true, length = 8)
     private String nickName;
 
     @Column
