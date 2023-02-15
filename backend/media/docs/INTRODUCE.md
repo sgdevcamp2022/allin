@@ -51,7 +51,7 @@ on_done_publish http://${MANAGER_SERVER:PORT}/api/v1/manager/end;
 
 해당프로젝트에서 CDN 서버로의 영상 전송의 경우 Kafka를 통해 영상을 전송합니다.
 
-![Group 1859](https://user-images.githubusercontent.com/102807742/218669188-5be3846c-3e7f-4ab9-88ab-7d13cd9b38d4.png)
+![Group 1859](https://user-images.githubusercontent.com/102807742/218960155-ca1f8a5c-1c99-4267-a455-aa755b4d7a73.png)
 
 해당 프로젝트에서는 기존 Origin 서버를 Kafka로 교체한 것입니다.
 

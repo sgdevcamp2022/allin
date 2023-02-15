@@ -2,7 +2,7 @@
 
 ### 간단 소개
 
-![Group 1857](https://user-images.githubusercontent.com/102807742/218668956-b750afd3-88f6-4990-8144-0540cc3adddd.png)
+![Group 1857](https://user-images.githubusercontent.com/102807742/218959914-c94d309e-8ef6-4c4e-b357-39f2a184fc07.png)
 
 
 위의 사진은 LINE LIVE 인코더 레이어 구조를 나타낸 사진입니다.
@@ -21,7 +21,7 @@ LINE Engineering 블로그의 [LINE LIVE 서비스의 인코더 레이어 구조
 
 ### 아키텍처
 
-![2-6아키텍쳐_2_1](https://user-images.githubusercontent.com/102807742/218659328-91450a9c-05db-443d-98f2-3f1278b5b7c2.jpg)
+![2-6아키텍쳐_2_1](https://user-images.githubusercontent.com/102807742/218960323-43148af5-8c54-40ad-87b4-8173f81f2626.jpg)
 
 OBS에서 RTMP 신호를 미디어 서버의 NGiNX RTMP 모듈을 통해 `.m3u8`, `.ts` 로 변환합니다.
 
