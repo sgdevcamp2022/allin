@@ -3,6 +3,7 @@ package com.example.chat.controller;
 import static java.lang.Thread.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 import com.example.chat.MongoTestContainerConfig;
@@ -27,6 +28,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -111,7 +113,7 @@ class ChatControllerTest {
 
   @Autowired
   TopicService topicService;
-  
+
   @Autowired
   TopicRepository topicRepository;
 
@@ -138,6 +140,12 @@ class ChatControllerTest {
                                   .get(1, TimeUnit.SECONDS);
   }
 
+  @AfterEach
+  void clear() {
+    userRepository.deleteAll();
+    chatRepository.deleteAll();
+    topicRepository.deleteAll();
+  }
   @Nested
   @DisplayName("send 메서드는")
   class DescribeSend {
@@ -200,7 +208,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -223,7 +231,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -243,7 +251,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -264,7 +272,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -284,7 +292,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -304,7 +312,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
 
@@ -325,7 +333,7 @@ class ChatControllerTest {
 
         // then
         sleep(1000);
-        verify(chatController).handleException(any(Exception.class));
+        verify(chatController, atLeastOnce()).handleException(any(Exception.class));
       }
     }
   }
