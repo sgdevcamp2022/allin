@@ -23,7 +23,7 @@ public class ReportServiceImpl implements ReportService {
     long count = reportCountRepository.increaseReportCount(request.getTopicId(),
       request.getReportedUser());
     sendMessage(count, request.getTopicId(), request.getReportedUser());
-    Report report = Report.of(request.getReportedUser(), request.getMessage(), request.getReason());
+    Report report = Report.of(request.getReportedUser(), request.getReporter(), request.getMessage(), request.getReason());
     reportRepository.save(report);
   }
 

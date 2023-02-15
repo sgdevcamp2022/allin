@@ -289,15 +289,15 @@ class ChatControllerTest {
     }
 
     @Nested
-    @DisplayName("송신자 닉네임이 255자를 넘는다면")
-    class ContextWithSenderLengthOver255 {
+    @DisplayName("송신자 닉네임이 8자를 넘는다면")
+    class ContextWithSenderLengthOver8 {
 
       @Test
       @DisplayName("handleException을 호출한다")
       void ItCallsHandleException() throws InterruptedException {
         // given
         String topicId = "topicId";
-        ChatMessageRequest message = ChatMessageRequest.of("u".repeat(256), "message");
+        ChatMessageRequest message = ChatMessageRequest.of("u".repeat(9), "message");
 
         // when
         session.send(String.format("/chat/%s/send", topicId), message);

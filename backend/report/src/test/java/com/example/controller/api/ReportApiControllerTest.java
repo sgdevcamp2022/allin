@@ -48,7 +48,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", reportedUser, "별로에요",
+        ReportRequest reportRequest = new ReportRequest("topic1", reportedUser, "user1", "별로에요",
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -62,8 +62,8 @@ class ReportApiControllerTest {
     }
 
     @Nested
-    @DisplayName("reportedUser가 255자를 넘는다면")
-    class ContextWithReportedUserLengthOver255 {
+    @DisplayName("reportedUser가 8자를 넘는다면")
+    class ContextWithReportedUserLengthOver8 {
 
       @Test
       @DisplayName("예외 메시지를 반환한다")
@@ -71,7 +71,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "r".repeat(256), "별로에요",
+        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(9), "별로에요",
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -84,6 +84,52 @@ class ReportApiControllerTest {
       }
     }
 
+    @Nested
+    @DisplayName("reporter가 빈 값이라면")
+    class ContextWithReporterEmpty {
+
+      @ParameterizedTest
+      @NullAndEmptySource
+      @DisplayName("예외 메시지를 반환한다")
+      void ItReturnsExceptionResponse(String reporter) throws Exception {
+        // given
+
+        // when, then
+        ReportRequest reportRequest = new ReportRequest("topic1", "user1", reporter, "별로에요",
+          ReportReason.UNPLEASANT_EXPRESSION);
+
+        MockHttpServletResponse res = mockMvc.perform(
+                                               MockMvcRequestBuilders.post("/api/v1/reports")
+                                                                     .contentType(MediaType.APPLICATION_JSON)
+                                                                     .content(convertDataToJson(reportRequest)))
+                                             .andExpect(status().is4xxClientError())
+                                             .andReturn().getResponse();
+        res.getContentAsString().contains("요청 데이터가 올바르지 않습니다.");
+      }
+    }
+
+    @Nested
+    @DisplayName("reporter가 8자를 넘는다면")
+    class ContextWithReporterLengthOver8 {
+
+      @Test
+      @DisplayName("예외 메시지를 반환한다")
+      void ItReturnsExceptionResponse() throws Exception {
+        // given
+
+        // when, then
+        ReportRequest reportRequest = new ReportRequest("topic1", "user2", "r".repeat(9), "별로에요",
+          ReportReason.UNPLEASANT_EXPRESSION);
+
+        MockHttpServletResponse res = mockMvc.perform(
+                                               MockMvcRequestBuilders.post("/api/v1/reports")
+                                                                     .contentType(MediaType.APPLICATION_JSON)
+                                                                     .content(convertDataToJson(reportRequest)))
+                                             .andExpect(status().is4xxClientError())
+                                             .andReturn().getResponse();
+        res.getContentAsString().contains("요청 데이터가 올바르지 않습니다.");
+      }
+    }
 
     @Nested
     @DisplayName("message가 빈 값이라면")
@@ -96,7 +142,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "user3", message,
+        ReportRequest reportRequest = new ReportRequest("topic1", "user3", "user1", message,
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -119,7 +165,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "usre2", "r".repeat(101),
+        ReportRequest reportRequest = new ReportRequest("topic1", "usre2", "user1", "r".repeat(101),
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -143,7 +189,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest("topic1", "usre2", "r".repeat(101),
+        ReportRequest reportRequest = new ReportRequest("topic1", "usre2", "user1", "r".repeat(101),
           null);
 
         MockHttpServletResponse res = mockMvc.perform(
@@ -167,7 +213,7 @@ class ReportApiControllerTest {
         // given
 
         // when, then
-        ReportRequest reportRequest = new ReportRequest(topicId, "user2", "별로에요",
+        ReportRequest reportRequest = new ReportRequest(topicId, "user2", "user1", "별로에요",
           ReportReason.UNPLEASANT_EXPRESSION);
 
         MockHttpServletResponse res = mockMvc.perform(

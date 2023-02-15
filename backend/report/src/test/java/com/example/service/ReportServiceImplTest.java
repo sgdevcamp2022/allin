@@ -43,10 +43,10 @@ class ReportServiceImplTest {
       void ItCallsSaveAndIncreaseReportCount() {
         // given
         ReportRequest reportRequest = new ReportRequest("topic1", "user2",
-          "제 주민번호는 990115-212345예요", ReportReason.PERSONAL_INFORMATION_DISCLOSURE);
+          "user1", "제 주민번호는 990115-212345예요", ReportReason.PERSONAL_INFORMATION_DISCLOSURE);
 
         given(reportRepository.save(any(Report.class)))
-          .willReturn(Report.of(reportRequest.getReportedUser(), reportRequest.getMessage(),
+          .willReturn(Report.of(reportRequest.getReportedUser(), reportRequest.getReporter(), reportRequest.getMessage(),
             reportRequest.getReason()));
 
         // when
