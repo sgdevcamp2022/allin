@@ -56,8 +56,8 @@ const ChatListElement = () => {
   return (
     <div className="border-border border-[1px] rounded-2xl p-6">
       <div className="overflow-x-hidden h-[58vh] mb-4 chatList scrollbar-hide">
-        {chatList.map((chat) => (
-          <ChatElement chat={chat} className="w-full" />
+        {chatList.map((chat, index) => (
+          <ChatElement chat={chat} className="w-full" key={index} />
         ))}
       </div>
       <ChatSenderElement />

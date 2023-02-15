@@ -23,7 +23,7 @@ type FailResponse = {
   message: string
 }
 
-const signInAxios = async (
+export const signInAxios = async (
   email: string,
   password: string,
   setIsWrongLogin: Dispatch<SetStateAction<boolean>>,
@@ -58,7 +58,7 @@ const signInAxios = async (
   }
 }
 
-const getRefreshToken = async () => {
+export const getRefreshToken = async () => {
   const storage = localStorage.getItem('isAutoLogin') === 'true' ? localStorage : sessionStorage
   let accessToken = storage.getItem('accessToken') ?? ''
   let refreshToken = storage.getItem('refreshToken') ?? ''
@@ -81,7 +81,12 @@ const getRefreshToken = async () => {
   }
 }
 
-const signUpAxios = async (email: string, password: string, nickName: string, userName: string) => {
+export const signUpAxios = async (
+  email: string,
+  password: string,
+  nickName: string,
+  userName: string
+) => {
   try {
     const res = await Axios.post(import.meta.env.VITE_AUTH_SERVER_URL + '/api/v1/auth/signup', {
       email,
@@ -109,5 +114,3 @@ const signUpAxios = async (email: string, password: string, nickName: string, us
     return
   }
 }
-
-export { signInAxios, signUpAxios }
