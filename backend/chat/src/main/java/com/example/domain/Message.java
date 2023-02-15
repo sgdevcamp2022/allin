@@ -24,7 +24,7 @@ public class Message {
   private String topicId;
 
   @NotBlank
-  @Size(max = 255)
+  @Size(max = 8)
   private String sender;
 
   @NotBlank

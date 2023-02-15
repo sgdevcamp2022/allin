@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class ChatMessageRequest {
 
   @NotEmpty
-  @Size(max = 255, message = "닉네임 길이는 최대 255자입니다.")
+  @Size(max = 8, message = "닉네임 길이는 최대 8자입니다.")
   private String sender;
 
   @NotEmpty
