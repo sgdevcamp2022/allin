@@ -21,7 +21,16 @@ public class LiveDTO implements Serializable {
 + index
   + index는 index.m3u8 파일으로 영상 파일 순서에 관한 정보를 담고 있습니다.
   ```
-  
+  #EXTM3U
+  #EXT-X-VERSION:3
+  #EXT-X-MEDIA-SEQUENCE:19
+  #EXT-X-TARGETDURATION:3
+  #EXTINF:3.333,
+  19.ts
+  #EXTINF:3.000,
+  20.ts
+  #EXTINF:3.334,
+  21.ts
   ```
 
 + type
