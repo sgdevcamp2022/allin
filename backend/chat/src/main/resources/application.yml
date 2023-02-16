@@ -16,8 +16,8 @@ spring:
     allow-bean-definition-overriding: true
 
   kafka:
+    bootstrap-servers: 3.38.191.130:9092
     consumer:
-      bootstrap-servers: ${KAFKA_SERVER}
       group-id: chat
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer

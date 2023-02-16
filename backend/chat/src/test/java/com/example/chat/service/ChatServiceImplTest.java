@@ -61,7 +61,7 @@ class ChatServiceImplTest {
         String id = "topic1";
         ChatMessageRequest message = ChatMessageRequest.of("user1", "message1");
         given(topicService.findById(anyString()))
-          .willReturn(Topic.of(id, LocalDateTime.now()));
+          .willReturn(Topic.of(id, LocalDateTime.now().plusMinutes(5)));
         given(userService.isBlockedUser(anyString(), anyString()))
           .willReturn(false);
         given(chatRepository.save(any(Message.class)))

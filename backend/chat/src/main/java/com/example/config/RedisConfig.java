@@ -20,7 +20,7 @@ public class RedisConfig {
   private final String host;
   private final int port;
 
-  @Value("${spring.data.redis.cluster.nodes}")
+  @Value("${spring.data.redis.cluster.nodes: 127.0.0.1:7001}")
   private final List<String> clusterNodes;
 
   @Bean
