@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
-  private static final long threshold = 10;
+  private static final long THRESHOLD = 10;
   private final ReportRepository reportRepository;
   private final ReportCountRepository reportCountRepository;
 
@@ -28,7 +28,7 @@ public class ReportServiceImpl implements ReportService {
   }
 
   private void sendMessage(long count, String topicId, String reportedUser) {
-    if (count == threshold) {
+    if (count == THRESHOLD) {
       reportProducer.send(topicId, reportedUser);
     }
   }

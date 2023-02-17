@@ -17,9 +17,6 @@ public class TopicServiceImpl implements TopicService {
   private final RedisMessageListenerContainer redisMessageListenerContainer;
   private final RedisSubscriber redisSubscriber;
 
-  /*
-  TODO: ttl 값 설정 필요
-   */
   @Override
   public void create(TopicCreateRequest request) {
     redisMessageListenerContainer.addMessageListener(redisSubscriber,

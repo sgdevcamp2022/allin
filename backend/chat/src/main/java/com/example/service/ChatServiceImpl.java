@@ -31,6 +31,7 @@ public class ChatServiceImpl implements ChatService {
   private final ChatRepository chatRepository;
 
   private final UserService userService;
+
   @Override
   public void send(String id, ChatMessageRequest message) {
     Topic foundTopic = topicService.findById(id);
@@ -52,9 +53,8 @@ public class ChatServiceImpl implements ChatService {
     Pageable page = PageRequest.of(request.getPage(), PAGE_SIZE, Sort.by("createAt").descending());
     return chatRepository.findAllByTopicId(topic.getId(), page)
                          .stream()
-                         .map(
-                           (message) -> ChatMessageResponse.of(message.getSender(),
-                             message.getContent()))
+                         .map((message) -> ChatMessageResponse.of(message.getSender(),
+                           message.getContent()))
                          .collect(Collectors.toList());
   }
 }

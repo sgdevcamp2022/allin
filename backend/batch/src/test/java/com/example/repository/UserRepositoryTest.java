@@ -84,7 +84,7 @@ class UserRepositoryTest {
         List<User> result = userRepository.findAllByIsDone(false);
 
         // then
-        assertThat(result.size()).isEqualTo(size);
+        assertThat(result).hasSize(size);
       }
     }
   }

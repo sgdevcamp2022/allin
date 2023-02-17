@@ -46,7 +46,7 @@ class UserRepositoryTest {
           user.getName());
 
         // then
-        assertThat(result).isNotNull();
+        assertThat(result).isTrue();
       }
     }
 
