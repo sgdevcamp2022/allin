@@ -162,7 +162,7 @@ class ChatServiceImplTest {
           new ChatMessagePagingRequest(0));
 
         // then
-        assertThat(result.size()).isEqualTo(messages.size());
+        assertThat(result).hasSameSizeAs(messages);
       }
     }
 

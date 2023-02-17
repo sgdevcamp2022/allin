@@ -146,6 +146,7 @@ class ChatControllerTest {
     chatRepository.deleteAll();
     topicRepository.deleteAll();
   }
+
   @Nested
   @DisplayName("send 메서드는")
   class DescribeSend {
@@ -182,7 +183,7 @@ class ChatControllerTest {
         // then
         sleep(1000);
         List<Message> result = (List<Message>) chatRepository.findAll();
-        assertThat(result.size()).isEqualTo(1);
+        assertThat(result).hasSize(1);
         ChatMessageResponse chatMessage = queue.poll(3, TimeUnit.SECONDS);
         assertThat(chatMessage.getSender()).isEqualTo(message.getSender());
         assertThat(chatMessage.getContent()).isEqualTo(message.getContent());

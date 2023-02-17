@@ -40,7 +40,7 @@ class ChatRepositoryTest {
         List<Message> result = chatRepository.findAllByTopicId("topic1", PageRequest.of(0, 19));
 
         // then
-        assertThat(result.size()).isEqualTo(19);
+        assertThat(result).hasSize(19);
       }
     }
   }

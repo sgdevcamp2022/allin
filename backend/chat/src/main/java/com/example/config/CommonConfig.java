@@ -8,7 +8,6 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 @EnableConfigurationProperties(value = {RedisConfig.class})
 @EnableRedisRepositories
 @EnableMongoAuditing
-//@EnableDiscoveryClient
 @Configuration
 public class CommonConfig {
 
