@@ -14,7 +14,7 @@
 
 
 ## 아키텍처
-![스크린샷 2023-02-17 오후 2 52 24](https://user-images.githubusercontent.com/60775067/219560621-ac317d43-0f0f-433c-971f-b794af17b876.png)
+![스크린샷 2023-02-17 오후 5 49 09](https://user-images.githubusercontent.com/60775067/219597410-ef5fb5fb-54d2-42e4-8cd8-d4403025dd82.png)
 
 
 
