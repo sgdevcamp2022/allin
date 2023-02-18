@@ -43,7 +43,7 @@ class ChatRepositoryTest {
           sender);
 
         // then
-        assertThat(result.size()).isEqualTo(size);
+        assertThat(result).hasSize(size);
       }
     }
   }
