@@ -5,6 +5,8 @@ server:
       timeout: 1800
 
 spring:
+  application:
+    name: manager-server
   datasource:
     url: ${DB_URL}
     username: sa
@@ -26,3 +28,10 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
 
+eureka:
+  instance:
+    prefer-ip-address: true
+    ip-address: ${IP_ADDRESS}
+  client:
+    service-url:
+      defaultZone: ${EUREKA_ADDRESS}
