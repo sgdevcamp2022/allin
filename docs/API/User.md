@@ -122,7 +122,7 @@
 
 - 요청은, 로그인 이후 발급된 accessToken으로 진행됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/360cd078-d7bd-4af7-952c-f0efa1cfc657/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/45393030/219909783-46c33785-771d-4ac4-97d4-7489dfd15cfd.png)
 
 ## 응답
 
@@ -223,7 +223,7 @@
 
 - 요청은, 로그인 이후 발급된 accessToken으로 진행됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/020f5c59-826f-4aaf-b042-7b04aa1aeafc/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/45393030/219909800-b6ecf75b-7714-4bcc-a6be-4cb499285792.png)
 
 ## 응답
 
@@ -279,7 +279,7 @@
 
 - 요청은 accessToken과 Body로 이루어집니다.(현재 userName, nickName, password 수정 가능)
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/dd87a059-9cc5-42d5-b70e-bef7607eb1e9/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/45393030/219909808-fc4dff16-0d13-489a-b732-765208eeede4.png)
 
 ```json
 {
@@ -341,7 +341,8 @@
 
 - 이 역시, 로그인 시 발급받은 accessToken으로 진행됩니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d1a41b29-82d2-4baf-84a9-a3e3018b1cdb/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/45393030/219909818-670da634-177b-4c7d-b6f4-d33633a5446b.png)
+
 
 ## 응답
 
