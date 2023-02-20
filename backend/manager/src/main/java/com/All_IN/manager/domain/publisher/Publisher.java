@@ -18,7 +18,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "publisher_table")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Where(clause = "DELETE_AT IS NULL")
+@Where(clause = "DELETE_AT != CREATE_AT")
 @SQLDelete(sql = "UPDATE PUBLISHER_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where PUBLISHER_ID = ?")
 public class Publisher {
 

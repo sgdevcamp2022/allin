@@ -18,7 +18,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "room_info_table")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Where(clause = "DELETE_AT IS NULL")
+@Where(clause = "DELETE_AT != MODIFIED_AT")
 @SQLDelete(sql = "UPDATE ROOM_INFO_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where ROOM_INFO_ID = ?")
 public class RoomInfo {
 
@@ -36,6 +36,9 @@ public class RoomInfo {
     @Embedded
     private ScheduleVO scheduleVO;
 
+    /**
+     * {@link Room} RoomInfo는 Room의 id를 FK로 가지고 있습니다.
+     */
     @Column(name = "room_id")
     private Long roomId;
 

@@ -1,6 +1,7 @@
 package com.All_IN.manager.domain.room;
 
 import com.All_IN.manager.domain.SqlDateTime;
+import com.All_IN.manager.domain.publisher.Publisher;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import org.hibernate.annotations.Where;
 @Entity
 @Table(name = "room_table")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Where(clause = "DELETE_AT IS NULL")
+@Where(clause = "DELETE_AT != CREATE_AT")
 @SQLDelete(sql = "UPDATE ROOM_TABLE SET DELETE_AT = CURRENT_TIMESTAMP where ROOM_ID = ?")
 @Getter
 public class Room {
@@ -27,6 +28,9 @@ public class Room {
     @Column(name = "room_id")
     private Long id;
 
+    /**
+     * {@link Publisher} Room은 Publisher의 id를 FK로 가지고 있습니다.
+     */
     @Column(name = "publisher_id")
     private Long publisherId;
 

@@ -26,6 +26,9 @@ public class PublisherPassword {
     @Column(name = "publisher_password_id")
     private Long id;
 
+    /**
+     * {@link Publisher} PublisherPassword는 Publisher의 id를 FK로 가지고 있습니다.
+     */
     @Column(name = "publisher_id")
     private Long publisherId;
 

@@ -3,12 +3,12 @@ drop table if exists publisher_table CASCADE;
 
 create table publisher_password_table
 (
-    password_id    bigint NOT NULL AUTO_INCREMENT,
+    publisher_password_id    bigint NOT NULL AUTO_INCREMENT,
     create_at      timestamp,
-    password_used  boolean,
-    password_value varchar(255),
+    publisher_password_used  boolean,
+    publisher_password_value varchar(255),
     publisher_id   bigint,
-    primary key (password_id)
+    primary key (publisher_password_id)
 );
 
 create table publisher_table

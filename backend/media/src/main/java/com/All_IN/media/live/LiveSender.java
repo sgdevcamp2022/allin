@@ -52,6 +52,8 @@ public class LiveSender {
     public void broadCastLiveVideo(Map<String, Boolean> live, String key, String type)
         throws IOException, InterruptedException {
 
+        String latestTsFileName = null;
+
         while (live.getOrDefault(key, true)) {
 
             String index = getM3U8(
@@ -66,13 +68,18 @@ public class LiveSender {
 
             String liveDTOJSON = gson.toJson(liveDTO);
 
-            kafkaTemplate.send(
-                TOPIC_LIVE,
-                key,
-                liveDTOJSON
-            );
-
-            TimeUnit.SECONDS.sleep(RENEWAL_TIME);
+            if (latestTsFileName != null) {
+                if (!latestTsFileName.equals(tsFileName)) {
+                    kafkaTemplate.send(
+                        TOPIC_LIVE,
+                        key,
+                        liveDTOJSON
+                    );
+                    latestTsFileName = tsFileName;
+                }
+            } else {
+                latestTsFileName = tsFileName;
+            }
         }
     }
 
@@ -80,8 +87,8 @@ public class LiveSender {
         return m3U8.substring(m3U8.lastIndexOf(",") + 2, m3U8.lastIndexOf(DOT_TS));
     }
 
-    private byte[] getTsFile(String url) throws IOException {
-        return Files.readAllBytes(Paths.get(url));
+    private byte[] getTsFile(String path) throws IOException {
+        return Files.readAllBytes(Paths.get(path));
     }
 
     @Async
@@ -90,12 +97,12 @@ public class LiveSender {
         kafkaTemplate.send(TOPIC_LIVE_INDEX, key, m3U8);
     }
 
-    private String getM3U8(String url) throws IOException, InterruptedException {
+    private String getM3U8(String path) throws IOException, InterruptedException {
         byte[] m3u8 = null;
 
         while (m3u8 == null) {
             try {
-                m3u8 = Files.readAllBytes(Paths.get(url));
+                m3u8 = Files.readAllBytes(Paths.get(path));
             } catch (NoSuchFileException noSuchFileException) {
                 TimeUnit.SECONDS.sleep(SHORT_RENEWAL_TIME);
             }
