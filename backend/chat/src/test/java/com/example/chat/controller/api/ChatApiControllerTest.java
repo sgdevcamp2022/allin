@@ -1,6 +1,6 @@
 package com.example.chat.controller.api;
 
-import static com.example.exception.ErrorMessage.NONEXISTENT_TOPIC;
+import static com.example.exception.ExceptionMessage.NONEXISTENT_TOPIC;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -22,7 +22,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.AutoConfigureDataMongo;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -30,7 +29,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 
-@AutoConfigureDataMongo
 @WebMvcTest(controllers = ChatApiController.class)
 class ChatApiControllerTest {
 
@@ -86,7 +84,7 @@ class ChatApiControllerTest {
         LinkedMultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("page", "-1");
         MockHttpServletResponse res = mockMvc.perform(
-                                               MockMvcRequestBuilders.get("/api/v1/chats")
+                                               MockMvcRequestBuilders.get("/api/v1/chats/topic1")
                                                                      .params(params))
                                                                      .andExpect(status().is4xxClientError())
                                                                      .andReturn().getResponse();

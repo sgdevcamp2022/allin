@@ -1,0 +1,8 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  sql:
+    init:
+      schema-locations:
+        - classpath:sql/report_schema.sql
+      mode: always

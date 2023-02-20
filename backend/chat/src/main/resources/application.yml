@@ -1,11 +1,45 @@
+
 spring:
+  application:
+    name: chat-server
   data:
     redis:
-      host: localhost
-      port: 8090
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      cluster:
+        nodes: ${REDIS_CLUSTER}
     mongodb:
-      host: localhost
-      port: 27017
-      database: chat
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: ${MONGO_DATABASE}
   main:
     allow-bean-definition-overriding: true
+
+  kafka:
+    bootstrap-servers: 3.38.191.130:9092
+    consumer:
+      group-id: chat
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: reportEvent:com.example.service.ReportEvent
+            trusted:
+              packages: '*'
+          deserializer:
+            value:
+              delegate:
+                class: org.springframework.kafka.support.serializer.JsonDeserializer
+    topicName: report_topics
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: ${EUREKA_URI}
+#    instance:
+#      prefer-ip-address: true
+server:
+  port: 9000
