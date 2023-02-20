@@ -16,9 +16,9 @@ import HomeDesktopPage from './Pages/Home/Desktop/Home.page'
 import { worker } from './mocks/worker'
 
 const prepare = async (): Promise<void> => {
-  worker.start().then(() => {
-    return Promise.resolve()
-  })
+  // worker.start().then(() => {
+  return Promise.resolve()
+  // })
 }
 
 const router = createBrowserRouter([
