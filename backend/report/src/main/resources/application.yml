@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: report-server
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -37,5 +39,12 @@ spring:
               mapping: reportEvent:com.example.service.ReportEvent
     topicName: report_topics
     bootstrap-servers: ${KAFKA_SERVER}
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://13.124.61.86:8761/eureka  # default address
 server:
   port: 8081
