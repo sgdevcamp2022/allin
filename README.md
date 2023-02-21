@@ -59,7 +59,7 @@
 
 ## 🚀 프로젝트 소개
 ### 서비스 소개
-Now.와 같은 서비스를 제공하는 실시간 스트리밍 웹어플리케이션
+N.와 같은 서비스를 제공하는 실시간 스트리밍 웹어플리케이션
 
 ### 프로젝트 목표
 NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
@@ -80,7 +80,7 @@ NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
 <br>
 
 > # Backend<br>
-> **🔐 인증/인가 관련 서버**
+> **🔐 인증인가 관련 서버**
 > * `Java 11`
 > * `Spring Boot 2.6.8`
 > * `Spring Data JPA`
@@ -122,6 +122,7 @@ NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
 
 > # API Gateway<br>
 > * `Spring Cloud Netflix Eureka`
+> * `Spring Cloud Starter Netflix Zuul`
 
 ---
 
@@ -152,8 +153,8 @@ NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
   - [배치 서버](https://github.com/sgdevcamp2022/allin/tree/main/backend/batch)
 
 #### 이하얀
-- 인증/인가 관련 부분 구현
-  - [인증/인가 서버](https://github.com/sgdevcamp2022/allin/tree/main/backend/Authserver7)
+- 인증인가 관련 부분 구현
+  - [인증인가 서버](https://github.com/sgdevcamp2022/allin/tree/main/backend/Authserver7)
 
 ---
 
@@ -210,7 +211,7 @@ sgdevcamp2022/allin
 
 |   Directory   |         Description          |
 | ------------- | ---------------------------- |
-| Authserver7   |  인증/인가 서버              |
+| Authserver7   |  인증인가 서버               |
 | batch         |  배치 서버                   |
 | cdn           |  cdn 서버                    |
 | chat          |  채팅 서버                   |
