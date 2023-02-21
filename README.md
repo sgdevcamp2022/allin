@@ -127,7 +127,7 @@ NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
 ---
 
 ## 🛠️ 아키텍처
-![image](https://user-images.githubusercontent.com/102213509/219622976-d8159ff5-65d6-4e26-a9c9-6bdcc7c588ef.png)
+![image](https://user-images.githubusercontent.com/102213509/220328455-686170e2-e065-482a-9ac4-7fbdffdc1d0e.png)
 
 ---
 
