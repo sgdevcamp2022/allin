@@ -94,21 +94,35 @@ NOW.를 기반으로 한 대량의 트래픽을 받는 웹 프로젝트 제작
 >
 > #
 > 
-> **⌨️ 채팅, 신고 관련 서버**
+> **💌 채팅 관련 서버**
 > * `Java 17`
 > * `SpringBoot 3.0.1`
-> * `Spring Data JPA`
-> * `Spring Batch`
-> * `Spring Scheduler`
 > * `Websocket, STOMP, SockJS`
-> * `MySQL8`
 > * `Redis`
 > * `Mongo DB`
 > * `Kafka`
 > * `AWS EC2`
->
-> #
-> 
+
+> **🚨 신고 관련 서버**
+> * `Java 17`
+> * `SpringBoot 3.0.2`
+> * `Spring Data JPA`
+> * `MySQL8`
+> * `Kafka`
+> * `AWS EC2`
+
+> **📚 배치 서버**
+> * `Java 17`
+> * `SpringBoot 3.0.2`
+> * `Spring Data JPA`
+> * `Spring Batch`
+> * `Spring Scheduler`
+> * `MySQL8`
+> * `Redis`
+> * `Mongo DB`
+> * `AWS EC2`
+
+
 > **🎥 라이브 관련 서버**
 > * `Java 11`
 > * `SpringBoot 2.6.8`
