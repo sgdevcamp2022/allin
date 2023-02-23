@@ -227,12 +227,13 @@ sgdevcamp2022/allin
 | ------------- | ---------------------------- |
 | Authserver7   |  인증인가 서버               |
 | batch         |  배치 서버                   |
-| cdn           |  cdn 서버                    |
 | chat          |  채팅 서버                   |
+| report        |  신고 서버                   |
+| cdn           |  cdn 서버                    |
 | manager       |  매니저 서버                 |
 | media         |  미디어 서버                 |
 | nginx         |  nginx 서버                  |
-| report        |  신고 서버                   |
+
 
 ---
 
