@@ -5,11 +5,9 @@
 ## 기술스택
 * Java 17
 * Springboot 3.0.2
-* Spring Batch 
-* Spring Scheduler
 * Spring Data JPA
+* Kafka
 * Redis
-* Mongo DB
 * MySQL8
 
 ## 아키텍처
