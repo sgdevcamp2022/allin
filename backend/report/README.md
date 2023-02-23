@@ -7,7 +7,6 @@
 * Springboot 3.0.2
 * Spring Data JPA
 * Kafka
-* Redis
 * MySQL8
 
 ## 아키텍처
